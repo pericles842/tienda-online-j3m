@@ -3,3 +3,19 @@
 @use './layout/layout.scss';
 @use 'primeicons/primeicons.css';
 @use './demo/demo.scss';
+
+
+
+::-webkit-scrollbar {
+    width: 2px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--surface-200);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 0px;
+}
