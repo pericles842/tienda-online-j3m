@@ -6,10 +6,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, Password, AppFloatingConfigurator, CommonModule, InputTextModule, ButtonModule, CheckboxModule],
+  imports: [
+    FormsModule,
+    Password,
+    AppFloatingConfigurator,
+    CommonModule,
+    InputTextModule,
+    ButtonModule,
+    RouterModule,
+    CheckboxModule
+  ],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })

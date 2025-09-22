@@ -11,7 +11,9 @@
         <!-- <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">Welcome Back</div> -->
         <div class="text-center w-full">
           <span class="text-surface-700 dark:text-surface-200 leading-normal">Ya tienes una cuenta?</span>
-          <a class="text-primary font-medium ml-1 cursor-pointer hover:text-primary-emphasis">Iniciar Sesión</a>
+          <a class="text-primary font-medium ml-1 cursor-pointer hover:text-primary-emphasis" routerLink="/auth/login"
+            >Iniciar Sesión</a
+          >
         </div>
       </div>
     </div>
@@ -42,9 +44,15 @@
       </div>
 
       <!-- seleccionar grupo -->
-      <div class="col-span-12">
-        <label for="correo" class="block mb-2 text-sm text-primary">Grupo</label>
+      <div class="col-span-12 md:col-span-6">
+        <label for="correo" class="block mb-2 text-sm text-primary">Caja de ahorro</label>
         <p-select [options]="cities" optionLabel="name" placeholder="Seleccionar grupo" class="w-full" />
+      </div>
+
+      <!-- seleccionar grupo -->
+      <div class="col-span-12 md:col-span-6">
+        <label for="correo" class="block mb-2 text-sm text-primary">Teléfono</label>
+        <input pInputText id="correo" type="number" placeholder="04245364786" class="w-full" />
       </div>
 
       <div class="col-span-12 md:col-span-4">
