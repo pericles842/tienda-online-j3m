@@ -72,7 +72,9 @@ declare type SurfacesType = {
                             (click)="updateColors($event, 'surface', surface)"
                             class="cursor-pointer w-5 h-5 rounded-full flex shrink-0 items-center justify-center p-0 outline-offset-1"
                             [ngClass]="{
-                                    'outline outline-primary': selectedSurfaceColor() ? selectedSurfaceColor() === surface.name : layoutService.layoutConfig().darkTheme ? surface.name === 'zinc' : surface.name === 'slate'
+                                    'outline outline-primary': selectedSurfaceColor() ?
+                                     selectedSurfaceColor() === surface.name : layoutService.layoutConfig().darkTheme ?
+                                      surface.name === 'zinc' : surface.name === 'slate'
                                 }"
                             [style]="{
                                     'background-color': surface?.palette?.['500']
@@ -117,6 +119,7 @@ export class AppConfigurator {
 
     ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {
+            
             this.onPresetChange(this.layoutService.layoutConfig().preset);
         }
     }
@@ -415,7 +418,7 @@ export class AppConfigurator {
     }
 
     updateColors(event: any, type: string, color: any) {
-        if (type === 'primary') {
+        if (type === 'primary') {             
             this.layoutService.layoutConfig.update((state) => ({ ...state, primary: color.name }));
         } else if (type === 'surface') {
             this.layoutService.layoutConfig.update((state) => ({ ...state, surface: color.name }));
