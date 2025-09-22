@@ -8,7 +8,7 @@
     "bracketSameLine": false,
     "overrides": [
         {
-            "files": ["*.ts", "*.mts", "*.d.ts"],
+            "files": ["*.ts", "*.mts", "*.d.ts","*.html"],
             "options": {
                 "parser": "typescript"
             }

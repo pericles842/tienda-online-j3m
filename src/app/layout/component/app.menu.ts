@@ -24,7 +24,7 @@ export class AppMenu {
         label: 'Home',
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
       },
-       {
+      {
         label: 'menu prueba',
         items: [{ label: 'Crud', icon: 'pi pi-fw pi-user', routerLink: ['/ss'] }]
       },
@@ -66,6 +66,11 @@ export class AppMenu {
                 label: 'Login',
                 icon: 'pi pi-fw pi-sign-in',
                 routerLink: ['/auth/login']
+              },
+              {
+                label: 'Registro',
+                icon: 'pi pi-fw pi-sign-in',
+                routerLink: ['/auth/register']
               },
               {
                 label: 'Error',
