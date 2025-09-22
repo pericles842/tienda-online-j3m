@@ -1,33 +1,83 @@
 <app-floating-configurator />
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-    <!-- Título -->
-    <h2 class="text-2xl font-bold text-center mb-6">Iniciar Sesión</h2>
 
-    <!-- Formulario en grid -->
-    <form class="grid grid-cols-1 gap-6">
-      <!-- Usuario -->
-      <div class="col-span-6">
-        <label for="username" class="block text-gray-700 mb-2">Usuario</label>
-        <input pInputText id="username" type="text" placeholder="Ingresa tu usuario" class="w-full p-inputtext-sm" />
+<div class="bg-surface-50 dark:bg-surface-950 px-6 py-5 md:px-20 lg:px-80">
+  <div class="bg-surface-0 dark:bg-surface-900 p-8 md:p-8 shadow-sm rounded-2xl w-full max-w-xl mx-auto flex flex-col gap-8">
+    <!-- Header -->
+    <div class="flex flex-col items-center gap-4">
+      <div class="flex items-center gap-4">
+        <img src="assets/images/logotipo.png" alt="logo" class="w-20" />
       </div>
-
-      <!-- Contraseña -->
-      <div class="col-span-6">
-        <label for="password" class="block text-gray-700 mb-2">Contraseña</label>
-        <p-password id="password" placeholder="Ingresa tu contraseña" [feedback]="false" class="w-full" inputStyleClass="w-full"></p-password>
+      <div class="flex flex-col items-center gap-2 w-full">
+        <!-- <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">Welcome Back</div> -->
+        <div class="text-center w-full">
+          <span class="text-surface-700 dark:text-surface-200 leading-normal">Ya tienes una cuenta?</span>
+          <a class="text-primary font-medium ml-1 cursor-pointer hover:text-primary-emphasis">Iniciar Sesión</a>
+        </div>
       </div>
-
-      <!-- Botón -->
-      <div class="col-span-12">
-        <button pButton type="button" label="Ingresar" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg py-2"></button>
-      </div>
-    </form>
-
-    <!-- Registro -->
-    <div class="text-center mt-6">
-      <span class="text-gray-600">¿No tienes cuenta?</span>
-      <a href="#" class="text-blue-600 font-semibold hover:underline"> Regístrate</a>
     </div>
+
+    <!-- DATOS PERSONALES -->
+    <div class="grid grid-cols-12 gap-6">
+      <!-- Nombre -->
+      <div class="col-span-12 md:col-span-6">
+        <label for="nombre" class="block mb-2 text-sm text-primary">Nombre</label>
+        <input pInputText id="nombre" type="text" placeholder="Jorge David" class="w-full" />
+      </div>
+
+      <!-- Apellido -->
+      <div class="col-span-12 md:col-span-6">
+        <label for="apellido" class="block mb-2 text-sm text-primary">Apellido</label>
+        <input pInputText id="apellido" type="text" placeholder="Garcia Espinosa" class="w-full" />
+      </div>
+
+      <!-- Correo -->
+      <div class="col-span-12 md:col-span-6">
+        <label for="correo" class="block mb-2 text-sm text-primary">Correo</label>
+        <input pInputText id="correo" type="email" placeholder="jorge.david@gmail.com" class="w-full" />
+      </div>
+      <!-- cedula -->
+      <div class="col-span-12 md:col-span-6">
+        <label for="correo" class="block mb-2 text-sm text-primary">Cédula</label>
+        <input pInputText id="correo" type="number" placeholder="303297834" class="w-full" />
+      </div>
+
+      <!-- seleccionar grupo -->
+      <div class="col-span-12">
+        <label for="correo" class="block mb-2 text-sm text-primary">Grupo</label>
+        <p-select [options]="cities" optionLabel="name" placeholder="Seleccionar grupo" class="w-full" />
+      </div>
+
+      <div class="col-span-12 md:col-span-4">
+        <label for="correo" class="block mb-2 text-sm text-primary">Ciudad</label>
+        <p-select [options]="cities" optionLabel="name" placeholder="Seleccionar grupo" class="w-full" />
+      </div>
+
+      <div class="col-span-12 md:col-span-4">
+        <label for="correo" class="block mb-2 text-sm text-primary">Estado</label>
+        <p-select [options]="cities" optionLabel="name" placeholder="Seleccionar grupo" class="w-full" />
+      </div>
+
+      <div class="col-span-12 md:col-span-4">
+        <label for="correo" class="block mb-2 text-sm text-primary">Parroquia</label>
+        <p-select [options]="cities" optionLabel="name" placeholder="Seleccionar grupo" class="w-full" />
+      </div>
+
+      <!-- ContraseñaS-->
+      <div class="col-span-12">
+        <label for="correo" class="block mb-2 text-sm text-primary">Contraseña</label>
+        <p-password [toggleMask]="true" class="w-full" inputStyleClass="w-full" />
+      </div>
+
+      <div class="col-span-12">
+        <label for="correo" class="block mb-2 text-sm text-primary">Repetir Contraseña</label>
+        <p-password [toggleMask]="true" class="w-full" inputStyleClass="w-full" />
+      </div>
+    </div>
+
+    <!-- Botón -->
+    <button pButton class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
+      <i pButtonIcon class="pi pi-user text-base! leading-normal!"></i>
+      <span pButtonLabel>Crear Cuenta</span>
+    </button>
   </div>
 </div>
