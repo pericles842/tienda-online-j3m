@@ -1,9 +1,13 @@
 {
-    "rewrites": [
-        {
-            "source": "/:path*",
-            "destination": "/index.html"
-        }
-    ],
-    "trailingSlash": false
+  "rewrites": [
+    {
+      "source": "/assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ],
+  "trailingSlash": false
 }
