@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    host: 'https://desdezero-server-production.up.railway.app'
+    host: 'https://j3m-server-production.up.railway.app/api'
 };
