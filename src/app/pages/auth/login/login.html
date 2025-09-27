@@ -1,7 +1,12 @@
 <app-floating-configurator />
+<p-toast />
 
 <div class="bg-surface-50 dark:bg-surface-950 px-6 py-10 md:px-20 lg:px-80">
-  <div class="bg-surface-0 dark:bg-surface-900 p-8 md:p-8 shadow-sm rounded-md w-full max-w-md mx-auto flex flex-col gap-8">
+  <form
+    [formGroup]="login"
+    class="bg-surface-0 dark:bg-surface-900 p-8 md:p-8 shadow-sm rounded-md w-full max-w-md mx-auto flex flex-col gap-8"
+    (ngSubmit)="loginUser()"
+  >
     <!-- Header -->
     <div class="flex flex-col items-center gap-4">
       <div class="flex items-center gap-4">
@@ -11,7 +16,9 @@
         <!-- <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">Welcome Back</div> -->
         <div class="text-center w-full">
           <span class="text-surface-700 dark:text-surface-200 leading-normal">No tienes una cuenta?</span>
-          <a class="text-primary font-medium ml-1 cursor-pointer hover:text-primary-emphasis" routerLink="/auth/register">Crear Cuenta</a>
+          <a class="text-primary font-medium ml-1 cursor-pointer hover:text-primary-emphasis" routerLink="/auth/register"
+            >Crear Cuenta</a
+          >
         </div>
       </div>
     </div>
@@ -21,13 +28,34 @@
       <!-- Correo -->
       <div class="col-span-12">
         <label for="correo" class="block mb-2 text-sm text-primary">Correo</label>
-        <input pInputText id="correo"  pSize="large" type="email" placeholder="jorge.david@gmail.com" class="w-full " />
+        <input
+          formControlName="email"
+          pInputText
+          id="correo"
+          pSize="large"
+          type="email"
+          placeholder="jorge.david@gmail.com"
+          class="w-full mb-2"
+        />
+        @if (login.get('email')?.hasError('required')&& login.get('email')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">Ingrese el usuario</p-message>
+        }
       </div>
 
       <!-- ContraseñaS-->
       <div class="col-span-12">
         <label for="correo" class="block mb-2 text-sm text-primary">Contraseña</label>
-        <p-password [toggleMask]="true" size="large" [feedback]="false" class="w-full" inputStyleClass="w-full" />
+        <p-password
+          formControlName="password"
+          [toggleMask]="true"
+          size="large"
+          [feedback]="false"
+          class="w-full mb-2"
+          inputStyleClass="w-full"
+        />
+        @if (login.get('password')?.hasError('required')&& login.get('password')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">Ingrese la contraseña</p-message>
+        }
       </div>
 
       <!-- ContraseñaS-->
@@ -35,13 +63,14 @@
 
     <div class="flex justify-between">
       <label for="correo" class="block mb-2 text-sm text-primary">Recordar Contraseña</label>
-      <p-checkbox [(ngModel)]="checked1" [binary]="true" />
+      <p-checkbox formControlName="remember" [binary]="true" />
     </div>
 
     <!-- Botón -->
-    <button pButton class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
+    <button pButton type="submit" class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
       <i pButtonIcon class="pi pi-user text-base! leading-normal!"></i>
       <span pButtonLabel>Ingresar</span>
     </button>
-  </div>
+  </form>
+  <app-loading [loading]="loading()"></app-loading>
 </div>

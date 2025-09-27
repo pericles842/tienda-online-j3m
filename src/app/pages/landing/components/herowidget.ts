@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'hero-widget',
-  imports: [ButtonModule, RippleModule],
+  imports: [ButtonModule, RippleModule, ButtonModule, RippleModule, RouterLink],
   template: `
     <div
       id="hero"
@@ -16,7 +17,10 @@ import { RippleModule } from 'primeng/ripple';
         <p class="font-normal text-2xl leading-normal md:mt-4 text-gray-700 dark:text-gray-700">
           Que estas esperando para registrarte
         </p>
-        <button pButton pRipple [rounded]="true" type="button" label="Próximamente" class="text-xl! mt-8 px-4!"></button>
+        <div class="flex gap-4">
+          <button pButton pRipple label="Ingresar" routerLink="/auth/login" [rounded]="true"></button>
+          <button pButton pRipple label="Crear Cuenta" routerLink="/auth/register" [rounded]="true"></button>
+        </div>
       </div>
       <div class="flex justify-center md:justify-end">
         <img src="https://primefaces.org/cdn/templates/sakai/landing/screen-1.png" alt="Hero Image" class="w-9/12 md:w-auto" />
