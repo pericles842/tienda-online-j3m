@@ -4,6 +4,8 @@ export interface User {
   last_name: string;
   email: string;
   phone: string;
+  phone_2: string;
+  age: number;
   password: string;
   password_confirmation: string;
   ci: string;
@@ -54,6 +56,6 @@ export type LoginForm = {
 };
 
 export interface LoginResponse {
-  user: { id: number; name: string; last_name: string; email: string; role: string ,rol_id: number};
+  user: { id: number; name: string; last_name: string; email: string; role: string; rol_id: number };
   accessToken: string;
 }

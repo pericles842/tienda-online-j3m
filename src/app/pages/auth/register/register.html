@@ -65,7 +65,7 @@
         }
       </div>
       <!-- cedula -->
-      <div class="col-span-12 md:col-span-6">
+      <div class="col-span-12 md:col-span-4">
         <label for="ci" class="block mb-2 text-sm text-primary">Cédula</label>
         <input
           pInputText
@@ -83,8 +83,46 @@
         }
       </div>
 
+      <div class="col-span-12 md:col-span-2">
+        <label for="ci" class="block mb-2 text-sm text-primary">Edad</label>
+        <input
+          pInputText
+          formControlName="age"
+          id="age"
+          type="text"
+          class="w-full mb-2"
+          [ngClass]="registerForm.get('age')?.hasError('invalid') && registerForm.get('age')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (registerForm.get('age')?.hasError('required')&& registerForm.get('age')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">La edad es obligatoria</p-message>
+        }
+      </div>
+
       <!-- seleccionar grupo -->
       <div class="col-span-12 md:col-span-6">
+        <label for="phone" class="block mb-2 text-sm text-primary">Teléfono</label>
+        <input
+          formControlName="phone"
+          pInputText
+          id="phone"
+          type="number"
+          placeholder="04245364786"
+          class="w-full mb-2"
+          [ngClass]="registerForm.get('phone')?.hasError('invalid') && registerForm.get('phone')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (registerForm.get('phone')?.hasError('required')&& registerForm.get('phone')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">El teléfono es obligatorio</p-message>
+        }
+      </div>
+
+      <!-- seleccionar grupo -->
+      <div class="col-span-12 md:col-span-6">
+        <label for="phone" class="block mb-2 text-sm text-primary">Teléfono 2</label>
+        <input formControlName="phone_2" pInputText id="phone" type="number" placeholder="04245364786" class="w-full" />
+      </div>
+
+      <!-- seleccionar grupo -->
+      <div class="col-span-12">
         <label for="correo" class="block mb-2 text-sm text-primary">Caja de ahorro</label>
         <p-select
           formControlName="public_group_id"
@@ -99,23 +137,6 @@
         />
         @if (registerForm.get('public_group_id')?.hasError('required')&& registerForm.get('public_group_id')?.dirty) {
         <p-message severity="error" variant="simple" size="small">La caja de ahorro es obligatoria</p-message>
-        }
-      </div>
-
-      <!-- seleccionar grupo -->
-      <div class="col-span-12 md:col-span-6">
-        <label for="phone" class="block mb-2 text-sm text-primary">Teléfono</label>
-        <input
-          formControlName="phone"
-          pInputText
-          id="phone"
-          type="string"
-          placeholder="04245364786"
-          class="w-full mb-2"
-          [ngClass]="registerForm.get('phone')?.hasError('invalid') && registerForm.get('phone')?.dirty ? 'ng-invalid ng-dirty' : ''"
-        />
-        @if (registerForm.get('phone')?.hasError('required')&& registerForm.get('phone')?.dirty) {
-        <p-message severity="error" variant="simple" size="small">El teléfono es obligatorio</p-message>
         }
       </div>
 

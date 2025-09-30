@@ -91,6 +91,8 @@ export class RegisterComponent {
         nonNullable: true
       }),
       phone: new FormControl('', [Validators.required]),
+      phone_2: new FormControl(''),
+      age: new FormControl('', [Validators.required]),
       public_group_id: new FormControl('', [Validators.required]),
       rol_id: new FormControl(6, [Validators.required]),
       state_id: new FormControl('', [Validators.required]),
