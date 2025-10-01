@@ -14,6 +14,7 @@ import { UserService } from '@/services/user.service';
 import { Loading } from '@/pages/loading/loading';
 import { Toast } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { AuthService } from '@/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -46,6 +47,7 @@ export class LoginComponent {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private messageService: MessageService,
     private router: Router
   ) {}
@@ -78,8 +80,8 @@ export class LoginComponent {
     this.loading.set(true);
     this.userService.authUser(this.login.value).subscribe({
       next: (user) => {
-        this.userService.setUser(user.user);
-        this.userService.setToken(user.accessToken);
+        this.authService.setUser(user.user);
+        this.authService.setToken(user.accessToken);
       
         this.loading.set(false);
 
