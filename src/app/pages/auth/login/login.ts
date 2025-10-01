@@ -78,8 +78,9 @@ export class LoginComponent {
     this.loading.set(true);
     this.userService.authUser(this.login.value).subscribe({
       next: (user) => {
-        localStorage.setItem('user', JSON.stringify(user.user));
-        localStorage.setItem('accessToken', user.accessToken);
+        this.userService.setUser(user.user);
+        this.userService.setToken(user.accessToken);
+      
         this.loading.set(false);
 
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `Bienvenido ${user.user.name}`, life: 3000 });

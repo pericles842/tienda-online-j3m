@@ -56,6 +56,16 @@ export type LoginForm = {
 };
 
 export interface LoginResponse {
-  user: { id: number; name: string; last_name: string; email: string; role: string; rol_id: number };
+  user: UserLoginResponse;
   accessToken: string;
 }
+
+type UserLoginResponse = {
+  id: number;
+  name: string;
+  last_name: string;
+  email: string;
+  role: string;
+  rol_id: number;
+  permissionss: ChargesResponse[];
+};

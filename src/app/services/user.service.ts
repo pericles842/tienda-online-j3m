@@ -25,31 +25,80 @@ export class UserService {
     return this.http.post<User>(`${environment.host}/users/create`, user);
   }
 
+  /**
+   *Autenticar un usuario
+   *
+   * @param {{ email: string; password: string }} user
+   * @return {*}  {Observable<LoginResponse>}
+   * @memberof UserService
+   */
   authUser(user: { email: string; password: string }): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${environment.host}/users/authenticate`, user);
   }
 
+  /**
+   *Obtener el token del localstorage
+   *
+   * @return {string|null}
+   * @memberof UserService
+   */
   getToken(): string | null {
     return localStorage.getItem('accessToken');
   }
 
+  /**
+   *Guardar el token en el localstorage
+   *
+   * @param {string} token
+   * @memberof UserService
+   */
   setToken(token: string) {
     localStorage.setItem('accessToken', token);
   }
+  /**
+   *Setear usuario en el localstorage
+   *
+   * @param {LoginResponse['user']} user
+   * @memberof UserService
+   */
   setUser(user: LoginResponse['user']) {
     localStorage.setItem('user', JSON.stringify(user));
   }
 
+  /**
+   *Verificar si el token expiró
+   *
+   * @param {string} [token]
+   * @return {*}  {boolean}
+   * @memberof UserService
+   */
   isTokenExpired(token?: string): boolean {
     if (!token) token = this.getToken()!;
     if (!token) return true;
     return this.jwtHelper.isTokenExpired(token);
   }
 
+  /**
+   *Decodificar el token
+   *
+   * @param {string} [token]
+   * @return {*}  {*}
+   * @memberof UserService
+   */
   decodeToken(token?: string): any {
     if (!token) token = this.getToken()!;
     if (!token) return null;
     return this.jwtHelper.decodeToken(token);
+  }
+
+  /**
+   *Cerrar sesion
+   *
+   * @memberof UserService
+   */
+  logout() {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
   }
 
   //!HAY UN PORBLEMA CON EL RFRES COKIE
