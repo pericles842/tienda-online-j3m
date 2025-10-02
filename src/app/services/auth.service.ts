@@ -152,7 +152,7 @@ export class AuthService {
     const openConfirm = () => {
       this.confirmationService.confirm({
         message: `Tu sesión ha expirado. ¿Quieres continuar? 
-                (Se cerrará en ${seconds} s)`,
+                Se cerrará en ${seconds} s`,
         header: 'Sesión expirada',
         icon: 'pi pi-exclamation-triangle',
         acceptLabel: 'Sí, continuar',
@@ -160,7 +160,8 @@ export class AuthService {
         accept: () => {
           clearInterval(timeout);
           //! ESTO SE DEBE COLOCAR NE L APETICION DE REFRESH
-          this.setToken(this.getToken()!);
+          // this.setToken(this.getToken()!);
+          this.refreshToken().subscribe();
           // o refresh token
         },
         reject: () => {

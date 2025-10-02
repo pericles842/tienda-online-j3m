@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private http: HttpClient) {}
 
   /**
@@ -20,7 +19,7 @@ export class UserService {
    * @memberof UserService
    */
   createClient(user: CreateUserTypeClient): Observable<User> {
-    return this.http.post<User>(`${environment.host}/users/create`, user);
+    return this.http.post<User>(`${environment.host}/users/create`, user, { withCredentials: true });
   }
 
   /**
