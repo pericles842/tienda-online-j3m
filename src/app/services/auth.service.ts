@@ -45,6 +45,18 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('accessToken');
   }
+  /**
+   *Decodificar el token
+   *
+   * @param {string} [token]
+   * @return {*}  {*}
+   * @memberof AuthService
+   */
+  getDecodeToken(token?: string): any {
+    if (!token) token = this.getToken()!;
+    if (!token) return null;
+    return this.jwtHelper.decodeToken(token);
+  }
 
   /**
    *Guardar el token en el localstorage

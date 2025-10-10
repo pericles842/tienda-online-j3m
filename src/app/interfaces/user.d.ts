@@ -66,6 +66,5 @@ type UserLoginResponse = {
   last_name: string;
   email: string;
   role: string;
-  rol_id: number;
-  permissionss: ChargesResponse[];
+  rol_id: number
 };
