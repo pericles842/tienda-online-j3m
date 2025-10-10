@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { StyleClassModule } from 'primeng/styleclass';
 import { AppConfigurator } from './app.configurator';
 import { LayoutService } from '../service/layout.service';
+import { AuthService } from '@/services/auth.service';
+import { User } from '@/interfaces/user';
 
 @Component({
   selector: 'app-topbar',
@@ -54,7 +56,15 @@ import { LayoutService } from '../service/layout.service';
         <app-configurator />
       </div>
 
-      <button class="layout-topbar-menu-button layout-topbar-action" pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
+      <button
+        class="layout-topbar-menu-button layout-topbar-action"
+        pStyleClass="@next"
+        enterFromClass="hidden"
+        enterActiveClass="animate-scalein"
+        leaveToClass="hidden"
+        leaveActiveClass="animate-fadeout"
+        [hideOnOutsideClick]="true"
+      >
         <i class="pi pi-ellipsis-v"></i>
       </button>
 
@@ -68,6 +78,11 @@ import { LayoutService } from '../service/layout.service';
             <i class="pi pi-bell"></i>
             <span>Notificación</span>
           </button>
+
+          <div class="flex flex-col items-end">
+            <span class="text-sm">{{user.name}}</span>
+            <span class="text-primary text-sm ">{{user.role}}</span>
+          </div>
           <button type="button" class="layout-topbar-action">
             <i class="pi pi-user"></i>
             <span>Profile</span>
@@ -79,10 +94,18 @@ import { LayoutService } from '../service/layout.service';
 })
 export class AppTopbar {
   items!: MenuItem[];
+  user!: User;
+   
 
-  constructor(public layoutService: LayoutService) {}
+  constructor(
+    public layoutService: LayoutService,
+    private authService: AuthService
+  ) {}
 
   toggleDarkMode() {
     this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
+  }
+  ngOnInit() {
+    this.user = this.authService.decodeToken().user
   }
 }

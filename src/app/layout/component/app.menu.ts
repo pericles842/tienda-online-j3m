@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
 import { AuthService } from '@/services/auth.service';
+import { ChargesResponse, User } from '@/interfaces/user';
+import { menu } from '@/utils/menu';
 
 @Component({
   selector: 'app-menu',
@@ -19,10 +21,12 @@ import { AuthService } from '@/services/auth.service';
 export class AppMenu {
   model: MenuItem[] = [];
 
-  constructor(private authService:AuthService) {}
+  constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.model = [
+
+    this.model = menu
+    let ola = [
       {
         label: 'Home',
         items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
@@ -168,7 +172,12 @@ export class AppMenu {
   }
 
   ngAfterViewInit(): void {
-   let token =  this.authService.getDecodeToken();
-   console.log(token);
+    let token: { user: User; exp: number; iat: number } = this.authService.decodeToken();
+    console.log(token);
+
+    const permissions = token.user.permissions;
+
+    
+    
   }
 }

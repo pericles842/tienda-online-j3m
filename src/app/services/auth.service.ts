@@ -1,4 +1,4 @@
-import { LoginResponse } from '@/interfaces/user';
+import { LoginResponse, User } from '@/interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
@@ -44,18 +44,6 @@ export class AuthService {
    */
   getToken(): string | null {
     return localStorage.getItem('accessToken');
-  }
-  /**
-   *Decodificar el token
-   *
-   * @param {string} [token]
-   * @return {*}  {*}
-   * @memberof AuthService
-   */
-  getDecodeToken(token?: string): any {
-    if (!token) token = this.getToken()!;
-    if (!token) return null;
-    return this.jwtHelper.decodeToken(token);
   }
 
   /**
@@ -139,7 +127,7 @@ export class AuthService {
    * @return {*}  {*}
    * @memberof UserService
    */
-  decodeToken(token?: string): any {
+  decodeToken(token?: string):any{
     if (!token) token = this.getToken()!;
     if (!token) return null;
     return this.jwtHelper.decodeToken(token);

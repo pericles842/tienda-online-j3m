@@ -15,8 +15,18 @@ import { LayoutService } from '../service/layout.service';
   template: `
     <ng-container>
       <!--//! MENU Y SUBMENUS -->
-      <div *ngIf="root && item.visible !== false" class="layout-menuitem-root-text">{{ item.label }}</div>
-      <a *ngIf="(!item.routerLink || item.items) && item.visible !== false" [attr.href]="item.url" (click)="itemClick($event)" [ngClass]="item.styleClass" [attr.target]="item.target" tabindex="0" pRipple>
+      <div *ngIf="root && item.visible !== false" class="layout-menuitem-root-text" style="color: var(--p-primary-color);">
+        {{ item.label }}
+      </div>
+      <a
+        *ngIf="(!item.routerLink || item.items) && item.visible !== false"
+        [attr.href]="item.url"
+        (click)="itemClick($event)"
+        [ngClass]="item.styleClass"
+        [attr.target]="item.target"
+        tabindex="0"
+        pRipple
+      >
         <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
         <span class="layout-menuitem-text ">{{ item.label }} </span>
         <i class="pi pi-fw pi-angle-down layout-submenu-toggler" *ngIf="item.items"></i>
@@ -27,7 +37,9 @@ import { LayoutService } from '../service/layout.service';
         [ngClass]="item.styleClass"
         [routerLink]="item.routerLink"
         routerLinkActive="active-route"
-        [routerLinkActiveOptions]="item.routerLinkActiveOptions || { paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }"
+        [routerLinkActiveOptions]="
+          item.routerLinkActiveOptions || { paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }
+        "
         [fragment]="item.fragment"
         [queryParamsHandling]="item.queryParamsHandling"
         [preserveFragment]="item.preserveFragment"
@@ -124,7 +136,12 @@ export class AppMenuitem {
   }
 
   updateActiveStateFromRoute() {
-    let activeRoute = this.router.isActive(this.item.routerLink[0], { paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' });
+    let activeRoute = this.router.isActive(this.item.routerLink[0], {
+      paths: 'exact',
+      queryParams: 'ignored',
+      matrixParams: 'ignored',
+      fragment: 'ignored'
+    });
 
     if (activeRoute) {
       this.layoutService.onMenuStateChange({ key: this.key, routeEvent: true });
