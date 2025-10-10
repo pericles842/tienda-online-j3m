@@ -30,6 +30,6 @@ export class UserService {
    * @memberof UserService
    */
   authUser(user: { email: string; password: string }): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${environment.host}/users/authenticate`, user);
+    return this.http.post<LoginResponse>(`${environment.host}/users/authenticate`, user, { withCredentials: true });
   }
 }
