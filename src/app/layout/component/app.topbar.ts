@@ -74,18 +74,23 @@ import { User } from '@/interfaces/user';
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
           </button> -->
+
+          <div class="flex flex-col items-end">
+            <span class="text-sm">{{ user.name }}</span>
+            <span class="text-primary text-sm ">{{ user.role }}</span>
+          </div>
+
           <button type="button" class="layout-topbar-action">
             <i class="pi pi-bell"></i>
             <span>Notificación</span>
           </button>
-
-          <div class="flex flex-col items-end">
-            <span class="text-sm">{{user.name}}</span>
-            <span class="text-primary text-sm ">{{user.role}}</span>
-          </div>
           <button type="button" class="layout-topbar-action">
             <i class="pi pi-user"></i>
             <span>Profile</span>
+          </button>
+          <button (click)="logout()" type="button" class="layout-topbar-action">
+            <i class=" pi pi-sign-out"></i>
+            <span>Salir</span>
           </button>
         </div>
       </div>
@@ -95,7 +100,6 @@ import { User } from '@/interfaces/user';
 export class AppTopbar {
   items!: MenuItem[];
   user!: User;
-   
 
   constructor(
     public layoutService: LayoutService,
@@ -106,6 +110,10 @@ export class AppTopbar {
     this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
   }
   ngOnInit() {
-    this.user = this.authService.decodeToken().user
+    this.user = this.authService.decodeToken().user;
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }

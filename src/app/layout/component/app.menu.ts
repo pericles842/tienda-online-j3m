@@ -5,7 +5,7 @@ import { MenuItem } from 'primeng/api';
 import { AppMenuitem } from './app.menuitem';
 import { AuthService } from '@/services/auth.service';
 import { ChargesResponse, User } from '@/interfaces/user';
-import { menu } from '@/utils/menu';
+import { CustomMenuItem, menu } from '@/utils/menu';
 
 @Component({
   selector: 'app-menu',
@@ -19,13 +19,12 @@ import { menu } from '@/utils/menu';
   </ul> `
 })
 export class AppMenu {
-  model: MenuItem[] = [];
+  model: CustomMenuItem[] = [];
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-
-    this.model = menu
+    this.model = menu;
     let ola = [
       {
         label: 'Home',
@@ -173,11 +172,31 @@ export class AppMenu {
 
   ngAfterViewInit(): void {
     let token: { user: User; exp: number; iat: number } = this.authService.decodeToken();
-    console.log(token);
 
     const permissions = token.user.permissions;
 
-    
-    
+    for (let i = 0; i < this.model.length; i++) {
+      const menu = this.model[i];
+
+      //si items no existe pasa al otro submenu
+      if (!menu.items || menu.items.length === 0) continue;
+
+      //Asumimos que todos los menus son false
+      this.model[i].visible = false;
+
+      //submenu
+      for (let submenu_index = 0; submenu_index < menu.items.length; submenu_index++) {
+        const submenu = menu.items[submenu_index];
+
+        //Buscamos el modulo
+        const module = permissions?.find((m) => m.module_id == submenu.module_id);
+        const isSubmenuVisible = module?.can_view === true;
+
+        menu.items[submenu_index].visible = module?.can_view;
+
+        //* si un solo submenu es visible mostramos el padre
+        if (isSubmenuVisible) this.model[i].visible = true;
+      }
+    }
   }
 }

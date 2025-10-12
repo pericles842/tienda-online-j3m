@@ -43,10 +43,10 @@ export interface ChargesResponse {
   rol: string;
   module_id: number;
   module: string;
-  can_view: number | boolean;
-  can_create: number | boolean;
-  can_update: number | boolean;
-  can_delete: number | boolean;
+  can_view: boolean;
+  can_create: boolean;
+  can_update: boolean;
+  can_delete: boolean;
 }
 
 export type LoginForm = {
@@ -66,5 +66,5 @@ type UserLoginResponse = {
   last_name: string;
   email: string;
   role: string;
-  rol_id: number
+  rol_id: number;
 };
