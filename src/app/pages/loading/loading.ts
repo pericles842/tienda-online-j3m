@@ -4,12 +4,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 @Component({
   standalone: true,
   selector: 'app-loading',
-  imports: [
-    CommonModule,
-    ProgressSpinnerModule],
+  imports: [CommonModule, ProgressSpinnerModule],
   templateUrl: './loading.html',
   styleUrl: './loading.scss'
 })
 export class Loading {
-  @Input() loading: boolean = false;
+  @Input() loading: boolean | null = false;
 }

@@ -1,13 +1,14 @@
+import { authInterceptor } from '@/middlewares/auth.interceptor';
+import { errorsInterceptor } from '@/middlewares/errors.interceptor';
+import { loadingInterceptor } from '@/middlewares/loading.interceptor';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withEnabledBlockingInitialNavigation, withInMemoryScrolling } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { appRoutes } from './app.routes';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { authInterceptor } from '@/middlewares/auth.interceptor';
-import { errorsInterceptor } from '@/middlewares/errors.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,8 +20,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withFetch(),
       withInterceptors([
-        authInterceptor, // Primero el de Autorización
-        errorsInterceptor // Segundo el de Errores
+        authInterceptor, // primero el de Autorización
+        loadingInterceptor, //segundo Cargando
+        errorsInterceptor // tercero el de Errores
       ])
     ),
     provideAnimationsAsync(),
@@ -29,4 +31,3 @@ export const appConfig: ApplicationConfig = {
     MessageService
   ]
 };
-

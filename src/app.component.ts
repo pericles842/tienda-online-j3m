@@ -1,19 +1,29 @@
 import { AuthService } from '@/services/auth.service';
+import { LoadingService } from '@/services/loading.service';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Toast } from 'primeng/toast';
+import { Loading } from '@/pages/loading/loading';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, ConfirmDialogModule, Toast],
+  imports: [RouterModule, ConfirmDialogModule, Toast, Loading, CommonModule],
   template: `<router-outlet></router-outlet>
     <p-toast />
-    <p-confirmDialog></p-confirmDialog>`
+    <p-confirmDialog></p-confirmDialog>
+    <app-loading [loading]="loadingService.loading$ | async"></app-loading>`
 })
 export class AppComponent {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    public loadingService: LoadingService
+  ) {}
+  get isLoading$() {
+    return this.loadingService.loading$;
+  }
 
   ngOnInit() {
     /* 🔥 Si el token expira, mostrar modal es una suscripción 

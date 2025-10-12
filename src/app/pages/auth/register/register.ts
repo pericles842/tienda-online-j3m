@@ -58,7 +58,6 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
     AppFloatingConfigurator,
     RouterModule,
     Message,
-    Loading,
     ToastModule
   ],
   templateUrl: './register.html',
@@ -67,7 +66,6 @@ export const passwordMatchValidator: ValidatorFn = (control: AbstractControl): V
 export class RegisterComponent {
   loading: WritableSignal<boolean> = signal(false);
   loading_public_groups: WritableSignal<boolean> = signal(false);
-  loading_create_user: WritableSignal<boolean> = signal(false);
   /**
    *Cajas de ahorro
    *
@@ -190,21 +188,13 @@ export class RegisterComponent {
     //si el formulario no es valido salimos del proceso
     if (!this.registerForm.valid) return;
 
-    this.loading_create_user.set(true);
     this.userService.createClient(this.registerForm.value).subscribe({
       next: (user) => {
-        this.loading_create_user.set(false);
-
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Usuario creado exitosamente', life: 3000 });
 
         setTimeout(() => {
           this.router.navigate(['/auth/login']);
         }, 2000);
-      },
-      error: (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message, life: 5000 });
-
-        this.loading_create_user.set(false);
       }
     });
   }

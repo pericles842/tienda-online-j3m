@@ -20,7 +20,6 @@ export const errorsInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, 
         switch (error.status) {
           case 401: // No autorizado
             errorMessage = 'Sesión expirada o credenciales inválidas. Por favor, inicie sesión de nuevo.';
-            router.navigate(['/login']);
             break;
           case 403: // Prohibido (No tiene permisos)
             errorMessage = 'Acceso denegado. No tiene permisos para esta acción.';
