@@ -94,7 +94,7 @@ export class LoginComponent {
       },
       error: (error) => {
         this.loading.set(false);
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
+       
       }
     });
   }

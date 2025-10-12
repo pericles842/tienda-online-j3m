@@ -2,12 +2,15 @@ import { AuthService } from '@/services/auth.service';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { Toast } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule, ConfirmDialogModule],
-  template: `<router-outlet></router-outlet> <p-confirmDialog></p-confirmDialog>`
+  imports: [RouterModule, ConfirmDialogModule, Toast],
+  template: `<router-outlet></router-outlet>
+    <p-toast />
+    <p-confirmDialog></p-confirmDialog>`
 })
 export class AppComponent {
   constructor(private authService: AuthService) {}

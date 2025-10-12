@@ -171,6 +171,15 @@ export class AppMenu {
   }
 
   ngAfterViewInit(): void {
+    this.setPermissionsMenu();
+  }
+
+  /**
+   *Setae la visibilidad del menu según los permisos de los módulos
+   *
+   * @memberof AppMenu
+   */
+  setPermissionsMenu() {
     let token: { user: User; exp: number; iat: number } = this.authService.decodeToken();
 
     const permissions = token.user.permissions;
