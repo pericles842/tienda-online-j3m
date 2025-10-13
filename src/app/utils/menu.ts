@@ -17,31 +17,31 @@ export const menu: CustomMenuItem[] = [
   {
     label: 'Analisis',
     items: [
-      { label: 'Ventas', icon: 'pi pi-fw pi-chart-line', routerLink: ['/'], module_id: Modules.estadisticasVentas.id },
-      { label: 'Inventario', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/'], module_id: Modules.inventario.id }
+      { label: 'Ventas', icon: 'pi pi-fw pi-chart-line', routerLink: ['/'], module_id: Modules['estadisticasVentas'].id },
+      { label: 'Inventario', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/'], module_id: Modules['inventario'].id }
     ]
   },
   {
     label: 'Configuracion',
     items: [
-      { label: 'Métodos de pago', icon: 'pi pi-fw pi-credit-card', routerLink: ['/'], module_id: Modules.metodosPago.id },
-      { label: 'Tasas de conversion', icon: 'pi pi-fw pi-dollar', routerLink: ['/'], module_id: Modules.configuracion.id }
+      { label: 'Métodos de pago', icon: 'pi pi-fw pi-credit-card', routerLink: ['/'], module_id: Modules['metodosPago'].id },
+      { label: 'Tasas de conversion', icon: 'pi pi-fw pi-dollar', routerLink: ['/'], module_id: Modules['configuracion'].id }
     ]
   },
   {
     label: 'Administración',
     items: [
-      { label: 'Cargos y permisos', icon: 'pi pi-fw pi-key', routerLink: ['/pages/cargos'], module_id: Modules.cargos.id },
-      { label: 'Cajas de ahorro', icon: 'pi pi-fw pi-users', routerLink: ['/'], module_id: Modules.cajasAhorro.id },
-      { label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/'], module_id: Modules.usuarios.id },
-      { label: 'ventas', icon: 'pi pi-fw pi-megaphone', routerLink: ['/'], module_id: Modules.ventas.id }
+      { label: 'Cargos y permisos', icon: 'pi pi-fw pi-key', routerLink: ['/pages/cargos'], module_id: Modules['cargos'].id },
+      { label: 'Cajas de ahorro', icon: 'pi pi-fw pi-users', routerLink: ['/'], module_id: Modules['cajasAhorro'].id },
+      { label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/'], module_id: Modules['usuarios'].id },
+      { label: 'ventas', icon: 'pi pi-fw pi-megaphone', routerLink: ['/'], module_id: Modules['ventas'].id }
     ]
   },
   {
     label: 'inventario',
     items: [
-      { label: 'Productos', icon: 'pi pi-fw pi-barcode', routerLink: ['/'], module_id: Modules.productos.id },
-      { label: 'Categorías', icon: 'pi pi-fw pi-tag', routerLink: ['/'], module_id: Modules.categorias.id }
+      { label: 'Productos', icon: 'pi pi-fw pi-barcode', routerLink: ['/'], module_id: Modules['productos'].id },
+      { label: 'Categorías', icon: 'pi pi-fw pi-tag', routerLink: ['/'], module_id: Modules['categorias'].id }
     ]
   }
   // },

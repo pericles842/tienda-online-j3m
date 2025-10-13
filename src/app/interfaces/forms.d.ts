@@ -1,6 +1,6 @@
 export interface Column {
   style?: string;
-  field: string;
+  label: string;
 
   key: string;
   customExportHeader?: string;

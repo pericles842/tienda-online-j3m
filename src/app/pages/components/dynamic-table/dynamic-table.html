@@ -1,0 +1,66 @@
+<p-table
+  #dt
+  [value]="data"
+  [rows]="10"
+  [columns]="columns"
+  [paginator]="true"
+  [globalFilterFields]="['name', 'description']"
+  [tableStyle]="{ 'min-width': '75rem' }"
+  [rowHover]="true"
+  dataKey="id"
+  currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} productos"
+  [showCurrentPageReport]="true"
+  [rowsPerPageOptions]="[10, 20, 30]"
+>
+  <ng-template #caption>
+    <div class="flex items-center justify-between">
+      <h5 class="m-0">{{name_table}}</h5>
+      <p-iconfield>
+        <p-inputicon styleClass="pi pi-search" />
+        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
+      </p-iconfield>
+    </div>
+  </ng-template>
+  <ng-template #header>
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox />
+      </th>
+      @for (col of columns; track $index) {
+      <th [pSortableColumn]="col.key" [style]="col.style? col.style : 'min-width: 16rem'">
+        {{col.label}}
+
+        <!-- Si existe sortTable -->
+        @if(col.sortTable) {
+        <p-sortIcon [field]="col.key" />
+        }
+      </th>
+
+      }
+      <th style="min-width: 12rem">Acción</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-rowData let-columns="columns">
+    <tr>
+      <!-- CHECKBOX -->
+      <td style="width: 3rem">
+        <p-tableCheckbox [value]="rowData" />
+      </td>
+      @for (col of columns; track $index) {
+      <td [style]="col.style? col.style : ''">{{ rowData[col.key] }}</td>
+      }
+      <!-- botonera -->
+      <td>
+        <p-button
+          icon="pi pi-pencil"
+          severity="info"
+          (onClick)="onEdit.emit(rowData)"
+          class="mr-2"
+          [rounded]="true"
+          [outlined]="true"
+        />
+        <p-button icon="pi pi-trash" severity="danger" (onClick)="onEdit.emit(rowData)" [rounded]="true" [outlined]="true" />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
