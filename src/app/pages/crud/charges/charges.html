@@ -25,12 +25,12 @@
     <div class="grid grid-cols-12 gap-3">
       <div class="col-span-12">
         <label for="nombre" class="block mb-2 text-sm text-primary">Cargo</label>
-        <input pInputText id="nombre" type="text" placeholder="Secretario" formControlName="cargo" class="w-full mb-2" />
+        <input pInputText id="nombre" type="text" placeholder="Secretario" formControlName="name" class="w-full mb-2" />
       </div>
 
       <div class="col-span-12">
         <label for="descripcion" class="block mb-2 text-sm text-primary">Descripción</label>
-        <textarea rows="5" cols="30" pTextarea formControlName="descripcion" class="w-full mb-2" [autoResize]="true"></textarea>
+        <textarea rows="5" cols="30" pTextarea formControlName="description" class="w-full mb-2" [autoResize]="true"></textarea>
       </div>
     </div>
 
@@ -44,11 +44,11 @@
     </div>
 
     <!-- FILAS DE PERMISOS -->
-    <div formArrayName="permisos">
+    <div formArrayName="permissions">
       @for (perm of permisos.controls; track $index) {
       <div class="grid grid-cols-5 gap-2 mt-4 items-center" [formGroupName]="$index">
         <!-- Nombre del módulo -->
-        <p class="font-medium text-lg text-primary ">{{ perm.get('name')?.value }}</p>
+        <p class="font-medium text-lg text-primary ">{{ perm.get('module')?.value }}</p>
 
         <!--  Iterar toggles dinámicamente -->
         @for (action of actions; track $index) {

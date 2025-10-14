@@ -65,21 +65,21 @@ export class Charges {
     this.getRoles();
 
     this.form = this.fb.group({
-      cargo: [''],
-      descripcion: [''],
-      permisos: this.fb.array([])
+      name: [''],
+      description: [''],
+      permissions: this.fb.array([])
     });
 
     this.initPermisos();
   }
 
   private initPermisos(): void {
-    const permisosArray = this.form.get('permisos') as FormArray;
+    const permisosArray = this.form.get('permissions') as FormArray;
 
     this.modules.forEach(([_, mod]) => {
       const moduloForm = this.fb.group({
-        id: [mod.id],
-        name: [mod.name],
+        module_id: [mod.id],
+        module: [mod.name],
         can_view: [false],
         can_create: [false],
         can_update: [false],
@@ -90,7 +90,7 @@ export class Charges {
   }
 
   get permisos(): FormArray {
-    return this.form.get('permisos') as FormArray;
+    return this.form.get('permissions') as FormArray;
   }
 
   guardar(): void {
