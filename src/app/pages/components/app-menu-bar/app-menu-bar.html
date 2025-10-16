@@ -1,10 +1,41 @@
 <p-toolbar styleClass="mb-6">
   <ng-template #start>
-    <p-button label="Nuevo" icon="pi pi-plus" severity="primary" class="mr-2" outlined (click)="touchNew.emit()" />
-    <p-button label="Eliminar" icon="pi pi-trash" severity="danger" outlined (click)="touchDelete.emit()" />
+    <p-button
+      pTooltip="crear registro"
+      pRipple
+      showDelay="400"
+      tooltipPosition="bottom"
+      label="Nuevo"
+      icon="pi pi-plus"
+      severity="primary"
+      class="mr-2"
+      [outlined]="layoutService.isDarkTheme()"
+      (click)="touchNew.emit()"
+    />
+
+    <p-button
+      pTooltip="eliminar registros"
+      showDelay="400"
+      [disabled]="disableDeleteButton"
+      tooltipPosition="bottom"
+      label="Eliminar"
+      icon="pi pi-trash"
+      severity="danger"
+      [outlined]="layoutService.isDarkTheme()"
+      (click)="touchDelete.emit()"
+    />
   </ng-template>
 
   <ng-template #end>
-    <p-button label="Exportar" icon="pi pi-upload" severity="success" outlined (onClick)="touchExport.emit()" />
+    <p-button
+      label="Exportar"
+      pTooltip="exportar"
+      tooltipPosition="bottom"
+      showDelay="400"
+      icon="pi pi-upload"
+      severity="success"
+      [outlined]="layoutService.isDarkTheme()"
+      (onClick)="touchExport.emit()"
+    />
   </ng-template>
 </p-toolbar>

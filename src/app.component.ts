@@ -6,6 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { Toast } from 'primeng/toast';
 import { Loading } from '@/pages/loading/loading';
 import { CommonModule } from '@angular/common';
+import { LayoutService } from '@/layout/service/layout.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ import { CommonModule } from '@angular/common';
 export class AppComponent {
   constructor(
     private authService: AuthService,
-    public loadingService: LoadingService
+    public loadingService: LoadingService,
+    public layoutService: LayoutService
   ) {}
   get isLoading$() {
     return this.loadingService.loading$;
@@ -40,5 +42,16 @@ export class AppComponent {
       const exp = this.authService.getTokenExpiration(token);
       this.authService['startExpirationCountdown'](exp);
     }
+
+    // this.layoutService.configUpdate$.subscribe((config) => {
+    //   console.log(config);
+    //   if (config.darkTheme) {
+    //        this.layoutService.layoutConfig.update((state) => ({ ...state, primary: 'noir' }));
+    //   }
+    // });
+  
+
+   // console.log(this.layoutService.isDarkTheme());
   }
+  //noir
 }

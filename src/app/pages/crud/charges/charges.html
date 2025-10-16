@@ -1,11 +1,14 @@
-<app-menu-bar (touchNew)="modal.set(true)"></app-menu-bar>
+<app-menu-bar [disableDeleteButton]="selectedEliminateCharges.length === 0" (touchNew)="openModal()" (touchDelete)="deleteChargeMultiple()"></app-menu-bar>
 
 <!-- TALA DINÁMICA -->
 <app-dynamic-table
   [columns]="columns"
   name_table="Cargos y permisos"
   [data]="charges()"
+  [(selection)]="selectedEliminateCharges"
   (onEdit)="editCharge($event)"
+  (onDelete)="deleteCharge($event)"
+  [actions_button]="buttons_table"
 ></app-dynamic-table>
 
 <p-dialog
@@ -16,21 +19,42 @@
   [closable]="false"
   [draggable]="false"
   [resizable]="false"
- [closeOnEscape]="true"
-  
+  [closeOnEscape]="true"
 >
   <!--  FORMULARIO REACTIVO -->
-  <form [formGroup]="form"   class="space-y-6">
+  <form [formGroup]="form" class="space-y-6">
     <!-- CAMPOS BÁSICOS -->
     <div class="grid grid-cols-12 gap-3">
       <div class="col-span-12">
         <label for="nombre" class="block mb-2 text-sm text-primary">Cargo</label>
-        <input pInputText id="nombre" type="text" placeholder="Secretario" formControlName="name" class="w-full mb-2" />
+        <input
+          pInputText
+          id="nombre"
+          type="text"
+          placeholder="Secretario"
+          formControlName="name"
+          class="w-full mb-2"
+          [ngClass]="form.get('name')?.hasError('invalid') && form.get('name')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (form.get('name')?.hasError('required')&& form.get('name')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">El cargo es obligatorio</p-message>
+        }
       </div>
 
       <div class="col-span-12">
         <label for="descripcion" class="block mb-2 text-sm text-primary">Descripción</label>
-        <textarea rows="5" cols="30" pTextarea formControlName="description" class="w-full mb-2" [autoResize]="true"></textarea>
+        <textarea
+          rows="5"
+          cols="30"
+          pTextarea
+          formControlName="description"
+          class="w-full mb-2"
+          [autoResize]="true"
+          [ngClass]="form.get('description')?.hasError('invalid') && form.get('description')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        ></textarea>
+        @if (form.get('description')?.hasError('required')&& form.get('description')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">La descripción es obligatoria</p-message>
+        }
       </div>
     </div>
 
@@ -44,11 +68,12 @@
     </div>
 
     <!-- FILAS DE PERMISOS -->
+
     <div formArrayName="permissions">
       @for (perm of permisos.controls; track $index) {
       <div class="grid grid-cols-5 gap-2 mt-4 items-center" [formGroupName]="$index">
         <!-- Nombre del módulo -->
-        <p class="font-medium text-lg text-primary ">{{ perm.get('module')?.value }}</p>
+        <p class="font-medium text-lg text-primary">{{ perm.get('module')?.value }}</p>
 
         <!--  Iterar toggles dinámicamente -->
         @for (action of actions; track $index) {
@@ -70,23 +95,82 @@
       <hr />
       }
     </div>
-    
   </form>
 
   <!-- FOOTER CORRECTO -->
   <ng-template pTemplate="footer">
     <div class="flex justify-end gap-3 p-3">
       <p-button
-      label="Cancelar"
-      icon="pi pi-times"
-      (onClick)="modal.set(false)"
-      severity="danger"
-      outlined
-      class="p-button-text"
-      text
-    ></p-button>
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="modal.set(false)"
+        severity="danger"
+        outlined
+        class="p-button-text"
+        text
+      ></p-button>
 
-    <p-button (click)="guardar()" label="Guardar" icon="pi pi-check" type="button"></p-button>
+      <p-button (click)="guardar()" label="Guardar" icon="pi pi-check" type="button"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- MODAL DE PERMISOS SOLO LECTURA -->
+<p-dialog
+  [visible]="modalPermissions()"
+  [style]="{ width: '740px' }"
+  header="Permisos del cargo"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+>
+  <ng-template pTemplate="content">
+    <div class="grid grid-cols-5 gap-2 mt-5 sticky top-0 bg-surface-50 dark:bg-surface-900 z-10">
+      <p class="font-medium text-lg capitalize">modulo</p>
+      <p class="font-medium text-lg capitalize">ver</p>
+      <p class="font-medium text-lg capitalize">crear</p>
+      <p class="font-medium text-lg capitalize">editar</p>
+      <p class="font-medium text-lg capitalize">eliminar</p>
+    </div>
+
+    <div class="grid grid-cols-5 gap-2 mt-4 items-center">
+      @for (permission of permissions ; track $index) {
+      <p class="font-medium text-lg text-primary">{{ permission.module }}</p>
+      <p-tag
+        [icon]="permission.can_view ? ' pi pi-check' : 'pi pi-times'"
+        [severity]="permission.can_view ? 'success' : 'danger'"
+      ></p-tag>
+
+      <p-tag
+        [icon]="permission.can_create ? ' pi pi-check' : 'pi pi-times'"
+        [severity]="permission.can_create ? 'success' : 'danger'"
+      ></p-tag>
+      <p-tag
+        [icon]="permission.can_update ? ' pi pi-check' : 'pi pi-times'"
+        [severity]="permission.can_update ? 'success' : 'danger'"
+      ></p-tag>
+      <p-tag
+        [icon]="permission.can_delete ? ' pi pi-check' : 'pi pi-times'"
+        [severity]="permission.can_delete ? 'success' : 'danger'"
+      ></p-tag>
+
+      }
+    </div>
+  </ng-template>
+  <!-- FOOTER CORRECTO -->
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 p-3">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="modalPermissions.set(false)"
+        severity="danger"
+        outlined
+        class="p-button-text"
+        text
+      ></p-button>
     </div>
   </ng-template>
 </p-dialog>

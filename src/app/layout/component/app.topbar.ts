@@ -49,7 +49,15 @@ import { User } from '@/interfaces/user';
 
         <!-- //!BOTON DE COLORES, COLOCAR app-configurator DENTRO DE ESTE BOTON -->
         <!-- <div class="relative">
-          <button class="layout-topbar-action layout-topbar-action-highlight" pStyleClass="@next" enterFromClass="hidden" enterActiveClass="animate-scalein" leaveToClass="hidden" leaveActiveClass="animate-fadeout" [hideOnOutsideClick]="true">
+          <button
+            class="layout-topbar-action layout-topbar-action-highlight"
+            pStyleClass="@next"
+            enterFromClass="hidden"
+            enterActiveClass="animate-scalein"
+            leaveToClass="hidden"
+            leaveActiveClass="animate-fadeout"
+            [hideOnOutsideClick]="true"
+          >
             <i class="pi pi-palette"></i>
           </button>
         </div> -->

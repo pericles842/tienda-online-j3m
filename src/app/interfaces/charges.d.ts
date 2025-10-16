@@ -1,6 +1,8 @@
-export interface SimpleCharges {
+
+
+export interface CreateCharge {
   id: number;
   name: string;
   description: string;
-  created_at: string;
+  permissions: ChargesResponse[];
 }

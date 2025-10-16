@@ -2,19 +2,21 @@
   #dt
   [value]="data"
   [rows]="10"
+  [(selection)]="selection"
+  (selectionChange)="emitSelectionChange($event)"
   [columns]="columns"
   [paginator]="true"
   [globalFilterFields]="['name', 'description']"
   [tableStyle]="{ 'min-width': '75rem' }"
   [rowHover]="true"
   dataKey="id"
-  currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} productos"
+  currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} datos"
   [showCurrentPageReport]="true"
   [rowsPerPageOptions]="[10, 20, 30]"
 >
   <ng-template #caption>
     <div class="flex items-center justify-between">
-      <h5 class="m-0">{{name_table}}</h5>
+      <p class="m-0 text-2xl text-primary">{{name_table}}</p>
       <p-iconfield>
         <p-inputicon styleClass="pi pi-search" />
         <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
@@ -54,12 +56,40 @@
         <p-button
           icon="pi pi-pencil"
           severity="info"
+          pTooltip="Editar"
+          tooltipPosition="bottom"
+          showDelay="400"
           (onClick)="onEdit.emit(rowData)"
           class="mr-2"
           [rounded]="true"
-          [outlined]="true"
+          [outlined]="layoutService.isDarkTheme()"
         />
-        <p-button icon="pi pi-trash" severity="danger" (onClick)="onEdit.emit(rowData)" [rounded]="true" [outlined]="true" />
+        <p-button
+          icon="pi pi-trash"
+          pTooltip="Eliminar"
+          tooltipPosition="bottom"
+          showDelay="400"
+          class="mr-2"
+          severity="danger"
+          (onClick)="onDelete.emit(rowData)"
+          [rounded]="true"
+          [outlined]="layoutService.isDarkTheme()"
+        />
+
+        <!-- Iterar botones dinamicamente -->
+        @for (button of actions_button; track $index) {
+        <p-button
+          class="mr-2"
+          [pTooltip]="button.tooltip"
+          tooltipPosition="bottom"
+          showDelay="400"
+          [icon]="button.icon"
+          [severity]="button.severity"
+          (onClick)="button.method(rowData)"
+          [rounded]="button.rounded"
+          [outlined]="layoutService.isDarkTheme()"
+        />
+        }
       </td>
     </tr>
   </ng-template>
