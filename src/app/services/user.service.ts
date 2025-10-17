@@ -22,6 +22,10 @@ export class UserService {
     return this.http.post<User>(`${environment.host}/users/create`, user, { withCredentials: true });
   }
 
+  listUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${environment.host}/users`);
+  }
+
   /**
    *Autenticar un usuario
    *

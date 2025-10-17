@@ -6,6 +6,7 @@
   name_table="Cargos y permisos"
   [data]="charges()"
   [(selection)]="selectedEliminateCharges"
+  [globalFilterFields]="globalFilter"
   (onEdit)="editCharge($event)"
   (onDelete)="deleteCharge($event)"
   [actions_button]="buttons_table"
@@ -159,6 +160,7 @@
       }
     </div>
   </ng-template>
+  
   <!-- FOOTER CORRECTO -->
   <ng-template pTemplate="footer">
     <div class="flex justify-end gap-3 p-3">

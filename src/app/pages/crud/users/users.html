@@ -1,0 +1,39 @@
+<app-menu-bar (touchNew)="modal.set(true)"></app-menu-bar>
+
+<app-dynamic-table
+  [columns]="columns"
+  name_table="Listado de usuarios"
+  [globalFilterFields]="globalFilterFields"
+  [data]="users()"
+></app-dynamic-table>
+
+<p-dialog
+  [visible]="modal()"
+  [style]="{ width: '740px' }"
+  header="Crear usuario"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+>
+  <ng-template pTemplate="content">
+    <app-form-user mode_component="crud"></app-form-user>
+  </ng-template>
+
+  <!-- FOOTER CORRECTO -->
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 p-3">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="modal.set(false)"
+        severity="danger"
+        outlined
+        class="p-button-text"
+        text
+      ></p-button>
+      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>

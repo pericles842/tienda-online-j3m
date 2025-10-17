@@ -33,7 +33,7 @@ export const menu: CustomMenuItem[] = [
     items: [
       { label: 'Cargos y permisos', icon: 'pi pi-fw pi-key', routerLink: ['/pages/cargos'], module_id: Modules['cargos'].id },
       { label: 'Cajas de ahorro', icon: 'pi pi-fw pi-users', routerLink: ['/'], module_id: Modules['cajasAhorro'].id },
-      { label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/'], module_id: Modules['usuarios'].id },
+      { label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/pages/usuarios'], module_id: Modules['usuarios'].id },
       { label: 'ventas', icon: 'pi pi-fw pi-megaphone', routerLink: ['/'], module_id: Modules['ventas'].id }
     ]
   },

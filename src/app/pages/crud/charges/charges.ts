@@ -63,6 +63,7 @@ export class Charges {
   selectedEliminateCharges: CreateCharge[] = [];
   modal = signal(false);
   modalPermissions = signal(false);
+  globalFilter: string[] = ['name', 'description'];
 
   /**
    *Permisos solo lectura
@@ -276,7 +277,7 @@ export class Charges {
               return current.filter((item) => !res.ids_to_delete_from_request.includes(item.id));
             });
 
-            this.selectedEliminateCharges = []; 
+            this.selectedEliminateCharges = [];
             this.messageService.add({
               severity: 'success',
               summary: 'Éxito',
@@ -286,6 +287,5 @@ export class Charges {
         });
       }
     });
-
   }
 }

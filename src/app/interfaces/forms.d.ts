@@ -4,6 +4,7 @@ export interface Column {
   key: string;
   customExportHeader?: string;
   sortTable: boolean;
+  dataType?: 'string' | 'number' | 'date' | 'boolean';
 }
 
 /**

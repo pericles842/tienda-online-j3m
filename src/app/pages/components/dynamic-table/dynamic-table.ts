@@ -34,6 +34,7 @@ export class DynamicTable {
 
   @Input() name_table: string = 'tabla por defecto';
   @Input() actions_button: ActionTableButton[] = [];
+  @Input() globalFilterFields: string[] = [];
 
   @Output() onEdit = new EventEmitter<any>();
   @Output() onDelete = new EventEmitter<any>();

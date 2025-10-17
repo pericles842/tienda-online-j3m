@@ -6,7 +6,7 @@
   (selectionChange)="emitSelectionChange($event)"
   [columns]="columns"
   [paginator]="true"
-  [globalFilterFields]="['name', 'description']"
+  [globalFilterFields]="globalFilterFields"
   [tableStyle]="{ 'min-width': '75rem' }"
   [rowHover]="true"
   dataKey="id"
@@ -49,8 +49,18 @@
         <p-tableCheckbox [value]="rowData" />
       </td>
       @for (col of columns; track $index) {
-      <td [style]="col.style? col.style : ''">{{ rowData[col.key] }}</td>
+
+      <!-- SWITCH -->
+      @switch (col.dataType) {
+      <!-- DATE -->
+      @case ('date') {
+      <td [style]="col.style? col.style : ''">{{ rowData[col.key]|date:'dd/MM/yyyy' }}</td>
       }
+      <!-- SWITCH -->
+      @default {
+      <!-- DEFAULT -->
+      <td [style]="col.style? col.style : ''">{{ rowData[col.key] }}</td>
+      } } }
       <!-- botonera -->
       <td>
         <p-button
