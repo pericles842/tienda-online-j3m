@@ -12,14 +12,51 @@ export class UserService {
 
   /**
    *Crear un usuario
-   *!NO ESTA VALIDADO SI CREA USUAIOS O CLIENTES
+   *
    *
    * @param {CreateUserTypeClient} user
    * @return {*}  {Observable<User>}
    * @memberof UserService
    */
-  createClient(user: CreateUserTypeClient): Observable<User> {
-    return this.http.post<User>(`${environment.host}/users/create`, user, { withCredentials: true });
+  createUser(user: CreateUserTypeClient): Observable<User> {
+    return this.http.post<User>(`${environment.host}/users/create`, user);
+  }
+
+  /**
+   *Crea un cliente servicio dedicado par ala pagina web
+   *
+   * @param {CreateUserTypeClient} user
+   * @return {*}
+   * @memberof UserService
+   */
+  createClient(user: CreateUserTypeClient) {
+    return this.http.post<User>(`${environment.host}/users/create-client`, user);
+  }
+
+  deleteUser(id: number): Observable<number> {
+    return this.http.delete<number>(`${environment.host}/users/delete/${id}`);
+  }
+
+  /**
+   *Elimina un grupo de usuarios
+   *
+   * @param {number[]} ids
+   * @return {*}  {Observable<{ ids_array: number[] }>}
+   * @memberof UserService
+   */
+  deleteGroupUsers(id: number[]): Observable<{ ids_array: number[] }> {
+    return this.http.delete<{ ids_array: number[] }>(`${environment.host}/users/delete-group`, { params: { id } });
+  }
+
+  /**
+   *Edita un usuario
+   *
+   * @param {CreateUserTypeClient} user
+   * @return {*}
+   * @memberof UserService
+   */
+  updateUser(user: CreateUserTypeClient) {
+    return this.http.put<User>(`${environment.host}/users/edit`, user);
   }
 
   listUsers(): Observable<User[]> {

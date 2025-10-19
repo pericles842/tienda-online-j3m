@@ -27,15 +27,29 @@
   </ng-template>
 
   <ng-template #end>
-    <p-button
-      label="Exportar"
-      pTooltip="exportar"
-      tooltipPosition="bottom"
-      showDelay="400"
-      icon="pi pi-upload"
-      severity="success"
-      [outlined]="layoutService.isDarkTheme()"
-      (onClick)="touchExport.emit()"
-    />
+    <div class="flex gap-3">
+      <p-button
+        label="Exportar PDF"
+        pTooltip="exportar pdf"
+        tooltipPosition="bottom"
+        showDelay="400"
+        icon="pi pi-file-pdf"
+        severity="danger"
+        size="small"
+        [outlined]="layoutService.isDarkTheme()"
+        (onClick)="touchExport.emit()"
+      />
+      <p-button
+        label="Exportar EXCEL"
+        pTooltip="exportar excel"
+        tooltipPosition="bottom"
+        showDelay="400"
+        icon="pi pi-file-excel"
+        severity="success"
+        size="small"
+        [outlined]="layoutService.isDarkTheme()"
+        (onClick)="touchExport.emit()"
+      />
+    </div>
   </ng-template>
 </p-toolbar>

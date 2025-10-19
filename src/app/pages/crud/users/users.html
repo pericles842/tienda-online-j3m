@@ -1,10 +1,13 @@
-<app-menu-bar (touchNew)="modal.set(true)"></app-menu-bar>
+<app-menu-bar [disableDeleteButton]="selectedEliminateUsers.length === 0" (touchDelete)="deleteUserMultiple()" (touchNew)="openModal()"></app-menu-bar>
 
 <app-dynamic-table
   [columns]="columns"
   name_table="Listado de usuarios"
   [globalFilterFields]="globalFilterFields"
   [data]="users()"
+  (onEdit)="goToEdit($event)"
+  (onDelete)="deleteUser($event)"
+  [(selection)]="selectedEliminateUsers"
 ></app-dynamic-table>
 
 <p-dialog
@@ -18,7 +21,7 @@
   [closeOnEscape]="true"
 >
   <ng-template pTemplate="content">
-    <app-form-user mode_component="crud"></app-form-user>
+    <app-form-user #formUser mode_component="crud" [(formGroup)]="registerForm"></app-form-user>
   </ng-template>
 
   <!-- FOOTER CORRECTO -->
@@ -33,7 +36,7 @@
         class="p-button-text"
         text
       ></p-button>
-      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+      <p-button (click)="guardar()" label="Guardar" icon="pi pi-check" type="button"></p-button>
     </div>
   </ng-template>
 </p-dialog>

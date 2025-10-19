@@ -72,7 +72,7 @@
         pInputText
         formControlName="ci"
         id="ci"
-        type="text"
+        type="number"
         placeholder="303297834"
         class="w-full mb-2"
         [ngClass]="registerForm.get('ci')?.hasError('invalid') && registerForm.get('ci')?.dirty ? 'ng-invalid ng-dirty' : ''"
@@ -99,7 +99,7 @@
       }
     </div>
 
-    <!-- seleccionar grupo -->
+    <!-- seleccionar TELEFONO -->
     <div class="col-span-12 md:col-span-6">
       <label for="phone" class="block mb-2 text-sm text-primary">Teléfono</label>
       <input
@@ -116,14 +116,14 @@
       }
     </div>
 
-    <!-- seleccionar grupo -->
+    <!-- seleccionar TELEFONO 2 -->
     <div class="col-span-12 md:col-span-6">
-      <label for="phone" class="block mb-2 text-sm text-primary">Teléfono 2</label>
-      <input formControlName="phone_2" pInputText id="phone" type="number" placeholder="04245364786" class="w-full" />
+      <label for="phone2" class="block mb-2 text-sm text-primary">Teléfono 2</label>
+      <input formControlName="phone_2" pInputText id="phone2" type="number" placeholder="04245364786" class="w-full" />
     </div>
 
     <!-- seleccionar grupo -->
-    <div class="col-span-12">
+    <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component!=='account'}">
       <label for="correo" class="block mb-2 text-sm text-primary">Caja de ahorro</label>
       <p-select
         formControlName="public_group_id"
@@ -141,6 +141,28 @@
       }
     </div>
 
+    @if (mode_component==='crud') {
+    <!--//? ROLES Y PERMISOS SOLO APLICA EN MOOD CREAR USUARIO -->
+    <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component==='crud'}">
+      <label for="rol" class="block mb-2 text-sm text-primary">Cargo</label>
+      <p-select
+        formControlName="rol_id"
+        [options]="roles()"
+        [loading]="roles_loading()"
+        optionLabel="name"
+        optionValue="id"
+        placeholder="Seleccionar cargo"
+        class="w-full mb-2"
+        [ngClass]="registerForm.get('rol_id')?.hasError('invalid') && registerForm.get('rol_id')?.dirty ?
+           'ng-invalid ng-dirty' : ''"
+      />
+      @if (registerForm.get('rol_id')?.hasError('required')&& registerForm.get('rol_id')?.dirty) {
+      <p-message severity="error" variant="simple" size="small">El cargo es obligatorio</p-message>
+      }
+    </div>
+    }
+
+    <!-- ESTADO -->
     <div class="col-span-12 md:col-span-4">
       <label for="correo" class="block mb-2 text-sm text-primary">Estado</label>
       <p-select
@@ -210,7 +232,7 @@
         formControlName="password_confirmation"
         [toggleMask]="true"
         class="w-full"
-        inputStyleClass="w-full mb-2"
+        inputStyleClass="w-full"
         [ngClass]="registerForm.get('password_confirmation')?.hasError('invalid') && registerForm.get('password_confirmation')?.dirty ?
            'ng-invalid ng-dirty' : ''"
       />
