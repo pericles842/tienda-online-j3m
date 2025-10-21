@@ -69,7 +69,7 @@ export class Users {
       phone: new FormControl('', [Validators.required]),
       phone_2: new FormControl(''),
       age: new FormControl('', [Validators.required]),
-      public_group_id: new FormControl('', [Validators.required]),
+      public_group_id: new FormControl(''),
       rol_id: new FormControl('', [Validators.required]),
       state_id: new FormControl('', [Validators.required]),
       city_id: new FormControl('', [Validators.required]),

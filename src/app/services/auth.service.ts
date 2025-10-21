@@ -108,6 +108,17 @@ export class AuthService {
   }
 
   /**
+   *Obtiene el usuario
+   *
+   * @return {*}  {(User | null)}
+   * @memberof AuthService
+   */
+  getUser(): User | null {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  }
+
+  /**
    *Verificar si el token expiró
    *
    * @param {string} [token]
@@ -127,7 +138,7 @@ export class AuthService {
    * @return {*}  {*}
    * @memberof UserService
    */
-  decodeToken(token?: string):any{
+  decodeToken(token?: string): any {
     if (!token) token = this.getToken()!;
     if (!token) return null;
     return this.jwtHelper.decodeToken(token);

@@ -21,7 +21,7 @@
   [closeOnEscape]="true"
 >
   <ng-template pTemplate="content">
-    <app-form-user #formUser mode_component="crud" [(formGroup)]="registerForm"></app-form-user>
+    <app-form-user #formUser [viewCharges]="true" mode_component="crud" [(formGroup)]="registerForm"></app-form-user>
   </ng-template>
 
   <!-- FOOTER CORRECTO -->

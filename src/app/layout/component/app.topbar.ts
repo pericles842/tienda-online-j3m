@@ -84,15 +84,15 @@ import { User } from '@/interfaces/user';
           </button> -->
 
           <div class="flex flex-col items-end">
-            <span class="text-sm">{{ user.name }}</span>
-            <span class="text-primary text-sm ">{{ user.role }}</span>
+            <span class="text-sm">{{ getUser.name }}</span>
+            <span class="text-primary text-sm ">{{ getUser.role }}</span>
           </div>
 
           <button type="button" class="layout-topbar-action">
             <i class="pi pi-bell"></i>
             <span>Notificación</span>
           </button>
-          <button type="button" class="layout-topbar-action">
+          <button type="button" routerLink="/pages/profile" class="layout-topbar-action">
             <i class="pi pi-user"></i>
             <span>Profile</span>
           </button>
@@ -118,8 +118,13 @@ export class AppTopbar {
     this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
   }
   ngOnInit() {
-    this.user = this.authService.decodeToken().user;
+    this.user = this.authService.getUser() as User;
   }
+
+  get getUser() {
+    return this.user;
+  }
+  
 
   logout() {
     this.authService.logout();

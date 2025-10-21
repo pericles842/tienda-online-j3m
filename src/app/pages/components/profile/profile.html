@@ -1,0 +1,9 @@
+<app-menu-bar
+  labelNewButton="Guardar"
+  [viewDeleteButton]="false"
+  [viewExportExcelButton]="false"
+  [viewExportPdfButton]="false"
+  (touchNew)="saveProfile()"
+></app-menu-bar>
+
+<app-form-user #formUser mode_component="crud" [(formGroup)]="registerForm"></app-form-user>

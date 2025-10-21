@@ -38,6 +38,16 @@ export class UserService {
   }
 
   /**
+   *Obtiene a un usuario
+   *
+   * @param {number} id
+   * @return {*}  {Observable<User>}
+   * @memberof UserService
+   */
+  getUser(id: number): Observable<User> {
+    return this.http.get<User>(`${environment.host}/users/${id}`);
+  }
+  /**
    *Elimina un grupo de usuarios
    *
    * @param {number[]} ids
@@ -58,7 +68,23 @@ export class UserService {
   updateUser(user: CreateUserTypeClient) {
     return this.http.put<User>(`${environment.host}/users/edit`, user);
   }
+  /**
+   *Edita el perfil de un cliente
+   *
+   * @param {CreateUserTypeClient} user
+   * @return {*}
+   * @memberof UserService
+   */
+  editClient(user: CreateUserTypeClient) {
+    return this.http.put<User>(`${environment.host}/users/edit-profile`, user);
+  }
 
+  /**
+   *Lista los usuarios
+   *
+   * @return {*}  {Observable<User[]>}
+   * @memberof UserService
+   */
   listUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.host}/users`);
   }

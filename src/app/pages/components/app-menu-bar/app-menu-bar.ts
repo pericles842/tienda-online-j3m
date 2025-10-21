@@ -17,7 +17,11 @@ export class AppMenuBar {
   @Output() touchExport: EventEmitter<any> = new EventEmitter<any>();
   @Output() touchDelete: EventEmitter<any> = new EventEmitter<any>();
 
+  @Input() labelNewButton: string = 'Nuevo';
   @Input() disableDeleteButton: boolean = true;
+  @Input() viewExportExcelButton: boolean = true;
+  @Input() viewExportPdfButton: boolean = true;
+  @Input() viewDeleteButton: boolean = true;
 
   constructor(public layoutService: LayoutService) {}
 }

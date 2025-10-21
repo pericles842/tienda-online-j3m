@@ -49,6 +49,7 @@ export class FormUser {
    * @memberof Users
    */
   @Input() mode_component: 'account' | 'crud' = 'account';
+  @Input() viewCharges: boolean = false;
 
   //* Formulario reactivo blinding
   @Input() formGroup?: FormGroup<CreateUserTypeClient>;
@@ -98,7 +99,7 @@ export class FormUser {
       phone: new FormControl('', [Validators.required]),
       phone_2: new FormControl(''),
       age: new FormControl('', [Validators.required]),
-      public_group_id: new FormControl('', [Validators.required]),
+      public_group_id: new FormControl(''),
       rol_id: new FormControl(6, [Validators.required]),
       state_id: new FormControl('', [Validators.required]),
       city_id: new FormControl('', [Validators.required]),

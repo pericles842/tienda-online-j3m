@@ -15,7 +15,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
 
   // Obtener el token y el id del modulo
   const authToken = authService.getToken();
-  const module_id = Modules[name_module_url as keyof typeof Modules].id;
+  const module_id = Modules[name_module_url as keyof typeof Modules]?.id;
 
   if (authToken && module_id) {
     const authReq = req.clone({

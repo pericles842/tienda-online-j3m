@@ -1,11 +1,11 @@
 <p-toolbar styleClass="mb-6">
   <ng-template #start>
     <p-button
-      pTooltip="crear registro"
+      [pTooltip]="labelNewButton"
       pRipple
       showDelay="400"
       tooltipPosition="bottom"
-      label="Nuevo"
+      [label]="labelNewButton"
       icon="pi pi-plus"
       severity="primary"
       class="mr-2"
@@ -13,6 +13,7 @@
       (click)="touchNew.emit()"
     />
 
+    @if (viewDeleteButton) {
     <p-button
       pTooltip="eliminar registros"
       showDelay="400"
@@ -24,10 +25,12 @@
       [outlined]="layoutService.isDarkTheme()"
       (click)="touchDelete.emit()"
     />
+    }
   </ng-template>
 
   <ng-template #end>
     <div class="flex gap-3">
+      @if (viewExportPdfButton) {
       <p-button
         label="Exportar PDF"
         pTooltip="exportar pdf"
@@ -39,6 +42,10 @@
         [outlined]="layoutService.isDarkTheme()"
         (onClick)="touchExport.emit()"
       />
+      }
+
+      <!-- BOTON EXEL -->
+      @if (viewExportExcelButton) {
       <p-button
         label="Exportar EXCEL"
         pTooltip="exportar excel"
@@ -50,6 +57,7 @@
         [outlined]="layoutService.isDarkTheme()"
         (onClick)="touchExport.emit()"
       />
+      }
     </div>
   </ng-template>
 </p-toolbar>

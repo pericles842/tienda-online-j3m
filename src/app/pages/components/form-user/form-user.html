@@ -123,7 +123,7 @@
     </div>
 
     <!-- seleccionar grupo -->
-    <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component!=='account'}">
+    <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component!=='account' && viewCharges }">
       <label for="correo" class="block mb-2 text-sm text-primary">Caja de ahorro</label>
       <p-select
         formControlName="public_group_id"
@@ -141,9 +141,9 @@
       }
     </div>
 
-    @if (mode_component==='crud') {
+    @if (mode_component==='crud' && viewCharges) {
     <!--//? ROLES Y PERMISOS SOLO APLICA EN MOOD CREAR USUARIO -->
-    <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component==='crud'}">
+    <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component==='crud' && viewCharges}">
       <label for="rol" class="block mb-2 text-sm text-primary">Cargo</label>
       <p-select
         formControlName="rol_id"
