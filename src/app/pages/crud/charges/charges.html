@@ -1,4 +1,4 @@
-<app-menu-bar [disableDeleteButton]="selectedEliminateCharges.length === 0" (touchNew)="openModal()" (touchDelete)="deleteChargeMultiple()"></app-menu-bar>
+<app-menu-bar url_api="charge-report" [disableDeleteButton]="selectedEliminateCharges.length === 0" (touchNew)="openModal()" (touchDelete)="deleteChargeMultiple()"></app-menu-bar>
 
 <!-- TALA DINÁMICA -->
 <app-dynamic-table

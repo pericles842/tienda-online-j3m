@@ -1,4 +1,4 @@
-<app-menu-bar [disableDeleteButton]="selectedEliminateUsers.length === 0" (touchDelete)="deleteUserMultiple()" (touchNew)="openModal()"></app-menu-bar>
+<app-menu-bar url_api="users-report" [disableDeleteButton]="selectedEliminateUsers.length === 0" (touchDelete)="deleteUserMultiple()" (touchNew)="openModal()"></app-menu-bar>
 
 <app-dynamic-table
   [columns]="columns"
