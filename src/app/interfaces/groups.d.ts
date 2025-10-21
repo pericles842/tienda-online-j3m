@@ -5,5 +5,7 @@ export interface PublicGroup {
   rif: string;
   email: string;
   url_img: string;
-  created_at: string;
+  created_at?: string;
 }
+
+export type PublicGroupFormGroup = FormGroupControls<PublicGroup>;

@@ -17,14 +17,14 @@ export const menu: CustomMenuItem[] = [
   {
     label: 'Analisis',
     items: [
-      { label: 'Ventas', icon: 'pi pi-fw pi-chart-line', routerLink: ['/'], module_id: Modules['estadisticasVentas'].id },
+      { label: 'Ventas', icon: 'pi pi-fw pi-chart-line', routerLink: ['/'], module_id: Modules['estadisticas_ventas'].id },
       { label: 'Inventario', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/'], module_id: Modules['inventario'].id }
     ]
   },
   {
     label: 'Configuracion',
     items: [
-      { label: 'Métodos de pago', icon: 'pi pi-fw pi-credit-card', routerLink: ['/'], module_id: Modules['metodosPago'].id },
+      { label: 'Métodos de pago', icon: 'pi pi-fw pi-credit-card', routerLink: ['/'], module_id: Modules['metodos_pago'].id },
       { label: 'Tasas de conversion', icon: 'pi pi-fw pi-dollar', routerLink: ['/'], module_id: Modules['configuracion'].id }
     ]
   },
@@ -32,7 +32,7 @@ export const menu: CustomMenuItem[] = [
     label: 'Administración',
     items: [
       { label: 'Cargos y permisos', icon: 'pi pi-fw pi-key', routerLink: ['/pages/cargos'], module_id: Modules['cargos'].id },
-      { label: 'Cajas de ahorro', icon: 'pi pi-fw pi-users', routerLink: ['/'], module_id: Modules['cajasAhorro'].id },
+      { label: 'Cajas de ahorro', icon: 'pi pi-fw pi-users', routerLink: ['/pages/cajas_ahorro'], module_id: Modules['cajas_ahorro'].id },
       { label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/pages/usuarios'], module_id: Modules['usuarios'].id },
       { label: 'ventas', icon: 'pi pi-fw pi-megaphone', routerLink: ['/'], module_id: Modules['ventas'].id }
     ]

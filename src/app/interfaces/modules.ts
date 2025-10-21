@@ -12,8 +12,8 @@ export const Modules: TypeModules = {
   categorias: { id: 4, name: 'Categorías' },
   productos: { id: 5, name: 'Productos' },
   ventas: { id: 6, name: 'Ventas' },
-  cajasAhorro: { id: 7, name: 'Cajas de ahorro' },
+  cajas_ahorro: { id: 7, name: 'Cajas de ahorro' },
   inventario: { id: 8, name: 'Inventario' },
-  estadisticasVentas: { id: 9, name: 'Estadisticas de ventas' },
-  metodosPago: { id: 10, name: 'Métodos de pago' }
+  estadisticas_ventas: { id: 9, name: 'Estadisticas de ventas' },
+  metodos_pago: { id: 10, name: 'Métodos de pago' }
 } as const;

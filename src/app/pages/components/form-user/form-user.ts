@@ -2,7 +2,6 @@ import { SimpleCharge } from '@/interfaces/charges';
 import { Municipality, Parish, State } from '@/interfaces/cities';
 import { PublicGroup } from '@/interfaces/groups';
 import { CreateUserTypeClient } from '@/interfaces/user';
-import { AppFloatingConfigurator } from '@/layout/component/app.floatingconfigurator';
 import { passwordMatchValidator } from '@/pages/auth/register/register';
 import { ChargesService } from '@/services/charges.service';
 import { PublicGroupsService } from '@/services/groups.service';

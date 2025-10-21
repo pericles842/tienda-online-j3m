@@ -5,6 +5,7 @@ import { Empty } from './empty/empty';
 import { Charges } from './crud/charges/charges';
 import { Users } from './crud/users/users';
 import { Profile } from './components/profile/profile';
+import { Groups } from './crud/groups/groups';
 
 //!LOS PATH SE TIENE QUE LLAMAR COMO LAS LLAVES DEL OBJETO MODULES
 export default [
@@ -14,5 +15,6 @@ export default [
   { path: 'usuarios', component: Users },
   { path: 'profile', component: Profile },
   { path: 'empty', component: Empty },
+  { path: 'cajas_ahorro', component: Groups },
   { path: '**', redirectTo: '/notfound' }
 ] as Routes;

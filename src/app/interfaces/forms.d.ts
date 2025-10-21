@@ -4,7 +4,7 @@ export interface Column {
   key: string;
   customExportHeader?: string;
   sortTable: boolean;
-  dataType?: 'string' | 'number' | 'date' | 'boolean';
+  dataType?: 'string' | 'number' | 'date' | 'boolean' | 'image';
 }
 
 /**
@@ -21,3 +21,7 @@ export interface ActionTableButton {
   outlined: boolean;
   method: (event: any) => void;
 }
+
+ export type FormGroupControls<T> = {
+  [K in keyof T]: FormControl<T[K]>;
+};

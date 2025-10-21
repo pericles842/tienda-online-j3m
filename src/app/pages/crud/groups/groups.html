@@ -1,0 +1,109 @@
+<app-menu-bar (touchNew)="modal.set(true)"></app-menu-bar>
+
+<app-dynamic-table
+  [columns]="columns"
+  name_table="Grupos"
+  [data]="public_groups()"
+  [globalFilterFields]="globalFilterFields"
+></app-dynamic-table>
+
+<p-dialog
+  [visible]="modal()"
+  [style]="{ width: '640px' }"
+  header="Permisos del cargo"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="groupForm" class="space-y-6">
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 md:col-span-4">
+          <app-dynamic-upload></app-dynamic-upload>
+        </div>
+        <!-- //?CONTENEDOR DERECHO -->
+        <div class="col-span-12 md:col-span-8">
+          <!-- //?INPUTS TODOS SON 12 -->
+          <div class="col-span-12">
+            <label for="nombre" class="block mb-2 text-sm text-primary">Nombre</label>
+            <input
+              pInputText
+              id="nombre"
+              type="text"
+              placeholder="Grupo 1"
+              formControlName="name"
+              class="w-full mb-2"
+              [ngClass]="groupForm.get('name')?.hasError('invalid') && groupForm.get('name')?.dirty ? 'ng-invalid ng-dirty' : ''"
+            />
+            @if (groupForm.get('name')?.hasError('required')&& groupForm.get('name')?.dirty) {
+            <p-message severity="error" variant="simple" size="small">El nombre es obligatorio</p-message>
+            }
+          </div>
+          <div class="col-span-12">
+            <label for="rif" class="block mb-2 text-sm text-primary">Rif</label>
+            <input
+              pInputText
+              id="rif"
+              type="text"
+              placeholder="Secretario"
+              formControlName="name"
+              class="w-full mb-2"
+              [ngClass]="groupForm.get('rif')?.hasError('invalid') && groupForm.get('rif')?.dirty ? 'ng-invalid ng-dirty' : ''"
+            />
+            @if (groupForm.get('rif')?.hasError('required')&& groupForm.get('rif')?.dirty) {
+            <p-message severity="error" variant="simple" size="small">El rif es obligatorio</p-message>
+            }
+          </div>
+        </div>
+
+        <!-- PARTE BAJA -->
+
+        <div class="col-span-12">
+          <label for="email" class="block mb-2 text-sm text-primary">Correo</label>
+          <input
+            pInputText
+            id="email"
+            type="text"
+            placeholder="grupo@gmail.com"
+            formControlName="name"
+            class="w-full mb-2"
+            [ngClass]="groupForm.get('email')?.hasError('invalid') && groupForm.get('email')?.dirty ? 'ng-invalid ng-dirty' : ''"
+          />
+          @if (groupForm.get('email')?.hasError('required')&& groupForm.get('email')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El correo es obligatorio</p-message>
+          }
+        </div>
+        <div class="col-span-12">
+          <label for="descripcion" class="block mb-2 text-sm text-primary">Descripción</label>
+          <textarea
+            rows="5"
+            cols="30"
+            pTextarea
+            formControlName="description"
+            class="w-full mb-2"
+            [autoResize]="true"
+            [ngClass]="groupForm.get('description')?.hasError('invalid') && groupForm.get('description')?.dirty ? 'ng-invalid ng-dirty' : ''"
+          ></textarea>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 p-3">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="modal.set(false)"
+        severity="danger"
+        outlined
+        class="p-button-text"
+        text
+      ></p-button>
+
+      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
