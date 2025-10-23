@@ -25,7 +25,7 @@ export class AppMenuBar {
   @Input() viewExportPdfButton: boolean = true;
   @Input() viewDeleteButton: boolean = true;
 
-  @Input() url_api: string = '';
+  @Input() url_api_pdf: string = '';
 
   constructor(
     public layoutService: LayoutService,
@@ -34,7 +34,7 @@ export class AppMenuBar {
   ) {}
 
   generatePdf() {
-    this.reportService.generateDowlandReportPdf(this.url_api).subscribe((response: any) => {
+    this.reportService.generateDowlandReportPdf(this.url_api_pdf).subscribe((response: any) => {
       const file = new Blob([response.body as Blob], { type: 'application/pdf' });
       const contentDisposition = response.headers.get('Content-Disposition');
 

@@ -22,10 +22,10 @@ export const menu: CustomMenuItem[] = [
     ]
   },
   {
-    label: 'Configuracion',
+    label: 'Configuración',
     items: [
       { label: 'Métodos de pago', icon: 'pi pi-fw pi-credit-card', routerLink: ['/'], module_id: Modules['metodos_pago'].id },
-      { label: 'Tasas de conversion', icon: 'pi pi-fw pi-dollar', routerLink: ['/'], module_id: Modules['configuracion'].id }
+      { label: 'Configuración', icon: 'pi pi-fw pi-cog', routerLink: ['/'], module_id: Modules['configuracion'].id }
     ]
   },
   {
