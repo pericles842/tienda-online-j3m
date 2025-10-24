@@ -219,7 +219,12 @@ export class AuthService {
     this.sessionExpired$.next(true);
   }
 
-  //!HAY UN PORBLEMA CON EL RFRES COKIE
+  /**
+   *Refresca la session
+   *
+   * @return {*}  {Observable<string>}
+   * @memberof AuthService
+   */
   refreshToken(): Observable<string> {
     return this.http.post<LoginResponse>(environment.host + '/users/refreshToken', {}, { withCredentials: true }).pipe(
       map((res) => {

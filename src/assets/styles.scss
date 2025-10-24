@@ -4,18 +4,34 @@
 @use 'primeicons/primeicons.css';
 @use './demo/demo.scss';
 
-
-
 ::-webkit-scrollbar {
-    width: 2px;
+  width: 2px;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: var(--surface-200);
-    border-radius: 10px;
+  background-color: var(--surface-200);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color);
-    border-radius: 0px;
+  background-color: var(--primary-color);
+  border-radius: 0px;
 }
+
+.p-megamenu-item-icon,
+.p-megamenu-item-label {
+  color: var(--primary-color) !important;
+  font-weight: bolder;
+}
+.p-megamenu {
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+.p-megamenu-submenu-label {
+ 
+  font-size: 18px !important;
+  font-weight: 600;
+}
+
+

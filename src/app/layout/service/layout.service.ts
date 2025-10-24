@@ -30,7 +30,7 @@ export class LayoutService {
         preset: 'Aura',
         primary: 'lime',
         surface: 'zinc',
-        darkTheme: true,
+        darkTheme: false,
         menuMode: 'static'
     };
 

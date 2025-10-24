@@ -1,0 +1,124 @@
+<!-- seccion 1 bienvenida -->
+
+
+<div class="flex justify-between h-15 px-3 items-center bg-primary">
+  <!-- IMAGEN -->
+  <div class="flex gap-3 items-center">
+    <img src="/assets/images/logotipo.png" alt="logo" class="w-12 h-12" />
+    <span class="dark:text-primary-900 text-white font-semibold">Bienvenido a nuestra tienda J3M</span>
+  </div>
+
+  <!-- secciones de la pagina -->
+  <div class="flex gap-4 dark:text-primary-900 text-white text-base">
+    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Hogar</a>
+    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Quienes Somos</a>
+    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Contacto</a>
+    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Productos</a>
+    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Ofertas</a>
+  </div>
+</div>
+
+<!-- ------------------------------------------------------------------ -->
+<!-- SECCIÓN DOS SEARCH Y REGISTRO -->
+<!-- ------------------------------------------------------------------ -->
+<div class="flex justify-between items-center p-3">
+  <!-- ------------------------------------------------------------------ -->
+  <!-- SECCIÓN DE BÚSQUEDA -->
+  <!-- ------------------------------------------------------------------ -->
+  <div class="w-3xl">
+    <div class="bg-surface-50 rounded-lg border-2 border-primary-300 flex">
+      <input
+        class="outline-none text-primary bg-primary-100 placeholder:text-primary-900 text-lg px-2 w-full"
+        type="text"
+        placeholder="Buscar Productos"
+      />
+      <button pButton pRipple severity="primary">
+        <span pButtonLabel>Buscar </span>
+        <i class="pi pi-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ------------------------------------------------------------------ -->
+  <!-- cONTENEDOR FLEX 2-->
+  <!-- ------------------------------------------------------------------ -->
+  <div class="flex justify-end gap-10">
+    <!-- ------------------------------------------------------------------ -->
+    <!-- TEMA E INGRESO -->
+    <!-- ------------------------------------------------------------------ -->
+    <div class="flex items-center gap-2 border-r-1 pr-10 border-primary-500 dark:border-primary-50">
+      <app-floating-configurator pTooltip="Tema" tooltipPosition="bottom" severity="primary" [float]="false" />
+
+      <p-button
+        pTooltip="Ingresar"
+        tooltipPosition="bottom"
+        severity="primary"
+        routerLink="/auth/login"
+        iconPos="right"
+        icon="pi pi-sign-in"
+      />
+      <p-button
+        pTooltip="Registro"
+        tooltipPosition="bottom"
+        severity="primary"
+        routerLink="/auth/register"
+        iconPos="right"
+        icon="pi pi-user-plus"
+      />
+      @if(isExistToken){
+      <p-button
+        (click)="logout()"
+        pTooltip="Salir"
+        tooltipPosition="bottom"
+        severity="danger"
+        routerLink="/auth/register"
+        iconPos="right"
+        icon="pi pi-power-off"
+      />
+      }
+    </div>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- cUENTA Y CARRITO DE COMPRAS -->
+    <!-- ------------------------------------------------------------------ -->
+    <div class="flex items-center gap-2">
+      <p-overlaybadge class="mt-3 mr-4 cursor-pointer" value="34">
+        <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+      </p-overlaybadge>
+
+      @if(isExistToken){
+      <div class="flex items-center gap-3 cursor-pointer">
+        <p-avatar
+          [style]="{ 'background-color': 'var(--color-primary-100)', color: 'var(--color-primary)' }"
+          [pTooltip]="full_name"
+          tooltipPosition="left"
+          [label]="wordsInName"
+          class="mr-2"
+          size="large"
+          shape="circle"
+        />
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- categorías -->
+<div>
+  <p-megamenu breakpoint="425px" class="border-0" [model]="items" />
+</div>
+
+<!-- <div class="relative">
+  <button
+    class="layout-topbar-action layout-topbar-action-highlight"
+    pStyleClass="@next"
+    enterFromClass="hidden"
+    enterActiveClass="animate-scalein"
+    leaveToClass="hidden"
+    leaveActiveClass="animate-fadeout"
+    [hideOnOutsideClick]="true"
+  >
+    <i class="pi pi-palette"></i>
+  </button>
+  <app-configurator />
+</div> -->
