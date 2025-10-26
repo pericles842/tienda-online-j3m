@@ -4,14 +4,13 @@ import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
 import { StyleClassModule } from 'primeng/styleclass';
-import { HeroWidget } from './components/herowidget';
-import { TopbarWidget } from './components/topbarwidget.component';
 import { Header } from "./components/header/header";
+import { Home } from "./components/home/home";
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [RouterModule, RippleModule, StyleClassModule, ButtonModule, DividerModule, Header],
+  imports: [RouterModule, RippleModule, StyleClassModule, ButtonModule, DividerModule, Header, Home],
   templateUrl: './landing.html'
 })
 export class Landing {}

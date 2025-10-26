@@ -12,6 +12,7 @@ import { AppConfigurator } from './app.configurator';
     <div class="flex gap-0 top-8 right-8" [ngClass]="{ fixed: float() }">
       <p-button
         type="button"
+        [text]="text"
         (onClick)="toggleDarkMode()"
         [rounded]="rounded"
         [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'"
@@ -25,6 +26,7 @@ import { AppConfigurator } from './app.configurator';
   `
 })
 export class AppFloatingConfigurator {
+  @Input() text: boolean = false;
   @Input() rounded: boolean = true;
   @Input() severity: ButtonSeverity = 'secondary';
   LayoutService = inject(LayoutService);

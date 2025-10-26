@@ -4,7 +4,7 @@ import { NodeService } from '@/pages/service/node.service';
 import { AuthService } from '@/services/auth.service';
 import { Component, signal, WritableSignal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { MegaMenuItem, TreeNode } from 'primeng/api';
+import { TreeNode } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';

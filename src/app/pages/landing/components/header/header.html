@@ -1,20 +1,19 @@
 <!-- seccion 1 bienvenida -->
 
 @if (layoutService.isDesktop()) {
-<div class="flex justify-between p-4 items-center bg-primary">
+<div class="flex justify-between p-2 px-3 items-center bg-primary">
   <!-- IMAGEN -->
   <div class="flex gap-3 items-center">
-    <img src="/assets/images/logotipo.png" alt="logo" class="w-12 h-12" />
-    <span class="dark:text-primary-900 text-white font-bold">Bienvenido a nuestra tienda J3M</span>
+    <span class="dark:text-primary-900 text-white font-bold">Obtenga envío gratuito en pedidos superiores a $80</span>
   </div>
 
   <!-- secciones de la pagina -->
   <div class="flex gap-4 dark:text-primary-900 text-white text-base">
-    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Hogar</a>
-    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Quienes Somos</a>
-    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Contacto</a>
-    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Productos</a>
-    <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Ofertas</a>
+    <a class="hover:text-primary-900" href="#">Hogar</a>
+    <a class="hover:text-primary-900" href="#">Quienes Somos</a>
+    <a class="hover:text-primary-900" href="#">Contacto</a>
+    <a class="hover:text-primary-900" href="#">Productos</a>
+    <a class="hover:text-primary-900" href="#">Ofertas</a>
   </div>
 </div>
 }
@@ -22,15 +21,19 @@
 <!-- ------------------------------------------------------------------ -->
 <!-- SECCIÓN DOS SEARCH Y REGISTRO -->
 <!-- ------------------------------------------------------------------ -->
-<div class="flex justify-between items-center p-3 border-b-1 border-primary md:border-0  ">
+<div class="flex justify-between items-center p-3 bg-primary-900 dark:bg-surface-900 border-b-1 border-primary md:border-0">
+  <div class="flex gap-2 items-center">
+    <img src="/assets/images/logotipo.png" alt="logo" class="w-12 h-12" />
+    <span class="font-bold text-base text-white">Tienda J3M</span>
+  </div>
   <!-- ------------------------------------------------------------------ -->
   <!-- SECCIÓN DE BÚSQUEDA -->
   <!-- ------------------------------------------------------------------ -->
   <div class="w-3xl">
     @if (layoutService.isDesktop()) {
-    <div class="bg-surface-50 rounded-lg border-2 border-primary-300 flex">
+    <div class="bg-surface-50 rounded-md p-1 flex">
       <input
-        class="outline-none text-primary bg-primary-100 placeholder:text-primary-900 text-lg px-2 w-full"
+        class="outline-none text-primary  placeholder:text-primary-900 text-lg px-2 w-full"
         type="text"
         placeholder="Buscar Productos"
       />
@@ -38,11 +41,6 @@
         <span pButtonLabel>Buscar </span>
         <i class="pi pi-search"></i>
       </button>
-    </div>
-    }@else {
-    <div class="flex gap-2 items-center">
-      <img src="/assets/images/logotipo.png" alt="logo" class="w-12 h-12" />
-      <span class="font-bold text-base">Tienda J3M</span>
     </div>
     }
   </div>
@@ -54,10 +52,10 @@
     <!-- ------------------------------------------------------------------ -->
     <!-- TEMA E INGRESO -->
     <!-- ------------------------------------------------------------------ -->
-    <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-primary-500 dark:border-primary-50">
+    <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-primary-800  dark:border-primary-50">
       @if (layoutService.isMobile()) {
-      <p-overlaybadge class="mt-3 mr-4 cursor-pointer" value="34">
-        <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+      <p-overlaybadge  class="mt-3 mr-4 cursor-pointer"  value="34">
+        <i class="pi pi-shopping-cart color-shopping" style="font-size: 2rem;"></i>
       </p-overlaybadge>
       }
 
@@ -108,8 +106,8 @@
     <!-- ------------------------------------------------------------------ -->
     <div class="flex items-center gap-2">
       @if (layoutService.isDesktop()) {
-      <p-overlaybadge class="mt-3 mr-4 cursor-pointer" value="34">
-        <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+      <p-overlaybadge class="mt-3 mr-4 cursor-pointer"  value="34">
+        <i class="pi pi-shopping-cart" style="font-size: 2rem; color: var(--color-primary-100);"></i>
       </p-overlaybadge>
       } @if(isExistToken && layoutService.isDesktop()){
       <div class="flex items-center gap-3 cursor-pointer">
