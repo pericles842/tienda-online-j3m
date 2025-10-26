@@ -1,162 +1,49 @@
 import { AppFloatingConfigurator } from '@/layout/component/app.floatingconfigurator';
 import { LayoutService } from '@/layout/service/layout.service';
+import { NodeService } from '@/pages/service/node.service';
 import { AuthService } from '@/services/auth.service';
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { MegaMenuItem } from 'primeng/api';
+import { MegaMenuItem, TreeNode } from 'primeng/api';
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
-import { MegaMenuModule } from 'primeng/megamenu';
+import { DrawerModule } from 'primeng/drawer';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { AppConfigurator } from "@/layout/component/app.configurator";
-import { StyleClassModule } from 'primeng/styleclass';
-
+import { TreeModule } from 'primeng/tree';
 @Component({
   selector: 'app-header',
-  imports: [AppFloatingConfigurator
-    , ButtonModule, MegaMenuModule, RouterLink, OverlayBadgeModule, AvatarModule, TooltipModule],
+  imports: [
+    AppFloatingConfigurator,
+    ButtonModule,
+    TreeModule,
+    RouterLink,
+    OverlayBadgeModule,
+    AvatarModule,
+    TooltipModule,
+    DrawerModule,
+    TableModule
+  ],
+  providers: [NodeService],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
 export class Header {
+  menuVisible: WritableSignal<boolean> = signal(false);
+  visibleSearch: WritableSignal<boolean> = signal(false);
+
   constructor(
     public layoutService: LayoutService,
     private authService: AuthService,
-    public router: Router
+    public router: Router,
+    private nodeService: NodeService
   ) {}
 
-  items: MegaMenuItem[] | undefined;
+  files!: TreeNode[];
 
   ngOnInit() {
-    this.items = [
-      {
-        styleClass: 'text-primary',
-        label: 'Furniture',
-        icon: 'pi pi-box',
-        items: [
-          [
-            {
-              label: 'Living Room',
-              items: [
-                { label: 'Accessories' },
-                { label: 'Armchair' },
-                { label: 'Coffee Table' },
-                { label: 'Couch' },
-                { label: 'TV Stand' }
-              ]
-            }
-          ],
-          [
-            {
-              label: 'Kitchen',
-              items: [{ label: 'Bar stool' }, { label: 'Chair' }, { label: 'Table' }]
-            },
-            {
-              label: 'Bathroom',
-              items: [{ label: 'Accessories' }]
-            }
-          ],
-          [
-            {
-              label: 'Bedroom',
-              items: [
-                { label: 'Bed' },
-                { label: 'Chaise lounge' },
-                { label: 'Cupboard' },
-                { label: 'Dresser' },
-                { label: 'Wardrobe' }
-              ]
-            }
-          ],
-          [
-            {
-              label: 'Office',
-              items: [
-                { label: 'Bookcase' },
-                { label: 'Cabinet' },
-                { label: 'Chair' },
-                { label: 'Desk' },
-                { label: 'Executive Chair' }
-              ]
-            }
-          ]
-        ]
-      },
-      {
-        label: 'Electronics',
-        icon: 'pi pi-mobile',
-        items: [
-          [
-            {
-              label: 'Computer',
-              items: [
-                { label: 'Monitor' },
-                { label: 'Mouse' },
-                { label: 'Notebook' },
-                { label: 'Keyboard' },
-                { label: 'Printer' },
-                { label: 'Storage' }
-              ]
-            }
-          ],
-          [
-            {
-              label: 'Home Theater',
-              items: [{ label: 'Projector' }, { label: 'Speakers' }, { label: 'TVs' }]
-            }
-          ],
-          [
-            {
-              label: 'Gaming',
-              items: [{ label: 'Accessories' }, { label: 'Console' }, { label: 'PC' }, { label: 'Video Games' }]
-            }
-          ],
-          [
-            {
-              label: 'Appliances',
-              items: [
-                { label: 'Coffee Machine' },
-                { label: 'Fridge' },
-                { label: 'Oven' },
-                { label: 'Vaccum Cleaner' },
-                { label: 'Washing Machine' }
-              ]
-            }
-          ]
-        ]
-      },
-      {
-        label: 'Sports',
-        icon: 'pi pi-clock',
-        items: [
-          [
-            {
-              label: 'Football',
-              items: [{ label: 'Kits' }, { label: 'Shoes' }, { label: 'Shorts' }, { label: 'Training' }]
-            }
-          ],
-          [
-            {
-              label: 'Running',
-              items: [{ label: 'Accessories' }, { label: 'Shoes' }, { label: 'T-Shirts' }, { label: 'Shorts' }]
-            }
-          ],
-          [
-            {
-              label: 'Swimming',
-              items: [{ label: 'Kickboard' }, { label: 'Nose Clip' }, { label: 'Swimsuits' }, { label: 'Paddles' }]
-            }
-          ],
-          [
-            {
-              label: 'Tennis',
-              items: [{ label: 'Balls' }, { label: 'Rackets' }, { label: 'Shoes' }, { label: 'Training' }]
-            }
-          ]
-        ]
-      }
-    ];
+    this.nodeService.getFiles().then((data) => (this.files = data));
   }
 
   /**
@@ -212,7 +99,7 @@ export class Header {
     return array_words[0].charAt(0).toUpperCase() + array_words[1].charAt(0).toUpperCase() || '';
   }
 
-  logout(){
-    this.authService.logout()
+  logout() {
+    this.authService.logout();
   }
 }

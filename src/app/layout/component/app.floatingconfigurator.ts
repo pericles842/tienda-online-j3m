@@ -9,11 +9,11 @@ import { AppConfigurator } from './app.configurator';
   selector: 'app-floating-configurator',
   imports: [CommonModule, ButtonModule, StyleClassModule, AppConfigurator],
   template: `
-    <div class="flex gap-4 top-8 right-8" [ngClass]="{ fixed: float() }">
+    <div class="flex gap-0 top-8 right-8" [ngClass]="{ fixed: float() }">
       <p-button
         type="button"
         (onClick)="toggleDarkMode()"
-        [rounded]="true"
+        [rounded]="rounded"
         [icon]="isDarkTheme() ? 'pi pi-moon' : 'pi pi-sun'"
         [severity]="severity"
       />
@@ -25,6 +25,7 @@ import { AppConfigurator } from './app.configurator';
   `
 })
 export class AppFloatingConfigurator {
+  @Input() rounded: boolean = true;
   @Input() severity: ButtonSeverity = 'secondary';
   LayoutService = inject(LayoutService);
 

@@ -4,6 +4,11 @@
 @use 'primeicons/primeicons.css';
 @use './demo/demo.scss';
 
+* {
+  scrollbar-width: thin; /* Para Firefox */
+  scrollbar-color: var(--primary-color);
+}
+
 ::-webkit-scrollbar {
   width: 2px;
 }
@@ -18,20 +23,34 @@
   border-radius: 0px;
 }
 
-.p-megamenu-item-icon,
-.p-megamenu-item-label {
+// .p-megamenu-item-icon,
+// .p-megamenu-item-label {
+//   color: var(--primary-color) !important;
+//   font-weight: bolder;
+// }
+// .p-megamenu {
+//   border-radius: 0 !important;
+//   border: none !important;
+// }
+
+// .p-megamenu-submenu-label {
+//   font-size: 18px !important;
+//   font-weight: 600;
+// }
+
+.p-tree-node-label,
+.p-tree-node-icon {
   color: var(--primary-color) !important;
-  font-weight: bolder;
-}
-.p-megamenu {
-  border-radius: 0 !important;
-  border: none !important;
+  font-size: 1.1rem !important;
 }
 
-.p-megamenu-submenu-label {
- 
-  font-size: 18px !important;
-  font-weight: 600;
+.p-tree-root-children {
+  display: flex !important;
+  flex-direction: row !important;
 }
-
-
+.p-tree-root {
+  padding: 8px 0 !important;
+}
+.p-tree{
+  padding: 0 !important;
+}

@@ -1,11 +1,11 @@
 <!-- seccion 1 bienvenida -->
 
-
-<div class="flex justify-between h-15 px-3 items-center bg-primary">
+@if (layoutService.isDesktop()) {
+<div class="flex justify-between p-4 items-center bg-primary">
   <!-- IMAGEN -->
   <div class="flex gap-3 items-center">
     <img src="/assets/images/logotipo.png" alt="logo" class="w-12 h-12" />
-    <span class="dark:text-primary-900 text-white font-semibold">Bienvenido a nuestra tienda J3M</span>
+    <span class="dark:text-primary-900 text-white font-bold">Bienvenido a nuestra tienda J3M</span>
   </div>
 
   <!-- secciones de la pagina -->
@@ -17,15 +17,17 @@
     <a class="hover:font-bold hover:text-primary-900 hover:border-b-1" href="#">Ofertas</a>
   </div>
 </div>
+}
 
 <!-- ------------------------------------------------------------------ -->
 <!-- SECCIÓN DOS SEARCH Y REGISTRO -->
 <!-- ------------------------------------------------------------------ -->
-<div class="flex justify-between items-center p-3">
+<div class="flex justify-between items-center p-3 border-b-1 border-primary md:border-0  ">
   <!-- ------------------------------------------------------------------ -->
   <!-- SECCIÓN DE BÚSQUEDA -->
   <!-- ------------------------------------------------------------------ -->
   <div class="w-3xl">
+    @if (layoutService.isDesktop()) {
     <div class="bg-surface-50 rounded-lg border-2 border-primary-300 flex">
       <input
         class="outline-none text-primary bg-primary-100 placeholder:text-primary-900 text-lg px-2 w-full"
@@ -37,17 +39,40 @@
         <i class="pi pi-search"></i>
       </button>
     </div>
+    }@else {
+    <div class="flex gap-2 items-center">
+      <img src="/assets/images/logotipo.png" alt="logo" class="w-12 h-12" />
+      <span class="font-bold text-base">Tienda J3M</span>
+    </div>
+    }
   </div>
 
   <!-- ------------------------------------------------------------------ -->
   <!-- cONTENEDOR FLEX 2-->
   <!-- ------------------------------------------------------------------ -->
-  <div class="flex justify-end gap-10">
+  <div class="flex justify-end gap-2 md:gap-5">
     <!-- ------------------------------------------------------------------ -->
     <!-- TEMA E INGRESO -->
     <!-- ------------------------------------------------------------------ -->
-    <div class="flex items-center gap-2 border-r-1 pr-10 border-primary-500 dark:border-primary-50">
-      <app-floating-configurator pTooltip="Tema" tooltipPosition="bottom" severity="primary" [float]="false" />
+    <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-primary-500 dark:border-primary-50">
+      @if (layoutService.isMobile()) {
+      <p-overlaybadge class="mt-3 mr-4 cursor-pointer" value="34">
+        <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
+      </p-overlaybadge>
+      }
+
+      <app-floating-configurator [rounded]="false" pTooltip="Tema" tooltipPosition="bottom" severity="primary" [float]="false" />
+
+      @if (layoutService.isMobile()) {
+      <p-button
+        pTooltip="Buscar Productos"
+        (onClick)="visibleSearch.set(true)"
+        tooltipPosition="bottom"
+        severity="primary"
+        iconPos="right"
+        icon="pi pi-search"
+      />
+      } @if (layoutService.isDesktop()) {
 
       <p-button
         pTooltip="Ingresar"
@@ -65,7 +90,7 @@
         iconPos="right"
         icon="pi pi-user-plus"
       />
-      @if(isExistToken){
+      } @if(isExistToken && layoutService.isDesktop()){
       <p-button
         (click)="logout()"
         pTooltip="Salir"
@@ -82,11 +107,37 @@
     <!-- cUENTA Y CARRITO DE COMPRAS -->
     <!-- ------------------------------------------------------------------ -->
     <div class="flex items-center gap-2">
+      @if (layoutService.isDesktop()) {
       <p-overlaybadge class="mt-3 mr-4 cursor-pointer" value="34">
         <i class="pi pi-shopping-cart" style="font-size: 2rem"></i>
       </p-overlaybadge>
+      } @if(isExistToken && layoutService.isDesktop()){
+      <div class="flex items-center gap-3 cursor-pointer">
+        <p-avatar
+          [style]="{ 'background-color': 'var(--color-primary-100)', color: 'var(--color-primary)' }"
+          [pTooltip]="full_name"
+          tooltipPosition="left"
+          [label]="wordsInName"
+          class="mr-2"
+          size="large"
+          shape="circle"
+        />
+      </div>
+      } @if (layoutService.isMobile()) {
+      <p-button (click)="menuVisible.set(true)" icon="pi pi-bars" />
+      }
+    </div>
+  </div>
+</div>
 
-      @if(isExistToken){
+<!-- categorías -->
+
+<p-tree [value]="files" class="w-full p-0" />
+
+<p-drawer [(visible)]="menuVisible">
+  <ng-template #header>
+    <div class="flex items-center gap-2">
+      @if(isExistToken ){
       <div class="flex items-center gap-3 cursor-pointer">
         <p-avatar
           [style]="{ 'background-color': 'var(--color-primary-100)', color: 'var(--color-primary)' }"
@@ -99,26 +150,66 @@
         />
       </div>
       }
+      <span class="font-bold">{{full_name}}</span>
     </div>
+  </ng-template>
+  <div class="flex flex-col gap-4 text-primary text-base">
+    <a class="font-semibold text-xl" href="#">Hogar</a>
+    <a class="font-semibold text-xl" href="#">Quienes Somos</a>
+    <a class="font-semibold text-xl" href="#">Contacto</a>
+    <a class="font-semibold text-xl" href="#">Productos</a>
+    <a class="font-semibold text-xl" href="#">Ofertas</a>
   </div>
-</div>
+  <ng-template #footer>
+    <div class="flex justify-between">
+      @if(isExistToken){
+      <p-button
+        (click)="logout()"
+        pTooltip="Salir"
+        styleClass="w-full"
+        label="Salir"
+        tooltipPosition="bottom"
+        severity="danger"
+        routerLink="/auth/register"
+        iconPos="right"
+        icon="pi pi-power-off"
+      />
+      }@else {
+      <p-button
+        styleClass="w-full"
+        pTooltip="Ingresar"
+        label="Ingreso"
+        tooltipPosition="bottom"
+        severity="primary"
+        routerLink="/auth/login"
+        iconPos="right"
+        icon="pi pi-sign-in"
+      />
+      }
+      <p-button
+        pTooltip="Registro"
+        styleClass="w-full"
+        label="Registro"
+        tooltipPosition="bottom"
+        severity="primary"
+        routerLink="/auth/register"
+        iconPos="right"
+        icon="pi pi-user-plus"
+      />
+    </div>
+  </ng-template>
+</p-drawer>
 
-<!-- categorías -->
-<div>
-  <p-megamenu breakpoint="425px" class="border-0" [model]="items" />
-</div>
-
-<!-- <div class="relative">
-  <button
-    class="layout-topbar-action layout-topbar-action-highlight"
-    pStyleClass="@next"
-    enterFromClass="hidden"
-    enterActiveClass="animate-scalein"
-    leaveToClass="hidden"
-    leaveActiveClass="animate-fadeout"
-    [hideOnOutsideClick]="true"
-  >
-    <i class="pi pi-palette"></i>
-  </button>
-  <app-configurator />
-</div> -->
+<p-drawer position="top" [(visible)]="visibleSearch" header="Búsqueda de productos">
+  <div class="bg-surface-50 rounded-lg border-2 border-primary-300 flex">
+    <input
+      class="outline-none text-primary bg-primary-100 placeholder:text-primary-900 text-lg px-2 w-full"
+      type="text"
+      placeholder="Buscar Productos"
+    />
+    <button pButton pRipple severity="primary">
+      <span pButtonLabel>Buscar </span>
+      <i class="pi pi-search"></i>
+    </button>
+  </div>
+</p-drawer>
