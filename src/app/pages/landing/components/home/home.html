@@ -2,6 +2,7 @@
   <!-- Banner principal (columna grande) -->
   <div class="lg:col-span-2 bg-primary-50 rounded-xl shadow-md">
     <p-carousel
+      autoplayInterval="3000"
       class="w-full"
       contentClass="w-full p-0"
       [value]="products"
@@ -25,7 +26,7 @@
               <span class="text-primary-400">{{product.description}}</span>
             </div>
 
-            <button class="w-full mt-5 bg-primary text-primary-50 px-5 py-2 rounded-lg cursor-pointer hover:bg-primary-600">
+            <button class="w-full mt-5 text-xl bg-primary text-primary-50 px-5 py-3 rounded-lg cursor-pointer hover:bg-primary-600">
               Comprar
             </button>
           </div>

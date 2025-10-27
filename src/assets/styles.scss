@@ -47,12 +47,29 @@
 .p-tree-root-children {
   display: flex !important;
   flex-direction: row !important;
+  justify-content: space-evenly !important;
 }
 .p-tree-root {
   padding: 8px 0 !important;
 }
-.p-tree{
+.p-tree {
+  position: relative !important;
   padding: 0 !important;
 }
 
+.actions-product {
+  visibility: hidden;
+  position: absolute;
+  opacity: 0;
+  transition:
+    bottom 0.3s ease,
+    opacity 0.3s ease;
+}
 
+.product-car:hover .actions-product {
+  visibility: visible;
+  position: absolute;
+  opacity: 1;
+  transform: translate(50%, -60px);
+
+}
