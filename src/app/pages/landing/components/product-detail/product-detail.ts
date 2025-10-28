@@ -7,11 +7,12 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { Button } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { ProductComponent } from '../product/product';
+import { TabsModule } from 'primeng/tabs';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent],
+  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent,TabsModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss'
 })
