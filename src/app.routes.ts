@@ -2,9 +2,13 @@ import { Routes } from '@angular/router';
 import { AppLayout } from './app/layout/component/app.layout';
 import { Dashboard } from './app/pages/dashboard/dashboard';
 import { Documentation } from './app/pages/documentation/documentation';
-import { Landing } from './app/pages/landing/landing';
-import { Notfound } from './app/pages/notfound/notfound';
+
 import { AuthGuard } from '@/guards/auth-guard';
+ 
+import { Landing } from '@/pages/landing/landing-page/landing';
+import { WebShop } from '@/pages/landing/web-shop/web-shop';
+import { Notfound } from './app/pages/notfound/notfound';
+import { ProductDetailComponent } from '@/pages/landing/components/product-detail/product-detail';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -19,7 +23,14 @@ export const appRoutes: Routes = [
     ]
   },
   { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
-  { path: 'landing', component: Landing },
+  {
+    path: '',
+    component: WebShop,
+    children: [
+      { path: 'landing', component: Landing },
+      { path: 'product/:id', component: ProductDetailComponent }
+    ]
+  },
   { path: 'notfound', component: Notfound },
   { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
   { path: '**', redirectTo: '/notfound' }

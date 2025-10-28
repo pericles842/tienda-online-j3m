@@ -49,9 +49,8 @@ export class AppComponent {
     //        this.layoutService.layoutConfig.update((state) => ({ ...state, primary: 'noir' }));
     //   }
     // });
-  
 
-   // console.log(this.layoutService.isDarkTheme());
+    // console.log(this.layoutService.isDarkTheme());
   }
   //noir
 }

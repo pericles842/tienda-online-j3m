@@ -70,6 +70,7 @@
   visibility: visible;
   position: absolute;
   opacity: 1;
-  transform: translate(50%, -60px);
 
+  left: 50%;
+  transform: translate(-50%, -60px);
 }

@@ -1,0 +1,87 @@
+<!-- <div class="bg-surface-0 dark:bg-surface-900">
+  <div id="home" class="landing-wrapper overflow-hidden">
+    <topbar-widget class="py-6 px-6 mx-0 md:mx-12 lg:mx-20 lg:px-20 flex items-center justify-between relative lg:static" />
+  </div>
+</div> -->
+
+<!-- <div class="bg-surface-0 dark:bg-surface-900 fixed top-0 w-full z-600">
+  <app-header></app-header>
+</div> -->
+
+<app-home></app-home>
+
+<section class="pt-15">
+  <div class="flex justify-between">
+    <p class="text-4xl text-primary-800 dark:text-primary-50">Nuevos productos</p>
+    <p-button label="Ver mas" variant="outlined" />
+  </div>
+
+  <!-- PRODUCTOS -->
+  <div class="grid grid-cols-1 md:grid-cols-12 gap-5 gap-y-20">
+    @for (product of products; track $index) {
+    <app-product
+      class="col-span-3 md:col-span-6 lg:col-span-3"
+      [product]="product"
+    ></app-product>
+    }
+  </div>
+
+  <!-- DESCUENTOS -->
+  @let product = products[0];
+  <section class="grid grid-cols-1 mt-20 gap-10">
+    <div
+      class="md:flex p-10 md:p-20 relative justify-between bg-surface-900 dark:bg-primary-900 shadow-lg rounded-2xl"
+      style="overflow: hidden"
+    >
+      <div class="flex gap-5 flex-col text-primary-200">
+        <span class="text-3xl font-medium">{{product.name}}</span>
+        <span class="text-5xl font-bold">{{product.discount+'% de descuento'|uppercase}} </span>
+        <span class="text-lg text-primary-50">{{product.description}}</span>
+        <button class="bg-amber-50 text-primary-800 p-2 rounded-md cursor-pointer hover:bg-primary-100 font-semibold">
+          Comprar
+        </button>
+      </div>
+      @if(layoutService.isDesktop()){
+      <img class="right-25 top-0 absolute hidden md:block" [src]="product.url" alt="sss" />
+      }
+    </div>
+
+    <div class="flex flex-col md:flex-row justify-between gap-10">
+      <!-- Tarjeta producto 1 -->
+      <div class="bg-primary-50 rounded-xl w-full p-5 flex items-center justify-between shadow-md">
+        <div>
+          <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
+          <span class="text-primary text-base">Featured category</span>
+          <div class="mt-2">
+            <span class="font-bold text-4xl text-primary">$600</span>
+            <span class="line-through text-lg text-gray-400 ml-1">$898</span>
+          </div>
+          <button class="w-full mt-5 text-xl bg-primary text-primary-50 px-5 py-3 rounded-lg cursor-pointer hover:bg-primary-600">
+            Comprar
+          </button>
+        </div>
+        <img class="w-30 object-contain" src="https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg" alt="iphone" />
+      </div>
+
+      <!-- Tarjeta producto 2 -->
+      <div class="bg-primary-50 rounded-xl w-full p-5 flex items-center justify-between shadow-md">
+        <div>
+          <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
+          <span class="text-primary text-base">Featured category</span>
+          <div class="mt-2">
+            <span class="font-bold text-4xl text-primary">$600</span>
+            <span class="line-through text-lg text-gray-400 ml-1">$898</span>
+          </div>
+
+          <button class="w-full mt-5 text-xl bg-primary text-primary-50 px-5 py-3 rounded-lg cursor-pointer hover:bg-primary-600">
+            Comprar
+          </button>
+        </div>
+        <img class="w-30 object-contain" src="https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg" alt="iphone" />
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- 
+<app-footer-custom></app-footer-custom> -->

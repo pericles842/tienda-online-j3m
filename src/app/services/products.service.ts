@@ -1,35 +1,11 @@
-import { AppFooter } from '@/layout/component/app.footer';
-import { LayoutService } from '@/layout/service/layout.service';
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { DividerModule } from 'primeng/divider';
-import { RippleModule } from 'primeng/ripple';
-import { StyleClassModule } from 'primeng/styleclass';
-import { Footer } from './components/footer/footer';
-import { Header } from './components/header/header';
-import { Home } from './components/home/home';
-import { Product } from './components/product/product';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-@Component({
-  selector: 'app-landing',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    RippleModule,
-    StyleClassModule,
-    ButtonModule,
-    DividerModule,
-    Header,
-    Home,
-    Product,
-    Footer
-  ],
-  templateUrl: './landing.html'
+@Injectable({
+  providedIn: 'root'
 })
-export class Landing {
+export class ProductJ3mService {
+  constructor(private http: HttpClient) {}
   products = [
     {
       id: 1,
@@ -152,6 +128,18 @@ export class Landing {
       description: 'Unidad de estado sólido SATA III de 1TB para mejorar la velocidad del sistema.'
     }
   ];
+  /**
+   * Genera y descarga un PDF
+   *
+   * @param {string} url
+   * @return {*}  {Observable<Blob>}
+   * @memberof ProductService
+   */
+  getAllProducts(): any[] {
+    return this.products;
+  }
 
-  constructor(public layoutService: LayoutService) {}
+  findProduct(id: number) {
+    return this.products.find((p) => p.id == id);
+  }
 }
