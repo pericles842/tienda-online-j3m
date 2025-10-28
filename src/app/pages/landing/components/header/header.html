@@ -8,13 +8,7 @@
   </div>
 
   <!-- secciones de la pagina -->
-  <div class="flex gap-4 dark:text-primary-900 text-white text-base">
-    <a class="hover:text-primary-900" href="#">Hogar</a>
-    <a class="hover:text-primary-900" href="#">Quienes Somos</a>
-    <a class="hover:text-primary-900" href="#">Contacto</a>
-    <a class="hover:text-primary-900" href="#">Productos</a>
-    <a class="hover:text-primary-900" href="#">Ofertas</a>
-  </div>
+  <app-page-sections></app-page-sections>
 </div>
 }
 
@@ -153,13 +147,8 @@
       <span class="font-bold">{{full_name}}</span>
     </div>
   </ng-template>
-  <div class="flex flex-col gap-4 text-primary text-base">
-    <a class="font-semibold text-xl" href="#">Hogar</a>
-    <a class="font-semibold text-xl" href="#">Quienes Somos</a>
-    <a class="font-semibold text-xl" href="#">Contacto</a>
-    <a class="font-semibold text-xl" href="#">Productos</a>
-    <a class="font-semibold text-xl" href="#">Ofertas</a>
-  </div>
+  <app-page-sections orientation="vertical"></app-page-sections>
+
   <ng-template #footer>
     <div class="flex justify-between">
       @if(isExistToken){

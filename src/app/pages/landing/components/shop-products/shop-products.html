@@ -1,1 +1,28 @@
+<div class="flex bg-white dark:bg-surface-900 justify-between items-center px-3">
+  <p-breadcrumb [model]="items" />
+  @if (layoutService.isMobile()) {
+  <p-button (click)="viewMenuFilter.set(true)" icon="pi pi-filter" />
+  }
+</div>
 
+<section class="flex gap-10 mt-10">
+  @if(layoutService.isDesktop()){
+
+  <div class="w-100">
+    <app-store-filter-settings></app-store-filter-settings>
+  </div>
+  }
+
+  <div class="w-full">
+    <!-- PRODUCTOS -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 gap-y-20">
+      @for (product of products; track $index) {
+      <app-product class="col-span-3 md:col-span-6 lg:col-span-4" [product]="product"></app-product>
+      }
+    </div>
+  </div>
+</section>
+
+<p-drawer [(visible)]="viewMenuFilter" header="Drawer">
+  <app-store-filter-settings></app-store-filter-settings>
+</p-drawer>

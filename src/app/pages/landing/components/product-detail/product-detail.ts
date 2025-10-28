@@ -16,10 +16,12 @@ import { ProductComponent } from '../product/product';
   styleUrl: './product-detail.scss'
 })
 export class ProductDetailComponent {
-  @Input() product: any ={};
+  @Input() product: any = {};
   products: any[] = [];
-  items: MenuItem[] = [{ label: 'Tienda', style: { color: 'var(--color-primary)' } }];
-  home: MenuItem = { icon: 'pi pi-home', routerLink: '/landing' };
+  items: MenuItem[] = [
+    { label: 'Hogar', routerLink: '/landing' },
+    { label: 'Tienda',  routerLink: '/shop'  }
+  ];
 
   constructor(
     private route: ActivatedRoute,

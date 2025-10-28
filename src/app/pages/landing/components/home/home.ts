@@ -1,3 +1,4 @@
+import { LayoutService } from '@/layout/service/layout.service';
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { CarouselModule } from 'primeng/carousel';
@@ -50,4 +51,8 @@ export class Home {
       numScroll: 1
     }
   ];
+
+  constructor(
+    public layoutService: LayoutService
+  ){}
 }

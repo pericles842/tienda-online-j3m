@@ -12,6 +12,7 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
+import { PageSections } from '../page-sections/page-sections';
 @Component({
   selector: 'app-header',
   imports: [
@@ -23,7 +24,8 @@ import { TreeModule } from 'primeng/tree';
     AvatarModule,
     TooltipModule,
     DrawerModule,
-    TableModule
+    TableModule,
+    PageSections,
   ],
   providers: [NodeService],
   templateUrl: './header.html',

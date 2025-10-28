@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(): Observable<boolean> {
     let token = this.authService.getToken();
-    let user: User = this.authService.decodeToken().user;
+    // let user: User = this.authService.decodeToken().user;
 
     if (!token) {
       this.router.navigate(['/auth/login']);

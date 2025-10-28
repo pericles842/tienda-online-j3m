@@ -1,0 +1,88 @@
+<div class="flex flex-col w-full gap-7">
+  <div class="flex justify-between items-center shadow-md bg-primary-50 p-3 rounded-lg">
+    <span class="text-xl text-primary-800">Filtros</span>
+    <p-button label="Limpiar" />
+  </div>
+  <!-- SECCIONES DE FILTROS -->
+  <p-accordion class="flex flex-col gap-7">
+    <p-accordion-panel value="0">
+      <p-accordion-header [style]="stylesInTabsAcordeon">
+        <span class="text-xl text-primary-800">Categorías</span>
+      </p-accordion-header>
+      <p-accordion-content>
+        <div class="flex flex-col gap-8 py-6 h-70 overflow-y-scroll">
+          <div class="flex justify-between items-center cursor-pointer">
+            <span class="text-lg ">Categoria 1</span>
+            <p-badge value="2" severity="secondary" />
+          </div>
+          <div class="flex justify-between items-center cursor-pointer">
+            <span class="text-lg ">Categoria 1</span>
+            <p-badge value="2" severity="secondary" />
+          </div>
+          <div class="flex justify-between items-center cursor-pointer">
+            <span class="text-lg ">Categoria 1</span>
+            <p-badge value="2" severity="secondary" />
+          </div>
+          <div class="flex justify-between items-center cursor-pointer">
+            <span class="text-lg ">Categoria 1</span>
+            <p-badge value="2" severity="secondary" />
+          </div>
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="1">
+      <p-accordion-header [style]="stylesInTabsAcordeon">
+        <span class="text-xl text-primary-800">Tallas</span>
+      </p-accordion-header>
+      <p-accordion-content>
+        <div class="flex py-6 gap-5 justify-start">
+          <span
+            class="active:border-primary-800 active:text-primary-800 border border-primary-100 px-3 cursor-pointer py-2 rounded-md text-primary"
+          >
+            talla xl
+          </span>
+          <span
+            class="active:border-primary-800 active:text-primary-800 border border-primary-100 px-3 cursor-pointer py-2 rounded-md text-primary"
+          >
+            talla xl
+          </span>
+          <span
+            class="active:border-primary-800 active:text-primary-800 border border-primary-100 px-3 cursor-pointer py-2 rounded-md text-primary"
+          >
+            talla xl
+          </span>
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="2">
+      <p-accordion-header [style]="stylesInTabsAcordeon">
+        <span class="text-xl text-primary-800">Colores</span>
+      </p-accordion-header>
+      <p-accordion-content>
+        <div class="flex gap-5 py-6">
+          <p-colorpicker [(ngModel)]="color" [defaultColor]="'#00ff00'" inputId="cp-hex" disabled />
+          <p-colorpicker [(ngModel)]="color" [defaultColor]="'#00ff00'" inputId="cp-hex" disabled />
+          <p-colorpicker [(ngModel)]="color" [defaultColor]="'#00ff00'" inputId="cp-hex" disabled />
+          <p-colorpicker [(ngModel)]="color" [defaultColor]="'#00ff00'" inputId="cp-hex" disabled />
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+
+    <p-accordion-panel value="3">
+      <p-accordion-header [style]="stylesInTabsAcordeon">
+        <span class="text-xl text-primary-800">Precio</span>
+      </p-accordion-header>
+      <p-accordion-content>
+        <div class="flex flex-col gap-5 py-6">
+          <div class="flex justify-between">
+            <span class="text-lg text-primary-800 dark:text-primary-100">{{rangeValues[0]}}$</span>
+            <span class="text-lg text-primary-800 dark:text-primary-100"> {{rangeValues[1]}}$</span>
+          </div>
+          <p-slider [(ngModel)]="rangeValues" [range]="true" min="0" max="9999" class="w-full" />
+        </div>
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
+</div>

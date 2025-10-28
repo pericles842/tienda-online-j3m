@@ -12,7 +12,7 @@
       [responsiveOptions]="responsiveOptions"
     >
       <ng-template let-product #item>
-        <div class="flex items-center justify-between">
+        <div class="flex items-center justify-between p-5 md:p-0">
           <div class="max-w-md">
             <div class="flex items-center gap-5">
               <span class="text-7xl text-primary font-bold">{{product.discount}}</span>
@@ -26,12 +26,17 @@
               <span class="text-primary-400">{{product.description}}</span>
             </div>
 
-            <button class="w-full mt-5 text-xl bg-primary text-primary-50 px-5 py-3 rounded-lg cursor-pointer hover:bg-primary-600">
+            <button
+              class="w-full mt-5 text-xl bg-primary text-primary-50 px-5 py-3 rounded-lg cursor-pointer hover:bg-primary-600"
+            >
               Comprar
             </button>
           </div>
 
+          @if(layoutService.isDesktop()){
+
           <img class="w-90 object-contain" [src]="product.url" alt="phone" />
+          }
         </div>
       </ng-template>
     </p-carousel>
