@@ -10,6 +10,6 @@ import { Component } from '@angular/core';
 export class Footer {
   private date = new Date();
   public get fechaActual(): string {
-    return this.date.toLocaleString();
+    return this.date.getFullYear().toString();
   }
 }

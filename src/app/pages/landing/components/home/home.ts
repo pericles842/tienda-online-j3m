@@ -1,10 +1,10 @@
+import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
 import { LayoutService } from '@/layout/service/layout.service';
 import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { CarouselModule } from 'primeng/carousel';
 @Component({
   selector: 'app-home',
-  imports: [CarouselModule],
+  imports: [CarouselModule,ScrollRevealAnimations],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
