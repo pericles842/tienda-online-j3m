@@ -9,7 +9,7 @@
   @if(layoutService.isDesktop()){
 
   <div class="w-100">
-    <app-store-filter-settings></app-store-filter-settings>
+    <app-store-filter-settings appScrollReveal ></app-store-filter-settings>
   </div>
   }
 
@@ -17,7 +17,7 @@
     <!-- PRODUCTOS -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5 gap-y-20">
       @for (product of products; track $index) {
-      <app-product class="col-span-3 md:col-span-6 lg:col-span-4" [product]="product"></app-product>
+      <app-product  class="col-span-3 md:col-span-6 lg:col-span-4" [product]="product"></app-product>
       }
     </div>
   </div>

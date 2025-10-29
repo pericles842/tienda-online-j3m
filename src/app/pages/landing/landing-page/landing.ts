@@ -10,11 +10,22 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { Home } from '../components/home/home';
 import { ProductDetailComponent } from '../components/product-detail/product-detail';
 import { ProductComponent } from '../components/product/product';
+import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
 
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule, RouterModule, RippleModule, StyleClassModule, ButtonModule, DividerModule, Home, ProductComponent],
+  imports: [
+    CommonModule,
+    ScrollRevealAnimations,
+    RouterModule,
+    RippleModule,
+    StyleClassModule,
+    ButtonModule,
+    DividerModule,
+    Home,
+    ProductComponent
+  ],
   templateUrl: './landing.html'
 })
 export class Landing {

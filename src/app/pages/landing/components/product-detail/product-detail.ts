@@ -8,11 +8,12 @@ import { Button } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { ProductComponent } from '../product/product';
 import { TabsModule } from 'primeng/tabs';
+import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent,TabsModule],
+  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent, TabsModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss'
 })
@@ -21,7 +22,7 @@ export class ProductDetailComponent {
   products: any[] = [];
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
-    { label: 'Tienda',  routerLink: '/shop'  }
+    { label: 'Tienda', routerLink: '/shop' }
   ];
 
   constructor(

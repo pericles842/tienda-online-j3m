@@ -12,6 +12,7 @@ import { SliderModule } from 'primeng/slider';
 import { StoreFilterSettings } from '../store-filter-settings/store-filter-settings';
 import { LayoutService } from '@/layout/service/layout.service';
 import { DrawerModule } from 'primeng/drawer';
+import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
 
 @Component({
   selector: 'app-shop-products',
@@ -23,6 +24,7 @@ import { DrawerModule } from 'primeng/drawer';
     FormsModule,
     ProductComponent,
     SliderModule,
+    ScrollRevealAnimations,
     StoreFilterSettings,
     Button
 ],

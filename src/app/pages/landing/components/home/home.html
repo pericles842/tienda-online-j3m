@@ -1,7 +1,7 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
   <!-- Banner principal (columna grande) -->
-  <div class="lg:col-span-2 bg-primary-50 rounded-xl shadow-md">
-    <p-carousel appScrollReveal
+  <div appScrollReveal class="lg:col-span-2 bg-primary-50 rounded-xl shadow-md">
+    <p-carousel
       autoplayInterval="3000"
       class="w-full"
       contentClass="w-full p-0"
@@ -45,7 +45,7 @@
   <!-- Columna derecha: dos productos verticales -->
   <div class="flex flex-col justify-between gap-6">
     <!-- Tarjeta producto 1 -->
-    <div class="bg-primary-50 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
+    <div appScrollReveal origin="right" class="bg-primary-50 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
       <div>
         <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
         <span class="text-primary text-base">Featured category</span>
@@ -58,7 +58,7 @@
     </div>
 
     <!-- Tarjeta producto 2 -->
-    <div class="bg-primary-50 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
+    <div  appScrollReveal origin="right" [delay]="400" class="bg-primary-50 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
       <div>
         <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
         <span class="text-primary text-base">Featured category</span>
