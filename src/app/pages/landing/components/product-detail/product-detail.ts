@@ -6,14 +6,14 @@ import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { Button } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
-import { ProductComponent } from '../product/product';
 import { TabsModule } from 'primeng/tabs';
-import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
+import { ItemsButton } from "../items-button/items-button";
+import { ProductComponent } from '../product/product';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent, TabsModule],
+  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent, TabsModule, ItemsButton],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss'
 })

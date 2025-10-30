@@ -1,48 +1,37 @@
 <div class="mt-3 mr-4">
-  <p-overlaybadge class="cursor-pointer" (click)="viewShoppingCard.set(true)" value="34">
+  <p-overlaybadge class="cursor-pointer" (click)="viewShoppingCard.set(true)" [value]="products.length">
     <i class="pi pi-shopping-cart" style="font-size: 2rem; color: var(--color-primary-100)"></i>
   </p-overlaybadge>
 </div>
 
-<p-drawer styleClass="!w-full  md:!w-[30rem]" [(visible)]="viewShoppingCard" header="Carrito de productos" position="right">
+<p-drawer styleClass="!w-full  md:!w-[30rem]" [(visible)]="viewShoppingCard" header="Carrito de productos"
+  position="right">
   <div class="flex flex-col gap-0.5-5">
     @for (product of products; track $index) {
-    <div class="flex items-center justify-between bg-white shadow-sm rounded-2xl p-4 mb-3 border border-gray-200">
+    <div class="flex items-center justify-between shadow-md rounded p-4 mb-3  ">
       <!-- Imagen -->
       <div class="flex items-center gap-4">
-        <img
-          src="https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/macbook-air-13-m4-hero-202406?wid=600&hei=600&fmt=jpeg&qlt=90&.v=1717173726423"
-          alt="MacBook Air"
-          class="w-16 h-16 object-contain rounded-lg"
-        />
-
+        <img [src]="product.url" [alt]="product.url" class="w-20 h-20 object-contain rounded-lg" />
         <!-- Info del producto -->
-        <div>
-          <h3 class="font-semibold text-gray-900">MacBook Air M4 chip</h3>
-          <p class="text-sm text-gray-500">16/256GB</p>
-
-          <!-- Cantidad -->
-          <div class="flex items-center gap-2 mt-2">
-            <button class="w-7 h-7 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
-              −
-            </button>
-
-            <span class="text-sm font-medium text-gray-800">1</span>
-
-            <button class="w-7 h-7 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 flex items-center justify-center">
-              +
-            </button>
+        <div class="flex flex-col">
+          <span class="font-semibold text-2xl text-primary-900">{{product.name}}</span>
+          <span class="font-semibold text-lg text-primary-900">{{product.quantity}}</span>
+          <div class="flex justify-start gap-3 items-center">
+            <span class="text-lg text-primary-800">${{product.price}}</span>
+            <span class="text-sm text-primary">{{product.price_bs}}bs</span>
           </div>
+
+          <div class="w-30 mt-5">
+            <app-items-button size="small"></app-items-button>
+          </div>
+
         </div>
       </div>
 
       <!-- Precios y eliminar -->
-      <div class="flex flex-col items-end">
-        <button class="text-gray-400 hover:text-red-500 transition-colors" aria-label="Eliminar producto">🗑️</button>
-        <div class="text-right mt-2">
-          <p class="text-gray-900 font-semibold">$600</p>
-          <p class="text-sm text-gray-500">Bs. 22,000</p>
-        </div>
+      <div class="flex flex-col justify-end">
+        <p-button icon="pi pi-trash" [text]="true" severity="danger" size="small"></p-button>
+
       </div>
     </div>
 

@@ -3,10 +3,12 @@ import { OverlayBadge } from 'primeng/overlaybadge';
 import { DrawerModule } from 'primeng/drawer';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { CommonModule } from '@angular/common';
+import { Button } from "primeng/button";
+import { ItemsButton } from "../items-button/items-button";
 
 @Component({
   selector: 'app-shopping-cart',
-  imports: [OverlayBadge, DrawerModule, CommonModule],
+  imports: [OverlayBadge, DrawerModule, CommonModule, Button, ItemsButton],
   templateUrl: './shopping-cart.html',
   styleUrl: './shopping-cart.scss'
 })

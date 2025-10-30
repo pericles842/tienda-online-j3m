@@ -11,7 +11,7 @@ export class ShoppingCartService {
   private cart_products = new BehaviorSubject<any[]>([]);
   cart_products$ = this.cart_products.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   /**
    *Añadir un producto al carrito
@@ -24,8 +24,9 @@ export class ShoppingCartService {
     const existing = items.find((i) => i.id === product.id);
 
     if (existing) {
-      existing.quantity += product.quantity;
+      existing.quantity += 1;
     } else {
+      product.quantity = 1;
       items.push(product);
     }
 

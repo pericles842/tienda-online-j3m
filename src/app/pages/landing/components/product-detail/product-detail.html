@@ -5,13 +5,8 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <!-- Imagen -->
       <div class="flex justify-center items-center bg-primary-50 dark:shadow-lg rounded-2xl p-6">
-        <p-image
-          [src]="product.url"
-          alt="Image"
-          imageClass="max-h-[400px] w-full object-contain"
-          class="flex items-center justify-center"
-          [preview]="true"
-        />
+        <p-image [src]="product.url" alt="Image" imageClass="max-h-[400px] w-full object-contain"
+          class="flex items-center justify-center" [preview]="true" />
         <!-- <img [src]="product.url" alt="Product Image" class="max-h-[400px] w-full object-contain" />   -->
       </div>
 
@@ -76,21 +71,16 @@
 
         <!-- Cantidad + Botones -->
         <div class="flex flex-col md:flex-row items-center gap-4">
-          <div class="flex justify-between items-center border text-2xl border-primary-300 rounded-lg w-full md:w-50">
-            <p-button icon="pi pi-minus" [text]="true" severity="primary" size="large"></p-button>
-            <span class="px-4 text-primary-500">1</span>
-            <p-button icon="pi pi-plus" [text]="true" severity="primary" size="large"></p-button>
+          <div class="w-full md:w-50">
+            <app-items-button></app-items-button>
           </div>
-
           <button
-            class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full md:w-100 text-primary-50 font-bold"
-          >
+            class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full md:w-100 text-primary-50 font-bold">
             Comprar
           </button>
 
           <button
-            class="hover:bg-primary-200 cursor-pointer px-4 py-4 rounded-md bg-primary-100 w-full md:w-60 text-primary-900 border border-primary-200 flex gap-2 justify-center font-bold"
-          >
+            class="hover:bg-primary-200 cursor-pointer px-4 py-4 rounded-md bg-primary-100 w-full md:w-60 text-primary-900 border border-primary-200 flex gap-2 justify-center font-bold">
             <i class="pi pi-shopping-cart"></i>
             Carrito
           </button>
@@ -120,19 +110,19 @@
                 <span class="text-xl">Marca</span>
                 <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
               </div>
-               <div class="flex justify-between  border-b border-primary-300 py-4">
+              <div class="flex justify-between  border-b border-primary-300 py-4">
                 <span class="text-xl">Marca</span>
                 <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
               </div>
-               <div class="flex justify-between  border-b border-primary-300 py-4">
+              <div class="flex justify-between  border-b border-primary-300 py-4">
                 <span class="text-xl">Marca</span>
                 <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
               </div>
-               <div class="flex justify-between  border-b border-primary-300 py-4">
+              <div class="flex justify-between  border-b border-primary-300 py-4">
                 <span class="text-xl">Marca</span>
                 <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
               </div>
-               <div class="flex justify-between  border-b border-primary-300 py-4">
+              <div class="flex justify-between  border-b border-primary-300 py-4">
                 <span class="text-xl">Marca</span>
                 <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
               </div>

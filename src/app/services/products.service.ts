@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ProductJ3mService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   products = [
     {
       id: 1,
@@ -14,6 +14,7 @@ export class ProductJ3mService {
       price: 120.1, // Ajuste para un precio más realista
       price_bs: 4323.6,
       stock: 10,
+      quantity: 0,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
       category: 'Electrónica',
       brand: 'InovoTech',
@@ -26,6 +27,7 @@ export class ProductJ3mService {
       price: 85.99,
       price_bs: 3095.64,
       stock: 25,
+      quantity: 0,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
       category: 'Electrónica',
       brand: 'StellarCom',
@@ -38,6 +40,7 @@ export class ProductJ3mService {
       price: 15.5,
       price_bs: 558.0,
       stock: 50,
+      quantity: 0,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
       category: 'Accesorios',
       brand: 'AudioWave',
@@ -50,6 +53,7 @@ export class ProductJ3mService {
       price: 5.99,
       price_bs: 215.64,
       stock: 80,
+      quantity: 0,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
       category: 'Accesorios',
       brand: 'TecnoGear',
@@ -62,6 +66,7 @@ export class ProductJ3mService {
       price: 69.99,
       price_bs: 2519.64,
       stock: 15,
+      quantity: 0,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
       category: 'Electrónica',
       brand: 'DrawEasy',
@@ -74,6 +79,7 @@ export class ProductJ3mService {
       price: 35.0,
       price_bs: 1260.0,
       stock: 30,
+      quantity: 0,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
       category: 'Accesorios',
       brand: 'AlphaKeys',
@@ -86,6 +92,7 @@ export class ProductJ3mService {
       price: 105.75,
       price_bs: 3807.0,
       stock: 5,
+      quantity: 0,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
       category: 'Electrónica',
       brand: 'JBL',
@@ -96,6 +103,7 @@ export class ProductJ3mService {
       name: 'Webcam StreamPro',
       discount: 18,
       price: 25.4,
+      quantity: 0,
       price_bs: 914.4,
       stock: 40,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
@@ -107,6 +115,7 @@ export class ProductJ3mService {
       id: 9,
       name: 'Monitor Curvo V32',
       discount: 20,
+      quantity: 0,
       price: 199.99,
       price_bs: 7199.64,
       stock: 8,
@@ -120,6 +129,7 @@ export class ProductJ3mService {
       name: 'Disco Duro SSD 1TB',
       discount: 15,
       price: 45.99,
+      quantity: 0,
       price_bs: 1655.64,
       stock: 20,
       url: 'https://demo.cozycommerce.dev/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdc6svbdh9%2Fimage%2Fupload%2Fv1745925702%2Fhero-sliders%2Fcalhxdo8l2s8fxgusail.png&w=384&q=75',
