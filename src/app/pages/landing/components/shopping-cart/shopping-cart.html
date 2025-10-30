@@ -22,7 +22,8 @@
           </div>
 
           <div class="w-30 mt-5">
-            <app-items-button size="small"></app-items-button>
+            <app-items-button (addAmount)="addAmount(product.id)" [amount]="product.quantity"
+              (subtractAmount)="subtractAmount(product.id)" size="small"></app-items-button>
           </div>
 
         </div>

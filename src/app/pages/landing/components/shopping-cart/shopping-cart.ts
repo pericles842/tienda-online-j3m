@@ -16,10 +16,18 @@ export class ShoppingCart {
   viewShoppingCard: WritableSignal<boolean> = signal(false);
   products: any[] = [];
 
-  constructor(private shoppingCartService: ShoppingCartService) {}
+  constructor(private shoppingCartService: ShoppingCartService) { }
   ngOnInit() {
     this.shoppingCartService.cart_products$.subscribe((items) => {
       this.products = items;
     });
   }
+  addAmount(id: number) {
+    this.shoppingCartService.addAmount(id);
+  }
+  subtractAmount(id: number) {
+    this.shoppingCartService.subtractAmount(id);
+
+  }
+
 }

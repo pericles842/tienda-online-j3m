@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Button } from "primeng/button";
 
 @Component({
@@ -9,4 +9,8 @@ import { Button } from "primeng/button";
 })
 export class ItemsButton {
   @Input() size: 'small' | 'large' = 'large'
+  @Input() amount: number = 0
+  @Output() addAmount: EventEmitter<any> = new EventEmitter<any>()
+  @Output() subtractAmount: EventEmitter<any> = new EventEmitter<any>()
+
 }

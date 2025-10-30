@@ -1,8 +1,5 @@
-import { CreateCharge, SimpleCharge } from '@/interfaces/charges';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +39,35 @@ export class ShoppingCartService {
   eliminateProduct(id: number) {
     const filtered = this.cart_products.value.filter((item) => item.id !== id);
     this.cart_products.next(filtered);
+  }
+
+  /**
+   *Aumentar la cantidad de un producto en el carrito
+   *
+   * @param {number} id
+   * @memberof ShoppingCartService
+   */
+  addAmount(id: number) {
+    const items = this.cart_products.value;
+    const product = items.find((item) => item.id === id);
+    product.quantity += 1;
+    this.cart_products.next(items);
+  }
+
+  /**
+   *disminuir la cantidad de productos 
+   *
+   * @param {number} id
+   * @memberof ShoppingCartService
+   */
+  subtractAmount(id: number) {
+    const items = this.cart_products.value;
+    const product = items.find((item) => item.id === id);
+
+    //si el producto llega a 1 no permite quitarlo
+    if (product.quantity === 1) return;
+    product.quantity -= 1;
+    this.cart_products.next(items);
   }
 
   clearCart() {

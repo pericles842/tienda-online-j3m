@@ -1,5 +1,6 @@
 <div class=" flex justify-between items-center border text-xl border-primary-300 rounded-lg w-full ">
-    <p-button icon="pi pi-minus" [text]="true" severity="primary" [size]="size"></p-button>
-    <span class="px-4 text-primary-500">1</span>
-    <p-button icon="pi pi-plus" [text]="true" severity="primary" [size]="size"></p-button>
+    <p-button (click)="subtractAmount.emit()" icon="pi pi-minus" [text]="true" severity="primary"
+        [size]="size"></p-button>
+    <span class="px-4 text-primary-500">{{amount}}</span>
+    <p-button (click)="addAmount.emit()" icon="pi pi-plus" [text]="true" severity="primary" [size]="size"></p-button>
 </div>
