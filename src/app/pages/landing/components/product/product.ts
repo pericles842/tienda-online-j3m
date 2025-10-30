@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { ProductDetailComponent } from '../product-detail/product-detail';
 import { ImageModule } from 'primeng/image';
+import { ShoppingCartService } from '@/services/shoppingCard.service';
 
 @Component({
   selector: 'app-product',
@@ -17,7 +18,9 @@ export class ProductComponent {
   @Input() product: any;
   modalViewProduct: WritableSignal<boolean> = signal(false);
 
+  constructor(private shoppingCartService: ShoppingCartService) {}
   addToCart(product: any, event: Event) {
+    this.shoppingCartService.addToCart(product);
     event.stopPropagation();
   }
 

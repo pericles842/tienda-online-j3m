@@ -21,28 +21,28 @@ export class ScrollRevealAnimations {
   @Input() rotate: { x: number; y: number; z: number } = { x: 0, y: 0, z: 0 };
   @Input() scale: number = 1;
 
-  private srInstance: any;
+  // private srInstance: any;
 
-  constructor(private el: ElementRef) {
-    this.srInstance = ScrollReveal();
-  }
+  // constructor(private el: ElementRef) {
+  //   this.srInstance = ScrollReveal();
+  // }
 
-  ngOnInit(): void {
-    const element = this.el.nativeElement;
+  // ngOnInit(): void {
+  //   const element = this.el.nativeElement;
 
-    // Define las opciones por defecto
-    const defaultOptions: RevealOptions = {
-      delay: this.delay,
-      duration: this.duration,
-      distance: this.distance,
-      origin: this.origin,
-      rotate: this.rotate,
-      scale: this.scale,
-      reset: false
-    };
+  //   // Define las opciones por defecto
+  //   const defaultOptions: RevealOptions = {
+  //     delay: this.delay,
+  //     duration: this.duration,
+  //     distance: this.distance,
+  //     origin: this.origin,
+  //     rotate: this.rotate,
+  //     scale: this.scale,
+  //     reset: false
+  //   };
 
-    // Combina y usa la instancia para revelar el elemento
-    const config = Object.keys(this.config).length === 0 ? defaultOptions : this.config;
-    this.srInstance.reveal(element, config);
-  }
+  //   // Combina y usa la instancia para revelar el elemento
+  //   const config = Object.keys(this.config).length === 0 ? defaultOptions : this.config;
+  //   this.srInstance.reveal(element, config);
+  // }
 }

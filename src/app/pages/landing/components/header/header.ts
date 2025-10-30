@@ -13,6 +13,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
 import { PageSections } from '../page-sections/page-sections';
+import { ShoppingCart } from "../shopping-cart/shopping-cart";
 @Component({
   selector: 'app-header',
   imports: [
@@ -26,7 +27,8 @@ import { PageSections } from '../page-sections/page-sections';
     DrawerModule,
     TableModule,
     PageSections,
-  ],
+    ShoppingCart
+],
   providers: [NodeService],
   templateUrl: './header.html',
   styleUrl: './header.scss'

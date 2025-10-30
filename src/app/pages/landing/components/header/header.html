@@ -48,9 +48,7 @@
     <!-- ------------------------------------------------------------------ -->
     <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-primary-800 dark:border-primary-50">
       @if (layoutService.isMobile()) {
-      <p-overlaybadge class="mt-3 mr-4 cursor-pointer" value="34">
-        <i class="pi pi-shopping-cart" style="font-size: 2rem; color: var(--color-primary-100)"></i>
-      </p-overlaybadge>
+      <app-shopping-cart></app-shopping-cart>
       }
 
       <app-floating-configurator [rounded]="false" pTooltip="Tema" tooltipPosition="bottom" severity="primary" [float]="false" />
@@ -100,9 +98,9 @@
     <!-- ------------------------------------------------------------------ -->
     <div class="flex items-center gap-2">
       @if (layoutService.isDesktop()) {
-      <p-overlaybadge class="mt-3 mr-4 cursor-pointer" value="34">
-        <i class="pi pi-shopping-cart" style="font-size: 2rem; color: var(--color-primary-100)"></i>
-      </p-overlaybadge>
+      
+        <app-shopping-cart></app-shopping-cart>
+      
       } @if(isExistToken && layoutService.isDesktop()){
       <div class="flex items-center gap-3 cursor-pointer">
         <p-avatar
