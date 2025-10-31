@@ -1,7 +1,7 @@
 import { ProductJ3mService } from '@/services/products.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { Button } from 'primeng/button';
@@ -14,7 +14,7 @@ import { ShoppingCartService } from '@/services/shoppingCard.service';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent, TabsModule, ItemsButton],
+  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent,RouterLink, TabsModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss'
 })

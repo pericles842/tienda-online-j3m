@@ -2,7 +2,7 @@ import { LayoutService } from '@/layout/service/layout.service';
 import { ProductJ3mService } from '@/services/products.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterLink, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
 import { RippleModule } from 'primeng/ripple';
@@ -19,6 +19,7 @@ import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
     CommonModule,
     ScrollRevealAnimations,
     RouterModule,
+    RouterLink,
     RippleModule,
     StyleClassModule,
     ButtonModule,

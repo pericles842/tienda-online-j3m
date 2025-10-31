@@ -10,6 +10,7 @@ import { WebShop } from '@/pages/landing/web-shop/web-shop';
 import { Notfound } from './app/pages/notfound/notfound';
 import { ProductDetailComponent } from '@/pages/landing/components/product-detail/product-detail';
 import { ShopProducts } from '@/pages/landing/components/shop-products/shop-products';
+import { Checkout } from '@/pages/landing/components/checkout/checkout';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full' },
@@ -30,7 +31,8 @@ export const appRoutes: Routes = [
     children: [
       { path: 'landing', component: Landing },
       { path: 'shop', component: ShopProducts },
-      { path: 'product/:id', component: ProductDetailComponent }
+      { path: 'product/:id', component: ProductDetailComponent },
+      { path: 'checkout', component: Checkout }
     ]
   },
   { path: 'notfound', component: Notfound },

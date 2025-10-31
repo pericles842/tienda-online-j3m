@@ -30,4 +30,9 @@ export class ShoppingCart {
 
   }
 
+  deleteProductInCard(id:number){
+    this.shoppingCartService.eliminateProduct(id);
+
+  }
+
 }
