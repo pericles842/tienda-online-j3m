@@ -1,1 +1,118 @@
 <p-breadcrumb [model]="items" />
+
+<section class="flex flex-col md:flex-row justify-between gap-3 mt-10">
+  <div class="flex md:w-1/2 w-full h-fit flex-col bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">
+    <span class="text-xl text-primary-800 dark:text-primary-100 font-semibold">Detalles de factura</span>
+    <hr />
+
+    <div class="grid grid-cols-12 gap-5 mt-3">
+      <div class="col-span-12 md:col-span-6 flex flex-col">
+        <span class="text-sm text-primary-400">Nombre</span>
+        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.name}}</span>
+      </div>
+
+      <div class="col-span-12 md:col-span-6 flex flex-col">
+        <span class="text-sm text-primary-400">Apellido</span>
+        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.last_name}}</span>
+      </div>
+
+      <div class="col-span-12 md:col-span-6 flex flex-col">
+        <span class="text-sm text-primary-400">Correo</span>
+        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.email}}</span>
+      </div>
+
+      <div class="col-span-12 md:col-span-6 flex flex-col">
+        <span class="text-sm text-primary-400">Teléfono</span>
+        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.phone}}</span>
+      </div>
+
+      <div class="col-span-12 md:col-span-6 flex flex-col">
+        <span class="text-sm text-primary-400">Direccion</span>
+        <span class="text-xl text-primary-800 dark:text-primary-200"
+          >{{user.state}} / {{user.municipality}} / {{user.parish}}</span
+        >
+      </div>
+
+      <div class="col-span-12 flex flex-col">
+        <span class="text-sm text-primary-400">Observaciones</span>
+        <textarea rows="5" cols="30" pTextarea class="w-full mb-2" [autoResize]="true"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col  w-full md:w-1/2 gap-10">
+    <div class="flex flex-col gap-5 bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">
+      <span class="text-xl text-primary-800 font-semibold dark:text-primary-100">Tu pedido</span>
+      <hr />
+      <div class="flex justify-between">
+        <span class="text-primary-800 font-bold dark:text-primary-100">Productos</span>
+        <span class="text-primary-800 font-bold dark:text-primary-100">Subtotal</span>
+      </div>
+
+      @for (product of products; track $index){
+
+      <div class="flex justify-between">
+        <span class="text-primary-600">{{product.name}}</span>
+        <span class="text-primary-900 font-bold dark:text-primary-200">${{product.price}}</span>
+      </div>
+      }
+
+      <hr />
+      <div class="flex flex-col gap-2 text-xl">
+        <span class="text-primary-700 font-bold dark:text-primary-100">Tasa: 134.00</span>
+        <div class="flex justify-between">
+          <span class="text-primary-700 font-bold dark:text-primary-100">Total</span>
+          <div class="flex gap-4">
+            <span class="text-primary-700 font-bold dark:text-primary-100">$154.00</span>
+            <span class="text-primary-700 font-bold dark:text-primary-100">3435.00bs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- METODOS DE PAGO -->
+    <div class="flex flex-col gap-5 bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">
+      <span class="text-xl text-primary-800 font-semibold dark:text-primary-100">Métodos de pago</span>
+      <hr />
+      <div class="flex flex-wrap justify-between gap-3">
+        @for (item of ['Pago Movil', 'Efectivo', 'Binance']; track $index) {
+        <div class="flex flex-col gap-3 items-center">
+          <img
+            class="w-20 shadow-md rounded-xl"
+            [src]="'https://i0.wp.com/logoroga.com/wp-content/uploads/2018/02/pago-movil.png?w=800&ssl=1'"
+            [alt]="item"
+          />
+          <span class="text-primary-800 text-xl">{{item}}</span>
+        </div>
+        }
+      </div>
+
+      <div class="grid grid-cols-12 gap-5 mt-3  ">
+        <div class="col-span-6 flex flex-col">
+          <span class="text-sm text-primary-400">Número de cuenta</span>
+          <p class="text-primary-800 font-bold">112214125214125</p>
+        </div>
+
+        <div class="col-span-6 flex flex-col">
+          <span class="text-sm text-primary-400">Titular</span>
+          <p class="text-primary-800 font-bold">J3M TITULAR</p>
+        </div>
+
+        <div class="col-span-6 flex flex-col">
+          <span class="text-sm text-primary-400">Banco</span>
+          <p class="text-primary-800 font-bold">VENEZUELA</p>
+        </div>
+
+        <div class="col-span-6 flex flex-col">
+          <span class="text-sm text-primary-400">Tipo de cuenta</span>
+          <p class="text-primary-800 font-bold">Corriente</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 text-xl mt-5">
+        <button class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full text-primary-50 font-bold">
+          Comprar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
