@@ -7,7 +7,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { Button } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { TabsModule } from 'primeng/tabs';
-import { ItemsButton } from "../items-button/items-button";
+import { ItemsButton } from '../items-button/items-button';
 import { ProductComponent } from '../product/product';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 
@@ -30,7 +30,7 @@ export class ProductDetailComponent {
     private route: ActivatedRoute,
     private productJ3mService: ProductJ3mService,
     private shoppingCartService: ShoppingCartService
-  ) { }
+  ) {}
 
   ngOnInit() {
     if (this.route.snapshot.paramMap.get('id')) {
@@ -49,6 +49,7 @@ export class ProductDetailComponent {
     product.quantity += 1;
   }
   subtractAmount(product: any) {
+    if (product.quantity === 1) return;
     product.quantity -= 1;
   }
   addToCart(product: any) {

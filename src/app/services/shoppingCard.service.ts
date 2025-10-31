@@ -21,9 +21,9 @@ export class ShoppingCartService {
     const existing = items.find((i) => i.id === product.id);
 
     if (existing) {
-      existing.quantity += 1;
+      existing.quantity = product.quantity;
     } else {
-      product.quantity = 1;
+      
       items.push(product);
     }
 
