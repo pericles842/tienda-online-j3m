@@ -1,25 +1,23 @@
 import { ProductJ3mService } from '@/services/products.service';
+import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { Button } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { TabsModule } from 'primeng/tabs';
-import { ItemsButton } from '../items-button/items-button';
-import { ProductComponent } from '../product/product';
-import { ShoppingCartService } from '@/services/shoppingCard.service';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [BreadcrumbModule, CommonModule, Button, ImageModule, ProductComponent,RouterLink, TabsModule],
+  imports: [BreadcrumbModule, CommonModule, ImageModule, RouterLink, TabsModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss'
 })
 export class ProductDetailComponent {
   @Input() product: any = {};
+  @ViewChild('productContainer', { read: ViewContainerRef })
   products: any[] = [];
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
@@ -29,8 +27,33 @@ export class ProductDetailComponent {
   constructor(
     private route: ActivatedRoute,
     private productJ3mService: ProductJ3mService,
-    private shoppingCartService: ShoppingCartService
+    private shoppingCartService: ShoppingCartService,
+    private viewContainer: ViewContainerRef
   ) {}
+
+  /**
+   * Generamos dinámicamente el componente para evitar la referencia circular
+   *
+   * @memberof ProductDetailComponent
+   */
+  async renderProductComponent() {
+    //Buscamos el componente
+    const { ProductComponent } = await import('../product/product');
+
+    // Limpia el contenedor por si ya existían componentes
+    this.viewContainer.clear();
+
+    // Itera sobre los productos relacionados obtenidos por el servicio
+    this.products.forEach((p) => {
+      //creamos el componente
+      const ref = this.viewContainer.createComponent(ProductComponent);
+      //agregamos las clases para el grid
+      ref.location.nativeElement.classList.add('col-span-3', 'md:col-span-6', 'lg:col-span-3');
+
+      //asignamos el producto
+      ref.instance.product = p;
+    });
+  }
 
   ngOnInit() {
     if (this.route.snapshot.paramMap.get('id')) {

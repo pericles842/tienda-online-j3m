@@ -10,7 +10,7 @@ import { ShoppingCartService } from '@/services/shoppingCard.service';
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [TagModule, ButtonModule, RouterLink, ImageModule, DialogModule],
+  imports: [TagModule, ButtonModule, RouterLink, ImageModule, DialogModule, ProductDetailComponent],
   templateUrl: './product.html',
   styleUrl: './product.scss'
 })
