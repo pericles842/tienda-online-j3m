@@ -5,6 +5,7 @@ import { filter, Subscription } from 'rxjs';
 import { LayoutService } from '../service/layout.service';
 import { AppSidebar } from './app.sidebar';
 import { AppTopbar } from './app.topbar';
+import { AppFooter } from './app.footer';
 
 @Component({
   selector: 'app-layout',
@@ -19,6 +20,7 @@ import { AppTopbar } from './app.topbar';
       </div>
     </div>
     <div class="layout-mask animate-fadein"></div>
+    <!-- <app-footer></app-footer> -->
   </div> `
 })
 export class AppLayout {
@@ -59,11 +61,21 @@ export class AppLayout {
     const topbarEl = document.querySelector('.layout-menu-button');
     const eventTarget = event.target as Node;
 
-    return !(sidebarEl?.isSameNode(eventTarget) || sidebarEl?.contains(eventTarget) || topbarEl?.isSameNode(eventTarget) || topbarEl?.contains(eventTarget));
+    return !(
+      sidebarEl?.isSameNode(eventTarget) ||
+      sidebarEl?.contains(eventTarget) ||
+      topbarEl?.isSameNode(eventTarget) ||
+      topbarEl?.contains(eventTarget)
+    );
   }
 
   hideMenu() {
-    this.layoutService.layoutState.update((prev) => ({ ...prev, overlayMenuActive: false, staticMenuMobileActive: false, menuHoverActive: false }));
+    this.layoutService.layoutState.update((prev) => ({
+      ...prev,
+      overlayMenuActive: false,
+      staticMenuMobileActive: false,
+      menuHoverActive: false
+    }));
     if (this.menuOutsideClickListener) {
       this.menuOutsideClickListener();
       this.menuOutsideClickListener = null;
@@ -83,7 +95,10 @@ export class AppLayout {
     if (document.body.classList) {
       document.body.classList.remove('blocked-scroll');
     } else {
-      document.body.className = document.body.className.replace(new RegExp('(^|\\b)' + 'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+      document.body.className = document.body.className.replace(
+        new RegExp('(^|\\b)' + 'blocked-scroll'.split(' ').join('|') + '(\\b|$)', 'gi'),
+        ' '
+      );
     }
   }
 
@@ -91,7 +106,8 @@ export class AppLayout {
     return {
       'layout-overlay': this.layoutService.layoutConfig().menuMode === 'overlay',
       'layout-static': this.layoutService.layoutConfig().menuMode === 'static',
-      'layout-static-inactive': this.layoutService.layoutState().staticMenuDesktopInactive && this.layoutService.layoutConfig().menuMode === 'static',
+      'layout-static-inactive':
+        this.layoutService.layoutState().staticMenuDesktopInactive && this.layoutService.layoutConfig().menuMode === 'static',
       'layout-overlay-active': this.layoutService.layoutState().overlayMenuActive,
       'layout-mobile-active': this.layoutService.layoutState().staticMenuMobileActive
     };
