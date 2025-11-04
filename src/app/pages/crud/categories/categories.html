@@ -1,13 +1,36 @@
-<app-menu-bar></app-menu-bar>
+<app-menu-bar [viewDeleteButton]="false" (touchNew)="modal.set(true)"></app-menu-bar>
 
 <div class="card">
-  <p-treetable [value]="files" [columns]="cols" [scrollable]="true" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template #caption><div class="text-xl font-bold">File Viewer</div> </ng-template>
+  <p-treetable
+    #tt
+    [value]="categories()"
+    [columns]="cols"
+    [paginator]="true"
+    [globalFilterFields]="['name']"
+    [rows]="5"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [scrollable]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+  >
+    <ng-template #caption>
+      <div class="flex justify-between items-center">
+        <span class="text-xl font-bold">Listado de Categorías</span>
+
+        <p-iconfield>
+          <p-inputicon class="pi pi-search" />
+          <input type="text" pInputText placeholder="Buscar" (input)="filterGlobal($event, tt)" />
+        </p-iconfield>
+      </div>
+    </ng-template>
+
     <ng-template #header let-columns>
       <tr>
-        @for (col of columns; track $index) {
-        <th>{{ col.header }}</th>
-        }
+        <th *ngFor="let col of columns" [ttSortableColumn]="col.field">
+          <div class="flex items-center gap-2">
+            {{ col.header }}
+            <p-treetable-sort-icon [field]="col.field" />
+          </div>
+        </th>
       </tr>
     </ng-template>
     <ng-template #body let-rowNode let-rowData="rowData" let-columns="columns">
@@ -17,8 +40,26 @@
           @if (i === 0) {
           <p-treetable-toggler [rowNode]="rowNode" />
           } {{ rowData[col.field] }} @if (last) {
-          <p-button icon="pi pi-search" rounded="true" [style]="{ 'margin-right': '.5em' }" />
-          <p-button icon="pi pi-pencil" rounded="true" severity="success" />
+          <p-button
+            icon="pi pi-pencil"
+            severity="info"
+            pTooltip="Editar"
+            tooltipPosition="bottom"
+            showDelay="400"
+            class="mr-2"
+            [rounded]="true"
+            [outlined]="layoutService.isDarkTheme()"
+          />
+          <p-button
+            icon="pi pi-trash"
+            pTooltip="Eliminar"
+            tooltipPosition="bottom"
+            showDelay="400"
+            class="mr-2"
+            severity="danger"
+            [rounded]="true"
+            [outlined]="layoutService.isDarkTheme()"
+          />
           }
         </td>
         }
@@ -31,3 +72,79 @@
     </ng-template> -->
   </p-treetable>
 </div>
+
+<p-dialog
+  header="Crear categorías"
+  [modal]="true"
+  [(visible)]="modal"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+  [style]="{ width: '640px' }"
+>
+  <ng-template pTemplate="content">
+    <form [formGroup]="category" class="space-y-6">
+      <div class="grid grid-cols-12 gap-3">
+        <div class="col-span-6">
+          <label for="nombre" class="block mb-2 text-sm text-primary">Nombre</label>
+          <input
+            pInputText
+            id="nombre"
+            type="text"
+            placeholder="categoría"
+            formControlName="name"
+            class="w-full mb-2"
+            [ngClass]="category.get('name')?.hasError('invalid') && category.get('name')?.dirty ? 'ng-invalid ng-dirty' : ''"
+          />
+          @if (category.get('name')?.hasError('required')&& category.get('name')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El nombre es obligatorio</p-message>
+          }
+        </div>
+
+        <!-- SELECT DE CATEGORÍAS -->
+        <div class="col-span-6">
+          <label for="nombre" class="block mb-2 text-sm text-primary">Categorías</label>
+          <p-select
+            [options]="plane_categories()"
+            formControlName="parent_id"
+            optionLabel="name"
+            optionValue="id"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            appendTo="body"
+            placeholder="Seleccionar categoría padre"
+            class="w-full"
+          >
+            <ng-template #selectedItem let-selectedOption>
+              <div class="flex items-center gap-2">
+                <div>{{ selectedOption.name }}</div>
+              </div>
+            </ng-template>
+            <ng-template let-country #item>
+              <div class="flex items-center gap-2">
+                <div>{{ country.name }}</div>
+              </div>
+            </ng-template>
+          </p-select>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 p-3">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="modal.set(false)"
+        severity="danger"
+        outlined
+        class="p-button-text"
+        text
+      ></p-button>
+
+      <p-button  (click)="guardar()" label="Guardar" icon="pi pi-check" type="button"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>

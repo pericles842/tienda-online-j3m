@@ -100,8 +100,8 @@ export class Charges {
    * @memberof Charges
    */
   columns: Column[] = [
-    { sortTable: true, key: 'name', label: 'nombre' },
-    { sortTable: true, key: 'description', style: 'min-width: 2rem', label: 'descripcion' }
+    { sortTable: true, key: 'name', label: 'Nombre' },
+    { sortTable: true, key: 'description', style: 'min-width: 2rem', label: 'Descripcion' }
   ];
 
   constructor(

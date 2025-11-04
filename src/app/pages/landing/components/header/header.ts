@@ -13,7 +13,8 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
 import { PageSections } from '../page-sections/page-sections';
-import { ShoppingCart } from "../shopping-cart/shopping-cart";
+import { ShoppingCart } from '../shopping-cart/shopping-cart';
+import { CategoriesService } from '@/services/categories.service';
 @Component({
   selector: 'app-header',
   imports: [
@@ -28,7 +29,7 @@ import { ShoppingCart } from "../shopping-cart/shopping-cart";
     TableModule,
     PageSections,
     ShoppingCart
-],
+  ],
   providers: [NodeService],
   templateUrl: './header.html',
   styleUrl: './header.scss'
@@ -41,13 +42,13 @@ export class Header {
     public layoutService: LayoutService,
     private authService: AuthService,
     public router: Router,
-    private nodeService: NodeService
+    private categoriesService: CategoriesService
   ) {}
 
   files!: TreeNode[];
 
   ngOnInit() {
-    this.nodeService.getFiles().then((data) => (this.files = data));
+    this.categoriesService.getCategoriesTree().subscribe((files) => (this.files = files));
   }
 
   /**
