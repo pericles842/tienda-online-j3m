@@ -17,7 +17,11 @@ export class CategoriesService {
     return this.http.get<Category[]>(`${environment.host}/categories`);
   }
 
-  createCategory(category: Category): Observable<TreeNode> {
-    return this.http.post<TreeNode>(`${environment.host}/create-category`, category);
+  createCategory(category: Category): Observable<{ category: Category; node_categories: TreeNode }> {
+    return this.http.post<{ category: Category; node_categories: TreeNode }>(`${environment.host}/create-category`, category);
+  }
+
+  updateCategory(category: Category): Observable<{ category: Category; node_categories: TreeNode }> {
+    return this.http.put<{ category: Category; node_categories: TreeNode }>(`${environment.host}/update-category`, category);
   }
 }

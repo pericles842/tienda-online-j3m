@@ -1,4 +1,4 @@
-<app-menu-bar [viewDeleteButton]="false" (touchNew)="modal.set(true)"></app-menu-bar>
+<app-menu-bar [viewDeleteButton]="false" (touchNew)="openModal()"></app-menu-bar>
 
 <div class="card">
   <p-treetable
@@ -14,7 +14,7 @@
   >
     <ng-template #caption>
       <div class="flex justify-between items-center">
-        <span class="text-xl font-bold">Listado de Categorías</span>
+        <span class="text-2xl text-primary">Listado de Categorías</span>
 
         <p-iconfield>
           <p-inputicon class="pi pi-search" />
@@ -44,6 +44,7 @@
             icon="pi pi-pencil"
             severity="info"
             pTooltip="Editar"
+            (click)="editCharge(rowData)"
             tooltipPosition="bottom"
             showDelay="400"
             class="mr-2"
@@ -144,7 +145,7 @@
         text
       ></p-button>
 
-      <p-button  (click)="guardar()" label="Guardar" icon="pi pi-check" type="button"></p-button>
+      <p-button (click)="guardar()" label="Guardar" icon="pi pi-check" type="button"></p-button>
     </div>
   </ng-template>
 </p-dialog>
