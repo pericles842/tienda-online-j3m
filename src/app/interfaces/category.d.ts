@@ -6,3 +6,9 @@ export interface Category {
 }
 
 export type CategoryForm = FormGroupControls<Category>;
+
+export interface CategoryTreeResponse {
+  category: Category;
+  node_categories: TreeNode;
+  categories: TreeNode[];
+}

@@ -70,6 +70,15 @@ export class Categories {
 
   ngOnInit() {
     this.categoriesService.getCategoriesTree().subscribe((files) => this.categories.set(files));
+    this.getPlaneCategories();
+  }
+
+  /**
+   *Obtiene el listado de las categorias del select
+   *
+   * @memberof Categories
+   */
+  getPlaneCategories() {
     this.categoriesService.getCategories().subscribe((files) => this.plane_categories.set(files));
   }
 
@@ -91,20 +100,33 @@ export class Categories {
     //si el formulario no es valido salimos del proceso
     if (!this.category.valid) return;
 
+    // Validamos que la categoria no sea su propia categoria padre
+    if (this.category.get('parent_id')?.value === this.category.get('id')?.value)
+      return this.messageService.add({
+        severity: 'warn',
+        summary: 'Error',
+        detail: `La categoría ${this.category.get('name')?.value} no puede ser su propia categoría padre`
+      });
+
     let service =
       this.mode_form() === 'create'
         ? this.categoriesService.createCategory.bind(this.categoriesService)
         : this.categoriesService.updateCategory.bind(this.categoriesService);
 
     service(this.category.value).subscribe((_category_response) => {
-      let {node_categories, category} = _category_response;
+      let { node_categories, category, categories } = _category_response;
 
-      this.categories.update((current) => this.addOrUpdateCategory(current, node_categories));
+      //?ESTE MÉTODO SE UTILIZABA PARA ACTUALIZAR DE FORMA LOCAL PERO TIENE UN BUG
+      // this.categories.update((current) => this.addOrUpdateCategory(current, node_categories));
 
-      this.plane_categories.update((current)=> [...current, category]);
-      console.log(category);
-      console.log(this.category.value);
-      
+      this.categories.set(categories);
+
+      // Actualizamos o editamos el listado de categorias
+      this.plane_categories.update(
+        this.mode_form() === 'create'
+          ? (current) => [...current, category]
+          : (current) => current.map((item) => (item.id === category.id ? category : item))
+      );
 
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Categoría creada exitosamente' });
       this.modal.set(false);
@@ -114,42 +136,47 @@ export class Categories {
   createCategoryService() {}
 
   /**
-   *Itera los nodos hasta saber si agrega o edita el arreglo
+   * Itera los nodos hasta saber si agrega o edita el arreglo
+   * Tiene un bug al editar el padre
    *
+   * @deprecated
    * @param {TreeNode[]} nodes
    * @param {TreeNode} category
    * @return {*}  {TreeNode[]}
    * @memberof Categories
    */
   addOrUpdateCategory(nodes: TreeNode[], category: TreeNode): TreeNode[] {
+    // eliminamos el nodo previo del árbol (si existe)
+    const cleanedNodes = this.removeCategory(nodes, category.data.id);
+
+    // hora lo insertamos donde corresponde
     if (!category.data.parent_id) {
-      // Si no tiene padre, revisamos si ya existe en el nivel raíz
-      const exists = nodes.some((n) => n.data.id === category.data.id);
+      // Si no tiene padre, se agrega o reemplaza en el nivel raíz
+      const exists = cleanedNodes.some((n) => n.data.id === category.data.id);
       if (exists) {
-        // Si ya existe, lo reemplazamos
-        return nodes.map((n) => (n.data.id === category.data.id ? category : n));
+        return cleanedNodes.map((n) => (n.data.id === category.data.id ? category : n));
       }
-      // Si no existe, lo agregamos
-      return [...nodes, category];
+      return [...cleanedNodes, category];
     }
 
-    // Si tiene padre, recorremos los nodos para encontrarlo
-    return nodes.map((node) => {
+    // i tiene padre, lo ubicamos dentro del árbol
+    return cleanedNodes.map((node) => {
       if (node.data.id === category.data.parent_id) {
-        // Es el padre → ahora revisamos si el hijo ya existe
         const children = node.children ?? [];
         const exists = children.some((c) => c.data.id === category.data.id);
 
         const updatedChildren = exists
-          ? children.map((c) => (c.data.id === category.data.id ? category : c)) // actualizar
-          : [...children, category]; // agregar
+          ? children.map((c) => (c.data.id === category.data.id ? category : c))
+          : [...children, category];
 
         return { ...node, children: updatedChildren };
       }
 
-      // Si no es el padre, buscamos dentro de sus hijos
       if (node.children && node.children.length > 0) {
-        return { ...node, children: this.addOrUpdateCategory(node.children, category) };
+        return {
+          ...node,
+          children: this.addOrUpdateCategory(node.children, category)
+        };
       }
 
       return node;
@@ -172,13 +199,57 @@ export class Categories {
     );
   }
 
+  deleteCategory(node_tree: any) {
+    let category = node_tree.node.data;
+    let children = node_tree.node.children;
+    let sms = `Estas seguro de eliminar la categoría ${category.name}?`;
+
+    //separamos los labels del los hijos
+    let label_children = children.map((item: any) => item.label).join(' -> ');
+
+    if (children.length > 0) sms += `\nTambién se eliminaran las sub categorías, ${label_children}`;
+    this.confirmationService.confirm({
+      message: sms.replace(/\n/g, '<br/>'),
+      header: 'Eliminar categoría',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.deleteCategoryService(category, children);
+      }
+    });
+  }
+
+  /**
+   * LLama al servicio de eliminar para borrar una categoría
+   *
+   * @memberof Categories
+   * @param {Category} category
+   */
+  deleteCategoryService(category: Category, children: TreeNode[]) {
+    this.categoriesService.deleteCategory(category.id).subscribe((_category_response) => {
+      let { node_categories, category } = _category_response;
+
+      // Actualizamos o editamos el listado de categorias
+      this.categories.update((current) => this.removeCategory(current, category.id));
+
+      // obtenemos los ids de las categorias hijas elmiinadas y contacenamos el id de la categoria a eliminar
+      let categories_eliminates = children.map((item: any) => item.id).concat([category.id]);
+
+      this.plane_categories.update((current) => current.filter((item) => !categories_eliminates.includes(item.id)));
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Categoría eliminada exitosamente' });
+    });
+  }
+
   openModal() {
-    this.category.reset();
+    this.category.patchValue({
+      id: 0,
+      name: '',
+      parent_id: null
+    });
     this.modal.set(true);
     this.mode_form.set('create');
   }
 
-  editCharge(data: Category) {
+  editCategory(data: Category) {
     this.openModal();
     this.category.patchValue(data);
     this.mode_form.set('edit');

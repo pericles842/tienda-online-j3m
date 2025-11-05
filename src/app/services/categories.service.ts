@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { TreeNode } from 'primeng/api';
 import { Observable } from 'rxjs';
-import { Category } from '@/interfaces/category';
+import { Category, CategoryTreeResponse } from '@/interfaces/category';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
@@ -17,11 +17,15 @@ export class CategoriesService {
     return this.http.get<Category[]>(`${environment.host}/categories`);
   }
 
-  createCategory(category: Category): Observable<{ category: Category; node_categories: TreeNode }> {
-    return this.http.post<{ category: Category; node_categories: TreeNode }>(`${environment.host}/create-category`, category);
+  createCategory(category: Category): Observable<CategoryTreeResponse> {
+    return this.http.post<CategoryTreeResponse>(`${environment.host}/create-category`, category);
   }
 
-  updateCategory(category: Category): Observable<{ category: Category; node_categories: TreeNode }> {
-    return this.http.put<{ category: Category; node_categories: TreeNode }>(`${environment.host}/update-category`, category);
+  updateCategory(category: Category): Observable<CategoryTreeResponse> {
+    return this.http.put<CategoryTreeResponse>(`${environment.host}/update-category`, category);
+  }
+
+  deleteCategory(id_category: number): Observable<CategoryTreeResponse> {
+    return this.http.delete<CategoryTreeResponse>(`${environment.host}/delete-category/${id_category}`);
   }
 }
