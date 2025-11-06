@@ -1,0 +1,119 @@
+<app-menu-bar
+  (touchNew)="guardar()"
+  labelNewButton="Guardar"
+  [viewDeleteButton]="false"
+  [viewExportExcelButton]="false"
+  [viewExportPdfButton]="false"
+></app-menu-bar>
+
+<section class="card">
+  <form [formGroup]="configuration" class="space-y-6">
+    <span class="text-2xl font-semibold text-primary">Contacto y soporte</span>
+    <div class="grid grid-cols-12 gap-5 mt-5">
+      <div class="col-span-12 md:col-span-3">
+        <label for="email" class="block mb-2 text-sm text-primary">Correo de soporte</label>
+        <input
+          pInputText
+          id="email"
+          type="text"
+          placeholder="Correo"
+          formControlName="email"
+          class="w-full mb-2"
+          [ngClass]="configuration.get('email')?.hasError('invalid') && configuration.get('email')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (configuration.get('email')?.hasError('required')&& configuration.get('email')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">El Correo es obligatorio</p-message>
+        }
+      </div>
+
+      <div class="col-span-12 md:col-span-3">
+        <label for="phone" class="block mb-2 text-sm text-primary">Teléfono de soporte</label>
+        <input
+          pInputText
+          id="phone"
+          type="text"
+          placeholder="Teléfono"
+          formControlName="phone"
+          class="w-full mb-2"
+          [ngClass]="configuration.get('phone')?.hasError('invalid') && configuration.get('phone')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (configuration.get('phone')?.hasError('required')&& configuration.get('phone')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">El Teléfono es obligatorio</p-message>
+        }
+      </div>
+
+      <div class="col-span-12 md:col-span-3">
+        <label for="ig" class="block mb-2 text-sm text-primary">Instagram</label>
+        <input
+          pInputText
+          id="ig"
+          type="text"
+          placeholder="Instagram"
+          formControlName="ig"
+          class="w-full mb-2"
+          [ngClass]="configuration.get('ig')?.hasError('invalid') && configuration.get('ig')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (configuration.get('ig')?.hasError('required')&& configuration.get('ig')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">El Instagram es obligatorio</p-message>
+        }
+      </div>
+
+      <div class="col-span-12 md:col-span-3">
+        <label for="fb" class="block mb-2 text-sm text-primary">Facebook</label>
+        <input
+          pInputText
+          id="fb"
+          type="text"
+          placeholder="Facebook"
+          formControlName="fb"
+          class="w-full mb-2"
+          [ngClass]="configuration.get('fb')?.hasError('invalid') && configuration.get('fb')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (configuration.get('fb')?.hasError('required')&& configuration.get('fb')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">El Facebook es obligatorio</p-message>
+        }
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-5">
+      <span class="text-2xl text-primary font-semibold">Informacion del dolar</span>
+      <app-card-rates></app-card-rates>
+    </div>
+
+    <span class="text-2xl font-semibold text-primary">Selección de tasas</span>
+    <div class="grid grid-cols-12 gap-5 mt-5">
+      <div class="col-span-12 md:col-span-2">
+        <label for="bcv" class="block mb-2 text-sm text-primary">Bcv</label>
+        <p-radiobutton name="type_rate" value="bcv" formControlName="type_rate" inputId="bcv" />
+      </div>
+
+      <div class="col-span-12 md:col-span-2">
+        <label for="binance" class="block mb-2 text-sm text-primary">Binance</label>
+        <p-radiobutton name="type_rate" value="binance" formControlName="type_rate" inputId="binance" />
+      </div>
+
+      <div class="col-span-12 md:col-span-2">
+        <label for="ts" class="block mb-2 text-sm text-primary">Tasa automática</label>
+        <p-checkbox formControlName="automatic_rate" id="ts" [binary]="true" />
+      </div>
+
+      @if(configuration.get('automatic_rate')?.value){
+      <div class="col-span-12 md:col-span-3">
+        <label for="rate_manual" class="block mb-2 text-sm text-primary">Monto tasa manual</label>
+        <input
+          pInputText
+          id="rate_manual"
+          type="text"
+          placeholder="Facebook"
+          formControlName="rate_manual"
+          class="w-full mb-2"
+          [ngClass]="configuration.get('rate_manual')?.hasError('invalid') && configuration.get('rate_manual')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        />
+        @if (configuration.get('rate_manual')?.hasError('required')&& configuration.get('rate_manual')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">El Facebook es obligatorio</p-message>
+        }
+      </div>
+      }
+    </div>
+  </form>
+</section>

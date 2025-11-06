@@ -245,6 +245,23 @@ export class AuthService {
     const name_module_url = this.router.url.split('/').at(-1);
     const module_id = Modules[name_module_url as keyof typeof Modules]?.id;
 
+    if (name_module_url === 'profile') {
+      let { id, rol_id, role: rol } = this.decodeToken().user;
+
+      return {
+        ...id,
+        ...rol_id,
+        ...rol,
+        id: 0,
+        module_id: 0,
+        module: 'profile',
+        can_view: true,
+        can_create: true,
+        can_update: true,
+        can_delete: true
+      };
+    }
+
     return permissions.find((permiso) => permiso.module_id === module_id) as ChargesResponse;
   }
 }

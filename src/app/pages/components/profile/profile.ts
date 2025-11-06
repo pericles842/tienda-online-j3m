@@ -68,6 +68,8 @@ export class Profile {
     this.registerForm.markAllAsDirty();
     this.registerForm.updateValueAndValidity();
 
+    if (!this.registerForm.valid) return;
+
     this.userService.editClient(this.registerForm.value).subscribe((user) => {
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Perfil actualizado exitosamente' });
       this.registerForm.get('password_confirmation')?.setValue(user.password);
