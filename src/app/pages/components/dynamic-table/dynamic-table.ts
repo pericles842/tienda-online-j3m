@@ -10,6 +10,7 @@ import { TagModule } from 'primeng/tag';
 import { ActionTableButton, Column } from '@/interfaces/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { LayoutService } from '@/layout/service/layout.service';
+import { AuthService } from '@/services/auth.service';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -43,7 +44,14 @@ export class DynamicTable {
   @Input() selection: any[] = [];
   @Output() selectionChange = new EventEmitter<any[]>();
 
-  constructor(public layoutService: LayoutService) {}
+  constructor(
+    public layoutService: LayoutService,
+    private authService: AuthService
+  ) {}
+
+  get getPermissionsUser() {
+    return this.authService.getPermissionsUser();
+  }
   /**
    * Filters the table based on the input value.
    * @param table The table to be filtered.

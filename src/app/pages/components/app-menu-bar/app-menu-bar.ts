@@ -8,6 +8,7 @@ import { Ripple } from 'primeng/ripple';
 import { ReportService } from '@/services/report.service';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
+import { AuthService } from '@/services/auth.service';
 
 @Component({
   selector: 'app-menu-bar',
@@ -30,8 +31,13 @@ export class AppMenuBar {
   constructor(
     public layoutService: LayoutService,
     private messageService: MessageService,
-    private reportService: ReportService
+    private reportService: ReportService,
+    private authService: AuthService
   ) {}
+
+  get getPermissionsUser() {
+    return this.authService.getPermissionsUser();
+  }
 
   generatePdf() {
     this.reportService.generateDowlandReportPdf(this.url_api_pdf).subscribe((response: any) => {
@@ -56,8 +62,6 @@ export class AppMenuBar {
       a.download = filename;
       a.click();
       window.URL.revokeObjectURL(url);
-
-       
 
       //!CON WIONDUS OPEN SE ABRE DIRECTAMENTE
       //const fileURL = URL.createObjectURL(file);

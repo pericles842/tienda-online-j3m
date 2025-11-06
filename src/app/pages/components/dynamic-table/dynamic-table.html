@@ -71,6 +71,7 @@
           showDelay="400"
           (onClick)="onEdit.emit(rowData)"
           class="mr-2"
+          [disabled]="!getPermissionsUser.can_update"
           [rounded]="true"
           [outlined]="layoutService.isDarkTheme()"
         />
@@ -82,6 +83,7 @@
           class="mr-2"
           severity="danger"
           (onClick)="onDelete.emit(rowData)"
+          [disabled]="!getPermissionsUser.can_delete"
           [rounded]="true"
           [outlined]="layoutService.isDarkTheme()"
         />
@@ -94,6 +96,7 @@
           tooltipPosition="bottom"
           showDelay="400"
           [icon]="button.icon"
+          [disabled]="!getPermissionsUser.can_view"
           [severity]="button.severity"
           (onClick)="button.method(rowData)"
           [rounded]="button.rounded"

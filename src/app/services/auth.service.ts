@@ -1,4 +1,4 @@
-import { LoginResponse, User } from '@/interfaces/user';
+import { ChargesResponse, LoginResponse, User } from '@/interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { Modules } from '@/interfaces/modules';
 
 @Injectable({
   providedIn: 'root'
@@ -237,5 +238,13 @@ export class AuthService {
         return of(''); // devuelve string vacío si falla
       })
     );
+  }
+
+  getPermissionsUser(): ChargesResponse {
+    const permissions = this.decodeToken().user.permissions as ChargesResponse[];
+    const name_module_url = this.router.url.split('/').at(-1);
+    const module_id = Modules[name_module_url as keyof typeof Modules]?.id;
+
+    return permissions.find((permiso) => permiso.module_id === module_id) as ChargesResponse;
   }
 }

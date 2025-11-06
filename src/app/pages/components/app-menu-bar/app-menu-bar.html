@@ -9,6 +9,7 @@
       icon="pi pi-plus"
       severity="primary"
       class="mr-2"
+      [disabled]="!getPermissionsUser.can_create"
       [outlined]="layoutService.isDarkTheme()"
       (click)="touchNew.emit()"
     />
@@ -21,6 +22,7 @@
       tooltipPosition="bottom"
       label="Eliminar"
       icon="pi pi-trash"
+      [disabled]="!getPermissionsUser.can_delete"
       severity="danger"
       [outlined]="layoutService.isDarkTheme()"
       (click)="touchDelete.emit()"
@@ -39,6 +41,7 @@
         icon="pi pi-file-pdf"
         severity="danger"
         size="small"
+        [disabled]="!getPermissionsUser.can_view"
         [outlined]="layoutService.isDarkTheme()"
         (onClick)="generatePdf()"
       />
@@ -53,9 +56,9 @@
         showDelay="400"
         icon="pi pi-file-excel"
         severity="success"
+        [disabled]="!getPermissionsUser.can_view"
         size="small"
         [outlined]="layoutService.isDarkTheme()"
-      
       />
       }
     </div>

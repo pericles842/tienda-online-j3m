@@ -17,6 +17,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Category, CategoryForm } from '@/interfaces/category';
 import { Message } from 'primeng/message';
 import { Select } from 'primeng/select';
+import { AuthService } from '@/services/auth.service';
 
 @Component({
   selector: 'app-categories',
@@ -65,9 +66,13 @@ export class Categories {
     public layoutService: LayoutService,
     private categoriesService: CategoriesService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private authService: AuthService
   ) {}
 
+  get getPermissionsUser() {
+    return this.authService.getPermissionsUser();
+  }
   ngOnInit() {
     this.categoriesService.getCategoriesTree().subscribe((files) => this.categories.set(files));
     this.getPlaneCategories();
