@@ -1,3 +1,4 @@
+import { ConfigurationService } from '@/services/configuration.service';
 import { ProductJ3mService } from '@/services/products.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { CommonModule } from '@angular/common';
@@ -28,7 +29,8 @@ export class ProductDetailComponent {
     private route: ActivatedRoute,
     private productJ3mService: ProductJ3mService,
     private shoppingCartService: ShoppingCartService,
-    private viewContainer: ViewContainerRef
+    private viewContainer: ViewContainerRef,
+    public configurationService:ConfigurationService
   ) {}
 
   /**

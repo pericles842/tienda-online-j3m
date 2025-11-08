@@ -1,7 +1,7 @@
 import { DollarInformation } from '@/interfaces/configuration';
 import { ConfigurationService } from '@/services/configuration.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 
 @Component({
   selector: 'app-card-rates',
@@ -10,11 +10,12 @@ import { Component } from '@angular/core';
   styleUrl: './card-rates.scss'
 })
 export class CardRates {
-  rates: DollarInformation[] = [];
+  rates: WritableSignal<DollarInformation[] | []> = signal([]);
+
   dateTime: string = new Date().toISOString();
-  constructor(private configurationService: ConfigurationService) {}
+  constructor(public configurationService: ConfigurationService) {}
 
   ngOnInit() {
-    this.rates = this.configurationService.getRates();
+    this.configurationService.getRates().subscribe((rates) => this.rates.set(rates));
   }
 }

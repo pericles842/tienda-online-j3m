@@ -1,31 +1,68 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { DollarInformation } from '@/interfaces/configuration';
+import { DollarInformation, SystemConfiguration } from '@/interfaces/configuration';
+import { environment } from 'src/environments/environment';
+import { forkJoin, map, Observable } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationService {
-  constructor(private http: HttpClient) {}
 
-  getRates(): DollarInformation[] {
-    return [
-      {
-        id: 1,
-        title: 'Dolar Bcv',
-        key: 'bcv',
-        last_update: '2021-06-21Z00:00:00',
-        price_old: '105.34',
-        price: 105.34,
-        url_img: 'https://monitordolarvenezuela.com/img/logos/bcv.webp'
-      },
-      {
-        id: 2,
-        title: 'Dolar Binance',
-        key: 'binance',
-        last_update: '2021-06-21Z00:00:00',
-        price_old: '240.34',
-        price: 300.34,
-        url_img: 'https://monitordolarvenezuela.com/img/logos/binance-logo.svg'
-      }
-    ];
+  /**
+   *Otiene la configuracion del dolar
+   *
+   * @type {(Signal<DollarInformation | null>)}
+   * @memberof ConfigurationService
+   */
+  getPriceDolarConfiguration!: Signal<DollarInformation | null>;
+
+  constructor(private http: HttpClient) {
+    this.getPriceDolarConfiguration = toSignal(
+      forkJoin({
+        config: this.getPublicConfiguration(),
+        rates: this.getRates()
+      }).pipe(
+        map(({ config, rates }) => {
+          if (config.automatic_rate) {
+            return {
+              id: 0,
+              key: 'manual',
+              title: 'Tasa manual',
+              last_update: new Date().toDateString(),
+              price_old: config.rate_manual.toString(),
+              price: config.rate_manual,
+              url_img: ''
+            } satisfies  DollarInformation;
+          }
+
+          return rates.find((r) => r.key == config.type_rate) ?? null;
+        })
+      ),
+      { initialValue: null }
+    );
+  }
+
+  getRates(): Observable<DollarInformation[]> {
+    return this.http.get<DollarInformation[]>(`${environment.host}/rate-dollar-j3m`);
+  }
+
+  /**
+   *Obtiene una configuration para usarse en el formulario
+   *
+   * @return {*}  {Observable<SystemConfiguration>}
+   * @memberof ConfigurationService
+   */
+  getConfiguration(): Observable<SystemConfiguration> {
+    return this.http.get<SystemConfiguration>(`${environment.host}/configuration`);
+  }
+
+  /**
+   * obtiene una configuracion publica
+   *
+   * @return {*}  {Observable<SystemConfiguration>}
+   * @memberof ConfigurationService
+   */
+  getPublicConfiguration(): Observable<SystemConfiguration> {
+    return this.http.get<SystemConfiguration>(`${environment.host}/configuration-public`);
   }
 }

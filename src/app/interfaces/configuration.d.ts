@@ -25,6 +25,6 @@ export interface DollarInformation {
   url_img: string;
 }
 
-export type TypeRate = 'bcv' | 'binance';
+export type TypeRate = 'bcv' | 'binance'|'manual';
 
 export type SystemConfigurationFormGroup = FormGroupControls<SystemConfiguration>;

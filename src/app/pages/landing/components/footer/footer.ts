@@ -1,5 +1,7 @@
+import { SystemConfiguration } from '@/interfaces/configuration';
+import { ConfigurationService } from '@/services/configuration.service';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input, signal, WritableSignal } from '@angular/core';
 
 @Component({
   selector: 'app-footer-custom',
@@ -9,7 +11,9 @@ import { Component } from '@angular/core';
 })
 export class Footer {
   private date = new Date();
-  public get fechaActual(): string {
+  @Input() config!: WritableSignal<SystemConfiguration>;
+
+  get fechaActual(): string {
     return this.date.getFullYear().toString();
   }
 }
