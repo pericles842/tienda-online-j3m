@@ -97,7 +97,7 @@
         <p-checkbox formControlName="automatic_rate" id="ts" [binary]="true" />
       </div>
 
-      @if(configuration.get('automatic_rate')?.value){
+      @if(!configuration.get('automatic_rate')?.value){
       <div class="col-span-12 md:col-span-3">
         <label for="rate_manual" class="block mb-2 text-sm text-primary">Monto tasa manual</label>
         <input

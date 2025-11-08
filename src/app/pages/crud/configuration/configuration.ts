@@ -8,6 +8,8 @@ import { Message } from 'primeng/message';
 import { CardRates } from '@/pages/components/card-rates/card-rates';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { CheckboxModule } from 'primeng/checkbox';
+import { MessageService } from 'primeng/api';
+import { ConfigurationService } from '@/services/configuration.service';
 
 @Component({
   selector: 'app-configuration',
@@ -28,7 +30,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 export class Configuration {
   configuration: FormGroup<SystemConfigurationFormGroup> = new FormGroup<SystemConfigurationFormGroup>({
     id: new FormControl<number>(0),
-    automatic_rate: new FormControl<boolean>(false),
+    automatic_rate: new FormControl<boolean>(true),
     type_rate: new FormControl<TypeRate>('bcv'),
     rate_manual: new FormControl<number>(1.0),
     email: new FormControl<string>('j3m@gmail.com', Validators.required),
@@ -37,12 +39,27 @@ export class Configuration {
     fb: new FormControl<string>('@j3m', Validators.required)
   });
 
+  constructor(
+    private messageService: MessageService,
+    private configurationService: ConfigurationService
+  ) {}
+  ngOnInit() {
+    this.configurationService.getConfiguration().subscribe((configuration) => {
+      this.configuration.patchValue(configuration);
+    });
+  }
+
   guardar() {
     this.configuration.markAllAsDirty();
     this.configuration.updateValueAndValidity();
 
     if (!this.configuration.valid) return;
 
-    console.log(this.configuration.value);
+    this.configurationService.updateConfiguration(this.configuration.value).subscribe({
+      next: (config) => {
+        this.configuration.patchValue(config);
+        this.messageService.add({ severity: 'success', summary: 'Guardado', detail: 'Configuracion Guardado correctamente' });
+      }
+    });
   }
 }

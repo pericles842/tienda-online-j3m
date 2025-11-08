@@ -40,7 +40,7 @@
     </div>
   </div>
 
-  <div class="flex flex-col  w-full md:w-1/2 gap-10">
+  <div class="flex flex-col w-full md:w-1/2 gap-10">
     <div class="flex flex-col gap-5 bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">
       <span class="text-xl text-primary-800 font-semibold dark:text-primary-100">Tu pedido</span>
       <hr />
@@ -59,7 +59,9 @@
 
       <hr />
       <div class="flex flex-col gap-2 text-xl">
-        <span class="text-primary-700 font-bold dark:text-primary-100">Tasa: 134.00</span>
+        <span class="text-primary-700 font-bold dark:text-primary-100"
+          >Tasa: {{configurationService.getPriceDolarConfiguration()?.price}} Bs</span
+        >
         <div class="flex justify-between">
           <span class="text-primary-700 font-bold dark:text-primary-100">Total</span>
           <div class="flex gap-4">
@@ -86,7 +88,7 @@
         }
       </div>
 
-      <div class="grid grid-cols-12 gap-5 mt-3  ">
+      <div class="grid grid-cols-12 gap-5 mt-3">
         <div class="col-span-6 flex flex-col">
           <span class="text-sm text-primary-400">Número de cuenta</span>
           <p class="text-primary-800 font-bold">112214125214125</p>

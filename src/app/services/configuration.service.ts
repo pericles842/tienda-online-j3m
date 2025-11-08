@@ -7,7 +7,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationService {
-
   /**
    *Otiene la configuracion del dolar
    *
@@ -23,7 +22,7 @@ export class ConfigurationService {
         rates: this.getRates()
       }).pipe(
         map(({ config, rates }) => {
-          if (config.automatic_rate) {
+          if (!config.automatic_rate) {
             return {
               id: 0,
               key: 'manual',
@@ -32,7 +31,7 @@ export class ConfigurationService {
               price_old: config.rate_manual.toString(),
               price: config.rate_manual,
               url_img: ''
-            } satisfies  DollarInformation;
+            } satisfies DollarInformation;
           }
 
           return rates.find((r) => r.key == config.type_rate) ?? null;
@@ -54,6 +53,10 @@ export class ConfigurationService {
    */
   getConfiguration(): Observable<SystemConfiguration> {
     return this.http.get<SystemConfiguration>(`${environment.host}/configuration`);
+  }
+
+  updateConfiguration(configuration: SystemConfiguration): Observable<SystemConfiguration> {
+    return this.http.put<SystemConfiguration>(`${environment.host}/configuration`, configuration);
   }
 
   /**

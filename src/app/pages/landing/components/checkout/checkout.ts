@@ -1,4 +1,5 @@
 import { AuthService } from '@/services/auth.service';
+import { ConfigurationService } from '@/services/configuration.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { Component } from '@angular/core';
 import { MenuItem } from 'primeng/api';
@@ -23,7 +24,8 @@ export class Checkout {
 
   constructor(
     private authService: AuthService,
-    private shoppingCartService: ShoppingCartService
+    private shoppingCartService: ShoppingCartService,
+    public configurationService: ConfigurationService
   ) {}
 
   ngOnInit() {
