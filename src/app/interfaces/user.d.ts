@@ -69,3 +69,14 @@ type UserLoginResponse = {
   role: string;
   rol_id: number;
 };
+
+/**
+ *Interfaz para le auditoria de los usuarios
+ *
+ * @export
+ * @interface UserTracking
+ */
+export interface UserTracking {
+  user_create_id: number;
+  user_update_id: number;
+}
