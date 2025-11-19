@@ -16,8 +16,8 @@
 <!-- SECCIÓN DOS SEARCH Y REGISTRO -->
 <!-- ------------------------------------------------------------------ -->
 <div class="flex justify-between items-center p-3 bg-primary-900 dark:bg-surface-900 border-b-1 border-primary md:border-0">
-  <div class="flex gap-2 items-center">
-    <img src="/assets/images/logotipo.png" alt="logo" class="w-12 h-12" />
+  <div routerLink="/dashboard" class="flex gap-2 items-center cursor-pointer">
+    <img [src]="'https://grupo-j3m.s3.us-east-2.amazonaws.com/public/logotipo.png'" alt="logo" class="w-12 h-12" />
     <span class="font-bold text-base text-white">Tienda J3M</span>
   </div>
   <!-- ------------------------------------------------------------------ -->
@@ -98,9 +98,9 @@
     <!-- ------------------------------------------------------------------ -->
     <div class="flex items-center gap-2">
       @if (layoutService.isDesktop()) {
-      
-        <app-shopping-cart></app-shopping-cart>
-      
+
+      <app-shopping-cart></app-shopping-cart>
+
       } @if(isExistToken && layoutService.isDesktop()){
       <div class="flex items-center gap-3 cursor-pointer">
         <p-avatar
