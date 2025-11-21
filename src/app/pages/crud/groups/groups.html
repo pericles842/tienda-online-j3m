@@ -1,4 +1,4 @@
-<app-menu-bar url_api_pdf="groups-report" (touchNew)="modal.set(true)"></app-menu-bar>
+<app-menu-bar url_api_pdf="groups-report" (touchNew)="openModal()"></app-menu-bar>
 
 <app-dynamic-table
   [columns]="columns"
@@ -21,7 +21,11 @@
     <form [formGroup]="groupForm" class="space-y-6">
       <div class="grid grid-cols-12 gap-4">
         <div class="col-span-12 md:col-span-4">
-          <app-dynamic-upload></app-dynamic-upload>
+          <app-dynamic-upload
+            [validator]="groupForm.get('image')?.hasError('required')&& groupForm.get('image')?.dirty || false"
+            (fileSelected)="fileSelected($event)"
+            [previewUrl]="groupForm.get('url_img')?.value"
+          ></app-dynamic-upload>
         </div>
         <!-- //?CONTENEDOR DERECHO -->
         <div class="col-span-12 md:col-span-8">
@@ -48,7 +52,7 @@
               id="rif"
               type="text"
               placeholder="Secretario"
-              formControlName="name"
+              formControlName="rif"
               class="w-full mb-2"
               [ngClass]="groupForm.get('rif')?.hasError('invalid') && groupForm.get('rif')?.dirty ? 'ng-invalid ng-dirty' : ''"
             />
@@ -67,7 +71,7 @@
             id="email"
             type="text"
             placeholder="grupo@gmail.com"
-            formControlName="name"
+            formControlName="email"
             class="w-full mb-2"
             [ngClass]="groupForm.get('email')?.hasError('invalid') && groupForm.get('email')?.dirty ? 'ng-invalid ng-dirty' : ''"
           />
@@ -103,7 +107,7 @@
         text
       ></p-button>
 
-      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+      <p-button (click)="saveGroup()" label="Guardar" icon="pi pi-check" type="button"></p-button>
     </div>
   </ng-template>
 </p-dialog>

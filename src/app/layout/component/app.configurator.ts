@@ -304,6 +304,20 @@ export class AppConfigurator {
         900: '#273f0e',
         950: '#192709'
       };
+
+      presetPalette.yellow = {
+        50: '#fffde6',
+        100: '#fff9bf',
+        200: '#fff499',
+        300: '#ffef73',
+        400: '#ffe94d',
+        500: '#ffe600',  
+        600: '#e6cf00',
+        700: '#b3a300',
+        800: '#807700',
+        900: '#4d4a00',
+        950: '#262500'
+      };
     }
     const colors = [
       'emerald',
