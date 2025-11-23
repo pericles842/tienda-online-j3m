@@ -1,16 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Table, TableModule } from 'primeng/table';
-import { IconField } from 'primeng/iconfield';
-import { InputIcon, InputIconModule } from 'primeng/inputicon';
-import { Button } from 'primeng/button';
-import { CommonModule } from '@angular/common';
-import { InputTextModule } from 'primeng/inputtext';
-import { TextareaModule } from 'primeng/textarea';
-import { TagModule } from 'primeng/tag';
 import { ActionTableButton, Column } from '@/interfaces/forms';
-import { TooltipModule } from 'primeng/tooltip';
 import { LayoutService } from '@/layout/service/layout.service';
 import { AuthService } from '@/services/auth.service';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Button } from 'primeng/button';
+import { IconField } from 'primeng/iconfield';
+import { InputIcon, InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { ProgressSpinner } from 'primeng/progressspinner';
+import { Table, TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { TextareaModule } from 'primeng/textarea';
+import { TooltipModule } from 'primeng/tooltip';
+import { ImageModule } from 'primeng/image';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -24,7 +26,9 @@ import { AuthService } from '@/services/auth.service';
     InputTextModule,
     TextareaModule,
     TagModule,
-    InputIconModule
+    InputIconModule,
+    ProgressSpinner,
+    ImageModule
   ],
   templateUrl: './dynamic-table.html',
   styleUrl: './dynamic-table.scss'
@@ -44,6 +48,8 @@ export class DynamicTable {
   @Input() selection: any[] = [];
   @Output() selectionChange = new EventEmitter<any[]>();
 
+  loadingImages: { [url: string]: boolean } = {};
+
   constructor(
     public layoutService: LayoutService,
     private authService: AuthService
@@ -62,12 +68,20 @@ export class DynamicTable {
   }
 
   /**
-   *Emite el arreglo de  datos seleciconados
+   *Emite el arreglo de  datos seleccionados
    *
    * @param {*} event
    * @memberof DynamicTable
    */
   emitSelectionChange(event: any) {
     this.selectionChange.emit(event);
+  }
+
+  /**
+   * Load an image and show a loading indicator while it is being loaded.
+   * @param {string} url The URL of the image to be loaded.
+   */
+  onImageLoad(url: string) {
+    this.loadingImages[url] = url !== '';
   }
 }

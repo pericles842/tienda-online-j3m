@@ -2,6 +2,7 @@
 
 <app-dynamic-table
   [columns]="columns"
+  (onEdit)="goToEdit($event)"
   name_table="Cajas de ahorro"
   [data]="public_groups()"
   [globalFilterFields]="globalFilterFields"
@@ -22,7 +23,7 @@
       <div class="grid grid-cols-12 gap-4">
         <div class="col-span-12 md:col-span-4">
           <app-dynamic-upload
-            [validator]="groupForm.get('image')?.hasError('required')&& groupForm.get('image')?.dirty || false"
+            [validator]="groupForm.errors?.['fileOrUrlRequired'] && groupForm.dirty"
             (fileSelected)="fileSelected($event)"
             [previewUrl]="groupForm.get('url_img')?.value"
           ></app-dynamic-upload>

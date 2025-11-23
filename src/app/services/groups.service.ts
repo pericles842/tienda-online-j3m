@@ -14,4 +14,12 @@ export class PublicGroupsService {
   getPublicGroups(): Observable<PublicGroup[]> {
     return this.http.get<PublicGroup[]>(`${environment.host}/public_groups`);
   }
+
+  createPublicGroup(group: FormData): Observable<PublicGroup> {
+    return this.http.post<PublicGroup>(`${environment.host}/public_groups`, group);
+  }
+
+  updatePublicGroup(group: FormData): Observable<PublicGroup> {
+    return this.http.put<PublicGroup>(`${environment.host}/public_groups`, group);
+  }
 }

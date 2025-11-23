@@ -23,9 +23,16 @@ export class DynamicUpload {
    * @memberof DynamicUpload
    */
   get condition_validator(): boolean {
-    return this.validator || this.previewUrl != null ? false : true;
+    
+    return this.validator ;
   }
 
+  /**
+   *Emite el archivo seleccionado
+   *
+   * @param {Event} event
+   * @memberof DynamicUpload
+   */
   onFileSelect(event: Event) {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
