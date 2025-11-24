@@ -18,7 +18,7 @@ import { User } from '@/interfaces/user';
         <i class="pi pi-bars"></i>
       </button>
       <a class="layout-topbar-logo" routerLink="/">
-        <img style="width: 40px;" src="assets/images/logotipo.png" alt="logotipo" />
+        <img style="width: 40px;" [src]="'https://grupo-j3m.s3.us-east-2.amazonaws.com/public/logotipo.png'" alt="logotipo" />
         <!-- <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fill-rule="evenodd"
