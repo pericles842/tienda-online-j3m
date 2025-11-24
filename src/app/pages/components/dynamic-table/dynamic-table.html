@@ -48,7 +48,7 @@
       <td style="width: 3rem">
         <p-tableCheckbox [value]="rowData" />
       </td>
-      @for (col of columns; track $index) {
+      @for (col of columns; track $index ) {
 
       <!-- SWITCH -->
       @switch (col.dataType) {
@@ -72,11 +72,12 @@
           />
 
           }@else {
+         
           <p-image
             loading="eager"
             imageClass="w-16 h-16 object-cover rounded cursor-pointer transition hover:opacity-80"
-            [src]="rowData[col.key]"
-            [alt]="rowData[col.key]"
+            [src]="rowData[col.key]  + '?t=' + dateToday"
+            [alt]="rowData[col.key] + '?t=' + dateToday"
             [preview]="true"
           />
           }

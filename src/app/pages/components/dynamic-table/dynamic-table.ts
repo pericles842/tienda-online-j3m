@@ -58,6 +58,11 @@ export class DynamicTable {
   get getPermissionsUser() {
     return this.authService.getPermissionsUser();
   }
+
+  get dateToday() {
+    return new Date().getSeconds();
+  }
+
   /**
    * Filters the table based on the input value.
    * @param table The table to be filtered.
@@ -66,6 +71,7 @@ export class DynamicTable {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
 
   /**
    *Emite el arreglo de  datos seleccionados

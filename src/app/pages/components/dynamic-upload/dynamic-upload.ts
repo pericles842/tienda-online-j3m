@@ -23,8 +23,11 @@ export class DynamicUpload {
    * @memberof DynamicUpload
    */
   get condition_validator(): boolean {
-    
-    return this.validator ;
+    return this.validator;
+  }
+
+  get dateToday() {
+    return new Date().getMinutes();
   }
 
   /**
