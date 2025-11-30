@@ -4,12 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { BaseCrudService } from './base-crud.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublicGroupsService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private baseCrudService: BaseCrudService
+  ) {}
 
   getPublicGroups(): Observable<PublicGroup[]> {
     return this.http.get<PublicGroup[]>(`${environment.host}/public_groups`);
@@ -21,5 +25,9 @@ export class PublicGroupsService {
 
   updatePublicGroup(group: FormData): Observable<PublicGroup> {
     return this.http.put<PublicGroup>(`${environment.host}/public_groups`, group);
+  }
+
+  deletePublicGroup(id: number[]): Observable<{ ids: number[] }> {
+    return this.baseCrudService.eliminateResources('public_groups', id);
   }
 }

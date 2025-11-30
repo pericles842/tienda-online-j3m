@@ -126,6 +126,7 @@
     <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component!=='account' && viewCharges }">
       <label for="correo" class="block mb-2 text-sm text-primary">Caja de ahorro</label>
       <p-select
+        appendTo="body"
         formControlName="public_group_id"
         [options]="public_groups"
         [loading]="loading_public_groups()"
@@ -146,6 +147,7 @@
     <div class="col-span-12" [ngClass]="{'md:col-span-6': mode_component==='crud' && viewCharges}">
       <label for="rol" class="block mb-2 text-sm text-primary">Cargo</label>
       <p-select
+        appendTo="body"
         formControlName="rol_id"
         [options]="roles()"
         [loading]="roles_loading()"
@@ -166,6 +168,7 @@
     <div class="col-span-12 md:col-span-4">
       <label for="correo" class="block mb-2 text-sm text-primary">Estado</label>
       <p-select
+        appendTo="body"
         formControlName="state_id"
         [filter]="true"
         filterBy="name"
@@ -206,6 +209,7 @@
     <div class="col-span-12 md:col-span-4">
       <label for="correo" class="block mb-2 text-sm text-primary">Parroquia</label>
       <p-select
+        appendTo="body"
         formControlName="parish_id"
         [filter]="true"
         filterBy="name"

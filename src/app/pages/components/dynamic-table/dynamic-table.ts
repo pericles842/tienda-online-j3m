@@ -59,7 +59,7 @@ export class DynamicTable {
     return this.authService.getPermissionsUser();
   }
 
-  get dateToday() {
+  get changeSecondsUrl() {
     return new Date().getSeconds();
   }
 
@@ -71,7 +71,6 @@ export class DynamicTable {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-
 
   /**
    *Emite el arreglo de  datos seleccionados

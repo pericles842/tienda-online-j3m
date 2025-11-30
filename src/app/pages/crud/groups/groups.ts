@@ -21,7 +21,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
 import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 /**
  * Validator para que un formulario tenga o bien una imagen o una url de imagen
@@ -117,7 +117,8 @@ export class Groups {
 
   constructor(
     private publicGroupsService: PublicGroupsService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
@@ -186,6 +187,30 @@ export class Groups {
       this.public_groups.update((current) => current.map((item) => (item.id === res.id ? res : item)));
       this.modal.set(false);
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Caja de ahorro actualizada exitosamente' });
+    });
+  }
+
+  deleteGroup(event: any) {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de eliminar esta caja de ahorro?',
+      header: 'Eliminar caja de ahorro',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const id: number[] = [event.id];
+        this.deleteGroupService(id);
+      }
+    });
+  }
+  /**
+   *Ejecuta el servicio de borrado
+   *
+   * @param {number[]} id
+   * @memberof Groups
+   */
+  deleteGroupService(id: number[]) {
+    this.publicGroupsService.deletePublicGroup(id).subscribe((res) => {
+      this.public_groups.update((current) => current.filter((item) => !res.ids.includes(item.id)));
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Caja de ahorro eliminada exitosamente' });
     });
   }
 }

@@ -3,6 +3,7 @@
 <app-dynamic-table
   [columns]="columns"
   (onEdit)="goToEdit($event)"
+  (onDelete)="deleteGroup($event)"
   name_table="Cajas de ahorro"
   [data]="public_groups()"
   [globalFilterFields]="globalFilterFields"

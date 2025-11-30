@@ -39,7 +39,7 @@
       </th>
 
       }
-      <th style="min-width: 12rem">Acción</th>
+      <th class="sticky right-0 bg-white z-10" style="min-width: 8rem">Acción</th>
     </tr>
   </ng-template>
   <ng-template #body let-rowData let-columns="columns">
@@ -72,12 +72,11 @@
           />
 
           }@else {
-         
           <p-image
             loading="eager"
             imageClass="w-16 h-16 object-cover rounded cursor-pointer transition hover:opacity-80"
-            [src]="rowData[col.key]  + '?t=' + dateToday"
-            [alt]="rowData[col.key] + '?t=' + dateToday"
+            [src]="rowData[col.key]  + '?t=' + changeSecondsUrl"
+            [alt]="rowData[col.key] + '?t=' + changeSecondsUrl"
             [preview]="true"
           />
           }
@@ -97,7 +96,7 @@
       <td [style]="col.style? col.style : ''">{{ rowData[col.key] }}</td>
       } } }
       <!-- botonera -->
-      <td>
+      <td class="sticky right-0 bg-white z-10 flex">
         <p-button
           icon="pi pi-pencil"
           severity="info"
