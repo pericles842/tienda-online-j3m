@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BaseCrudService } from './base-crud.service';
+import { ResponseDeleteResource } from '@/interfaces/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +28,7 @@ export class PublicGroupsService {
     return this.http.put<PublicGroup>(`${environment.host}/public_groups`, group);
   }
 
-  deletePublicGroup(id: number[]): Observable<{ ids: number[] }> {
+  deletePublicGroup(id: number[]): Observable<ResponseDeleteResource> {
     return this.baseCrudService.eliminateResources('public_groups', id);
   }
 }

@@ -18,11 +18,10 @@
     <p-button
       pTooltip="eliminar registros"
       showDelay="400"
-      [disabled]="disableDeleteButton"
       tooltipPosition="bottom"
       label="Eliminar"
       icon="pi pi-trash"
-      [disabled]="!getPermissionsUser.can_delete"
+      [disabled]="!getPermissionsUser.can_delete || disableDeleteButton"
       severity="danger"
       [outlined]="layoutService.isDarkTheme()"
       (click)="touchDelete.emit()"
@@ -40,7 +39,6 @@
         showDelay="400"
         icon="pi pi-file-pdf"
         severity="danger"
-        size="small"
         [disabled]="!getPermissionsUser.can_view"
         [outlined]="layoutService.isDarkTheme()"
         (onClick)="generatePdf()"
@@ -57,7 +55,6 @@
         icon="pi pi-file-excel"
         severity="success"
         [disabled]="!getPermissionsUser.can_view"
-        size="small"
         [outlined]="layoutService.isDarkTheme()"
       />
       }

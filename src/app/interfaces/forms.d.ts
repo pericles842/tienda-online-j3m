@@ -22,6 +22,11 @@ export interface ActionTableButton {
   method: (event: any) => void;
 }
 
- export type FormGroupControls<T> = {
+export type FormGroupControls<T> = {
   [K in keyof T]: FormControl<T[K]>;
 };
+
+/**
+ * Tipado de las respuesta en el delete
+ */
+export type ResponseDeleteResource = { ids: number[] };

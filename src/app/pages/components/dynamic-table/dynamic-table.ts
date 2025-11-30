@@ -69,7 +69,8 @@ export class DynamicTable {
    * @param event The event that triggered the filter.
    */
   onGlobalFilter(table: Table, event: Event) {
-    table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    const inputValue = (event.target as HTMLInputElement).value.trim();
+    table.filterGlobal(inputValue, 'contains');
   }
 
   /**

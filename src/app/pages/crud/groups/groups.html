@@ -1,7 +1,13 @@
-<app-menu-bar url_api_pdf="groups-report" (touchNew)="openModal()"></app-menu-bar>
+<app-menu-bar
+  url_api_pdf="groups-report"
+  [disableDeleteButton]="selectedEliminateGroups.length == 0"
+  (touchDelete)="deleteGroups()"
+  (touchNew)="openModal()"
+></app-menu-bar>
 
 <app-dynamic-table
   [columns]="columns"
+  [(selection)]="selectedEliminateGroups"
   (onEdit)="goToEdit($event)"
   (onDelete)="deleteGroup($event)"
   name_table="Cajas de ahorro"

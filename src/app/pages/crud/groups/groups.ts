@@ -68,6 +68,7 @@ export function fileOrUrlValidator(): ValidatorFn {
 export class Groups {
   public_groups: WritableSignal<PublicGroup[]> = signal([]);
   modal: WritableSignal<boolean> = signal(false);
+  selectedEliminateGroups: PublicGroup[] = [];
 
   groupForm: FormGroup<PublicGroupFormGroup> = new FormGroup<PublicGroupFormGroup>(
     {
@@ -201,6 +202,7 @@ export class Groups {
       }
     });
   }
+
   /**
    *Ejecuta el servicio de borrado
    *
@@ -211,6 +213,19 @@ export class Groups {
     this.publicGroupsService.deletePublicGroup(id).subscribe((res) => {
       this.public_groups.update((current) => current.filter((item) => !res.ids.includes(item.id)));
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Caja de ahorro eliminada exitosamente' });
+      this.selectedEliminateGroups = [];
+    });
+  }
+
+  deleteGroups() {
+    this.confirmationService.confirm({
+      message: `¿Estas seguro de eliminar ${this.selectedEliminateGroups.length} cajas de ahorro?`,
+      header: 'Eliminar cajas de ahorro',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const ids: number[] = this.selectedEliminateGroups.map((item: PublicGroup) => item.id);
+        this.deleteGroupService(ids);
+      }
     });
   }
 }

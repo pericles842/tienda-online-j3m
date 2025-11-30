@@ -1,12 +1,12 @@
 import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { Router } from '@angular/router'; // Para manejar redirecciones
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
 export const errorsInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn) => {
   const router = inject(Router);
-  const messageService = inject(MessageService); // Asumiendo que tienes un servicio de notificaciones
+  const messageService = inject(MessageService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -33,8 +33,7 @@ export const errorsInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, 
         }
       }
 
-      // Mostrar el error al usuario (opcional)
-      messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 5000 });
+      messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error, life: 0, sticky: true  });
 
       // Devolver un observable con el error para que sea manejado por el componente que hizo la solicitud
       return throwError(() => new Error(errorMessage));

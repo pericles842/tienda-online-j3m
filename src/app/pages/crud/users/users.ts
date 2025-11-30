@@ -215,6 +215,7 @@ export class Users {
           next: (users) => {
             this.users.update((current) => current.filter((item) => !users.ids_array.includes(item.id)));
             this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Usuarios eliminados exitosamente' });
+            this.selectedEliminateUsers = [];
           }
         });
       }

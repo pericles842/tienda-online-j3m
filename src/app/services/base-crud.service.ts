@@ -1,3 +1,4 @@
+import { ResponseDeleteResource } from '@/interfaces/forms';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -14,12 +15,12 @@ export class BaseCrudService {
    *
    * @param {string} url 'users/one-client/1'
    * @param {number} id 1
-   * @return {*}  {Observable<{ ids: number[] }>}
+   * @return {*}  {Observable<ResponseDeleteResource>}
    *
    * @example this.eliminateResources('users/one-client', [1,2,3])
    * @memberof BaseCrudService
    */
-  eliminateResources(url: string, id: number[]): Observable<{ ids: number[] }> {
-    return this.http.delete<{ ids: number[] }>(`${environment.host}/${url}`, { params: { id } });
+  eliminateResources(url: string, id: number[]): Observable<ResponseDeleteResource> {
+    return this.http.delete<ResponseDeleteResource>(`${environment.host}/${url}`, { params: { id } });
   }
 }
