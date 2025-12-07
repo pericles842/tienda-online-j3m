@@ -1,1 +1,158 @@
+<app-menu-bar (touchNew)="openModal()"></app-menu-bar>
 
+<p-dialog
+  [visible]="modal()"
+  [style]="{ width: '640px' }"
+  header="Métodos de pagos"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+>
+  <ng-template pTemplate="content">
+    <div>
+      <label for="pay" class="block mb-2 text-sm text-primary">Método de pago</label>
+      <p-select
+        [options]="pay_methods()"
+        (onChange)="builderTypePayForm()"
+        [(ngModel)]="pay_method_selected"
+        optionLabel="label"
+        appendTo="body"
+        class="w-full"
+      />
+      <span class="text-primary">{{ pay_method_selected.description }}</span>
+    </div>
+
+    <form [formGroup]="pay_method_form" class="space-y-6 mt-8">
+      <!-- NOmbre apellido del titular -->
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 md:col-span-4">
+          <app-dynamic-upload></app-dynamic-upload>
+        </div>
+        <!-- //?CONTENEDOR DERECHO -->
+        <div class="col-span-12 md:col-span-8">
+          <!-- //?INPUTS TODOS SON 12 -->
+          <div class="col-span-12">
+            <label for="name" class="block mb-2 text-sm text-primary">Nombre del método</label>
+            <input pInputText id="name" type="text" placeholder="Grupo 1" formControlName="name" class="w-full mb-2" />
+            @if (pay_method_form.get('name')?.hasError('required')&& pay_method_form.get('name')?.dirty) {
+            <p-message severity="error" variant="simple" size="small">El nombre del método de pago es obligatorio</p-message>
+            }
+          </div>
+
+          <div class="col-span-12">
+            <label for="holder" class="block mb-2 text-sm text-primary">Titular</label>
+            <input
+              pInputText
+              id="holder"
+              type="text"
+              placeholder="Nombre del titular"
+              formControlName="holder"
+              class="w-full mb-2"
+            />
+            @if (pay_method_form.get('holder')?.hasError('required')&& pay_method_form.get('holder')?.dirty) {
+            <p-message severity="error" variant="simple" size="small">El Titular es obligatorio</p-message>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- formulario dos -->
+      <div [formGroup]="datosForm" class="grid grid-cols-12 gap-4">
+        <!-- ?PAGOMOVIL -->
+        @if (pay_method_selected.type === 'pagomovil' || pay_method_selected.type === 'transferencia') {
+        <div class="col-span-12 md:col-span-6">
+          <label for="phone" class="block mb-2 text-sm text-primary">Teléfono</label>
+          <input pInputText id="holder" type="text" placeholder="04123456789" formControlName="phone" class="w-full mb-2" />
+
+          @if (datosForm.get('phone')?.hasError('required')&& datosForm.get('phone')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El teléfono es obligatorio</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-6">
+          <label for="documentation" class="block mb-2 text-sm text-primary">Documento</label>
+          <input pInputText id="holder" type="text" placeholder="30475648" formControlName="documentation" class="w-full mb-2" />
+
+          @if (datosForm.get('documentation')?.hasError('required')&& datosForm.get('documentation')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El documento es obligatorio</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-4">
+          <label for="code_bank" class="block mb-2 text-sm text-primary">Código</label>
+          <input pInputText id="holder" type="text" placeholder="0102" formControlName="code_bank" class="w-full mb-2" />
+
+          @if (datosForm.get('code_bank')?.hasError('required')&& datosForm.get('code_bank')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El código del banco es obligatorio</p-message>
+          }
+        </div>
+        }
+        <!-- ?TRANFERENCIA BANCARIA -->
+        @if (pay_method_selected.type === 'transferencia') {
+        <div class="col-span-12">
+          <label for="num_account" class="block mb-2 text-sm text-primary">Numero de cuenta</label>
+          <input pInputText id="num_account" type="text" formControlName="num_account" class="w-full mb-2" />
+
+          @if (datosForm.get('num_account')?.hasError('required')&& datosForm.get('num_account')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El teléfono es obligatorio</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-6">
+          <label for="type_account" class="block mb-2 text-sm text-primary">Tipo de cuenta</label>
+          <p-select
+            [options]="type_account_bank()"
+            formControlName="type_account"
+            optionLabel="label"
+            optionValue="type"
+            appendTo="body"
+            class="w-full"
+          />
+        </div>
+
+        <div class="col-span-12 md:col-span-6">
+          <label for="type_person" class="block mb-2 text-sm text-primary">Tipo de persona</label>
+          <p-select
+            [options]="type_person()"
+            formControlName="type_person"
+            optionLabel="label"
+            optionValue="type"
+            appendTo="body"
+            class="w-full"
+          />
+        </div>
+        }
+
+        <!-- ?BILLETERA DIGITAL -->
+        @if (pay_method_selected.type === 'billetera_digital') {
+        <div class="col-span-12">
+          <label for="email" class="block mb-2 text-sm text-primary">Correo electrónico</label>
+          <input pInputText id="email" type="text" placeholder="correo@gmail.com" formControlName="email" class="w-full mb-2" />
+
+          @if (datosForm.get('email')?.hasError('required')&& datosForm.get('email')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El correo es obligatorio</p-message>
+          }
+        </div>
+        }
+      </div>
+    </form>
+  </ng-template>
+
+  <!-- FOOTER CORRECTO -->
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 p-3">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="modal.set(false)"
+        severity="danger"
+        outlined
+        class="p-button-text"
+        text
+      ></p-button>
+      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
