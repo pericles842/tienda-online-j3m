@@ -1,8 +1,23 @@
+export interface PayMethodMobilePay {
+  code_bank: string;
+  phone: string;
+  documentation: number;
+}
+export interface PayMethodTransfer extends PayMethodMobilePay {
+  num_account: string;
+  type_account: 'ahorro' | 'corriente';
+  type_person: 'natural' | 'juridica';
+}
+
+export interface PayMethodDigitalWallet {
+  email: string;
+}
+
 export interface PayMethod {
   id: number;
   name: string;
   type: TypePayMethod;
-  datos: { [key: string]: string };
+  datos: PayMethodMobilePay | PayMethodDigitalWallet | PayMethodTransfer;
   holder: string;
   url_img: string;
   created_at: string;

@@ -2,13 +2,37 @@ import { PaymentTypeSelector, PayMethodForm, TypePayMethod } from '@/interfaces/
 import { AppMenuBar } from '@/pages/components/app-menu-bar/app-menu-bar';
 import { CommonModule } from '@angular/common';
 import { Component, signal, WritableSignal } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { Message } from 'primeng/message';
 import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
+import { PayMethodService } from '@/services/pay-method.service';
+
+export function fileOrUrlValidator(): ValidatorFn {
+  return (control: AbstractControl) => {
+    const image = control.get('image')?.value;
+    const url_img = control.get('url_img')?.value;
+
+    // Crear: debe haber image
+    // Editar: puede haber image o url_img
+    if (!image && !url_img) {
+      return { fileOrUrlRequired: true };
+    }
+
+    return null;
+  };
+}
 
 @Component({
   selector: 'app-pay-method',
@@ -35,18 +59,24 @@ export class PayMethod {
   pay_methods: WritableSignal<PaymentTypeSelector[]> = signal<PaymentTypeSelector[]>([]);
 
   modal: WritableSignal<boolean> = signal<boolean>(false);
-  pay_method_form: FormGroup<PayMethodForm> = new FormGroup({
-    id: new FormControl(0),
-    name: new FormControl('Banco de Venezuela (0102)', [Validators.required]),
-    type: new FormControl('pagomovil', [Validators.required]),
-    holder: new FormControl('Jose Gutierrez', [Validators.required]),
-    datos: new FormGroup({}),
-    url_img: new FormControl('')
-  });
+  pay_method_form: FormGroup<PayMethodForm> = new FormGroup(
+    {
+      id: new FormControl(0),
+      name: new FormControl('Banco de Venezuela (0102)', [Validators.required]),
+      type: new FormControl('pagomovil', [Validators.required]),
+      holder: new FormControl('Jose Gutierrez', [Validators.required]),
+      datos: new FormGroup({}),
+      url_img: new FormControl(''),
+      image: new FormControl(null)
+    },
+    { validators: fileOrUrlValidator() }
+  );
 
   get datosForm(): FormGroup {
     return this.pay_method_form.get('datos') as FormGroup;
   }
+
+  constructor(private payMethodService: PayMethodService) {}
 
   ngOnInit() {
     this.type_person.set([
@@ -72,6 +102,9 @@ export class PayMethod {
 
     this.pay_method_selected = this.pay_methods().find((pay_method) => pay_method.type === 'pagomovil')!;
     this.builderTypePayForm();
+  }
+  fileSelected(file: File) {
+    this.pay_method_form.patchValue({ image: file });
   }
 
   builderTypePayForm() {
@@ -106,5 +139,22 @@ export class PayMethod {
   }
   openModal() {
     this.modal.set(true);
+  }
+
+  saveRecord() {
+    this.pay_method_form.markAllAsDirty();
+    this.pay_method_form.updateValueAndValidity();
+
+    //si el formulario no es valido salimos del proceso
+    if (!this.pay_method_form.valid) return;
+
+    const formData = new FormData();
+    formData.append('pay_method', JSON.stringify(this.pay_method_form.value));
+    formData.append('image', this.pay_method_form.value.image);
+    console.log(this.pay_method_form.value);
+
+    this.payMethodService.createPayMethod(formData).subscribe((res) => {
+      console.log(res);
+    });
   }
 }

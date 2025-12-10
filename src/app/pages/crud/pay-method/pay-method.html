@@ -28,14 +28,18 @@
       <!-- NOmbre apellido del titular -->
       <div class="grid grid-cols-12 gap-4">
         <div class="col-span-12 md:col-span-4">
-          <app-dynamic-upload></app-dynamic-upload>
+          <app-dynamic-upload
+            [validator]="pay_method_form.errors?.['fileOrUrlRequired'] && pay_method_form.dirty"
+            (fileSelected)="fileSelected($event)"
+            [previewUrl]="pay_method_form.get('url_img')?.value"
+          ></app-dynamic-upload>
         </div>
         <!-- //?CONTENEDOR DERECHO -->
         <div class="col-span-12 md:col-span-8">
           <!-- //?INPUTS TODOS SON 12 -->
           <div class="col-span-12">
             <label for="name" class="block mb-2 text-sm text-primary">Nombre del método</label>
-            <input pInputText id="name" type="text" placeholder="Grupo 1" formControlName="name" class="w-full mb-2" />
+            <input pInputText id="name" type="text" placeholder="Pago Movil" formControlName="name" class="w-full mb-2" />
             @if (pay_method_form.get('name')?.hasError('required')&& pay_method_form.get('name')?.dirty) {
             <p-message severity="error" variant="simple" size="small">El nombre del método de pago es obligatorio</p-message>
             }
@@ -64,7 +68,7 @@
         @if (pay_method_selected.type === 'pagomovil' || pay_method_selected.type === 'transferencia') {
         <div class="col-span-12 md:col-span-6">
           <label for="phone" class="block mb-2 text-sm text-primary">Teléfono</label>
-          <input pInputText id="holder" type="text" placeholder="04123456789" formControlName="phone" class="w-full mb-2" />
+          <input pInputText id="holder" type="number" placeholder="04123456789" formControlName="phone" class="w-full mb-2" />
 
           @if (datosForm.get('phone')?.hasError('required')&& datosForm.get('phone')?.dirty) {
           <p-message severity="error" variant="simple" size="small">El teléfono es obligatorio</p-message>
@@ -73,7 +77,14 @@
 
         <div class="col-span-12 md:col-span-6">
           <label for="documentation" class="block mb-2 text-sm text-primary">Documento</label>
-          <input pInputText id="holder" type="text" placeholder="30475648" formControlName="documentation" class="w-full mb-2" />
+          <input
+            pInputText
+            id="holder"
+            type="number"
+            placeholder="30475648"
+            formControlName="documentation"
+            class="w-full mb-2"
+          />
 
           @if (datosForm.get('documentation')?.hasError('required')&& datosForm.get('documentation')?.dirty) {
           <p-message severity="error" variant="simple" size="small">El documento es obligatorio</p-message>
@@ -152,7 +163,7 @@
         class="p-button-text"
         text
       ></p-button>
-      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+      <p-button label="Guardar" (click)="saveRecord()" icon="pi pi-check" type="button"></p-button>
     </div>
   </ng-template>
 </p-dialog>
