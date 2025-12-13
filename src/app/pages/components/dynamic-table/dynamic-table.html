@@ -96,47 +96,49 @@
       <td [style]="col.style? col.style : ''">{{ rowData[col.key] }}</td>
       } } }
       <!-- botonera -->
-      <td class="sticky right-0 bg-white z-10 flex">
-        <p-button
-          icon="pi pi-pencil"
-          severity="info"
-          pTooltip="Editar"
-          tooltipPosition="bottom"
-          showDelay="400"
-          (onClick)="onEdit.emit(rowData)"
-          class="mr-2"
-          [disabled]="!getPermissionsUser.can_update"
-          [rounded]="true"
-          [outlined]="layoutService.isDarkTheme()"
-        />
-        <p-button
-          icon="pi pi-trash"
-          pTooltip="Eliminar"
-          tooltipPosition="bottom"
-          showDelay="400"
-          class="mr-2"
-          severity="danger"
-          (onClick)="onDelete.emit(rowData)"
-          [disabled]="!getPermissionsUser.can_delete"
-          [rounded]="true"
-          [outlined]="layoutService.isDarkTheme()"
-        />
+      <td class="sticky right-0 dark:bg-surface-900 bg-white z-10">
+        <div class="items-center flex">
+          <p-button
+            icon="pi pi-pencil"
+            severity="info"
+            pTooltip="Editar"
+            tooltipPosition="bottom"
+            showDelay="400"
+            (onClick)="onEdit.emit(rowData)"
+            class="mr-2"
+            [disabled]="!getPermissionsUser.can_update"
+            [rounded]="true"
+            [outlined]="layoutService.isDarkTheme()"
+          />
+          <p-button
+            icon="pi pi-trash"
+            pTooltip="Eliminar"
+            tooltipPosition="bottom"
+            showDelay="400"
+            class="mr-2"
+            severity="danger"
+            (onClick)="onDelete.emit(rowData)"
+            [disabled]="!getPermissionsUser.can_delete"
+            [rounded]="true"
+            [outlined]="layoutService.isDarkTheme()"
+          />
 
-        <!-- Iterar botones dinamicamente -->
-        @for (button of actions_button; track $index) {
-        <p-button
-          class="mr-2"
-          [pTooltip]="button.tooltip"
-          tooltipPosition="bottom"
-          showDelay="400"
-          [icon]="button.icon"
-          [disabled]="!getPermissionsUser.can_view"
-          [severity]="button.severity"
-          (onClick)="button.method(rowData)"
-          [rounded]="button.rounded"
-          [outlined]="layoutService.isDarkTheme()"
-        />
-        }
+          <!-- Iterar botones dinamicamente -->
+          @for (button of actions_button; track $index) {
+          <p-button
+            class="mr-2"
+            [pTooltip]="button.tooltip"
+            tooltipPosition="bottom"
+            showDelay="400"
+            [icon]="button.icon"
+            [disabled]="!getPermissionsUser.can_view"
+            [severity]="button.severity"
+            (onClick)="button.method(rowData)"
+            [rounded]="button.rounded"
+            [outlined]="layoutService.isDarkTheme()"
+          />
+          }
+        </div>
       </td>
     </tr>
   </ng-template>

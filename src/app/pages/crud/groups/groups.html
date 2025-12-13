@@ -59,7 +59,6 @@
               pInputText
               id="rif"
               type="text"
-              placeholder="Secretario"
               formControlName="rif"
               class="w-full mb-2"
               [ngClass]="groupForm.get('rif')?.hasError('invalid') && groupForm.get('rif')?.dirty ? 'ng-invalid ng-dirty' : ''"
@@ -85,6 +84,8 @@
           />
           @if (groupForm.get('email')?.hasError('required')&& groupForm.get('email')?.dirty) {
           <p-message severity="error" variant="simple" size="small">El correo es obligatorio</p-message>
+          } @if (groupForm.get('email')?.hasError('email')&& groupForm.get('email')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El correo debe ser valido</p-message>
           }
         </div>
         <div class="col-span-12">

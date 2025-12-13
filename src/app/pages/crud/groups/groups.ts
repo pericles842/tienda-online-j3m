@@ -76,7 +76,7 @@ export class Groups {
       name: new FormControl('', [Validators.required]),
       description: new FormControl(''),
       rif: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
       url_img: new FormControl(null),
       image: new FormControl(null)
     },
