@@ -1,38 +1,19 @@
-import { PaymentTypeSelector, PayMethodForm, TypePayMethod } from '@/interfaces/pay_method';
+import { Column } from '@/interfaces/forms';
+import { PaymentTypeSelector, PayMethodData, PayMethodForm, TypePayMethod } from '@/interfaces/pay_method';
 import { AppMenuBar } from '@/pages/components/app-menu-bar/app-menu-bar';
+import { DynamicTable } from '@/pages/components/dynamic-table/dynamic-table';
+import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
+import { PayMethodService } from '@/services/pay-method.service';
+import { fileOrUrlValidator } from '@/utils/forms';
 import { CommonModule } from '@angular/common';
 import { Component, signal, WritableSignal } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidatorFn,
-  Validators
-} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
-import { SelectModule } from 'primeng/select';
 import { Message } from 'primeng/message';
-import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
-import { PayMethodService } from '@/services/pay-method.service';
-
-export function fileOrUrlValidator(): ValidatorFn {
-  return (control: AbstractControl) => {
-    const image = control.get('image')?.value;
-    const url_img = control.get('url_img')?.value;
-
-    // Crear: debe haber image
-    // Editar: puede haber image o url_img
-    if (!image && !url_img) {
-      return { fileOrUrlRequired: true };
-    }
-
-    return null;
-  };
-}
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'app-pay-method',
@@ -46,7 +27,8 @@ export function fileOrUrlValidator(): ValidatorFn {
     InputTextModule,
     FormsModule,
     Message,
-    DynamicUpload
+    DynamicUpload,
+    DynamicTable
   ],
   templateUrl: './pay-method.html',
   styleUrl: './pay-method.scss'
@@ -72,11 +54,24 @@ export class PayMethod {
     { validators: fileOrUrlValidator() }
   );
 
+  list_pay_methods: WritableSignal<PayMethodData[]> = signal([]);
+  columns: Column[] = [
+    { label: 'Nombre', key: 'name', sortTable: true },
+    { label: 'url_img', key: 'url_img', sortTable: false, dataType: 'image' },
+    { label: 'Titular', key: 'holder', sortTable: true },
+
+    { label: 'created_at', dataType: 'date', key: 'created_at', sortTable: true }
+  ];
+  globalFilterFields: string[] = ['name', 'holder', 'type'];
+
   get datosForm(): FormGroup {
     return this.pay_method_form.get('datos') as FormGroup;
   }
 
-  constructor(private payMethodService: PayMethodService) {}
+  constructor(
+    private payMethodService: PayMethodService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
     this.type_person.set([
@@ -102,7 +97,14 @@ export class PayMethod {
 
     this.pay_method_selected = this.pay_methods().find((pay_method) => pay_method.type === 'pagomovil')!;
     this.builderTypePayForm();
+
+    this.getListPayMethods();
   }
+
+  getListPayMethods() {
+    this.payMethodService.getPayMethods().subscribe((pay_methods) => this.list_pay_methods.set(pay_methods));
+  }
+
   fileSelected(file: File) {
     this.pay_method_form.patchValue({ image: file });
   }
@@ -138,6 +140,26 @@ export class PayMethod {
     });
   }
   openModal() {
+    this.pay_method_form.patchValue({
+      id: 0,
+      name: 'Banco de Venezuela (0102)',
+      type: 'pagomovil',
+      holder: 'Jose Gutierrez',
+      url_img: '',
+      image: null
+    });
+    this.builderTypePayForm();
+    this.modal.set(true);
+  }
+
+  goToEdit(pay_method: PayMethodData) {
+
+    //!detectar el tipo de pago para constuir el formulario
+    pay_method.datos = JSON.parse(pay_method.datos as unknown as string);
+    
+    console.log(pay_method);
+    this.pay_method_form.patchValue(pay_method);
+
     this.modal.set(true);
   }
 
@@ -153,8 +175,16 @@ export class PayMethod {
     formData.append('image', this.pay_method_form.value.image);
     console.log(this.pay_method_form.value);
 
-    this.payMethodService.createPayMethod(formData).subscribe((res) => {
-      console.log(res);
+    this.createPayMethodService(formData);
+  }
+
+  createPayMethodService(pay_method: FormData) {
+    this.payMethodService.createPayMethod(pay_method).subscribe({
+      next: (res) => {
+        this.list_pay_methods.update((current) => [...current, res]);
+        this.modal.set(false);
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Metodo de pago creado exitosamente' });
+      }
     });
   }
 }

@@ -13,7 +13,7 @@ export interface PayMethodDigitalWallet {
   email: string;
 }
 
-export interface PayMethod {
+export interface PayMethodData {
   id: number;
   name: string;
   type: TypePayMethod;

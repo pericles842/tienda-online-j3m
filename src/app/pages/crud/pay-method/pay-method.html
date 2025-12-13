@@ -1,5 +1,13 @@
 <app-menu-bar (touchNew)="openModal()"></app-menu-bar>
 
+<app-dynamic-table
+  [columns]="columns"
+  name_table="Métodos de pagos"
+  [data]="list_pay_methods()"
+  (onEdit)="goToEdit($event)"
+  [globalFilterFields]="globalFilterFields"
+></app-dynamic-table>
+
 <p-dialog
   [visible]="modal()"
   [style]="{ width: '640px' }"
