@@ -36,6 +36,6 @@ export interface PaymentTypeSelector {
   description?: string;
 }
 
-export type TypePayMethod = 'pagomovil' | 'transferencia' | 'billetera_digital' | 'divisa';
+export type TypePayMethod = 'pagomovil' | 'tranferencia' | 'billetera_digital' | 'divisa';
 
 export type PayMethodForm = FormGroupControls<PayMethod>;

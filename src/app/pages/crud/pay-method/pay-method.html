@@ -1,11 +1,17 @@
-<app-menu-bar (touchNew)="openModal()"></app-menu-bar>
+<app-menu-bar
+  [disableDeleteButton]="selectedEliminatePayMethods.length == 0"
+  (touchDelete)="deletePayMethods()"
+  (touchNew)="openModal()"
+></app-menu-bar>
 
 <app-dynamic-table
   [columns]="columns"
   name_table="Métodos de pagos"
   [data]="list_pay_methods()"
   (onEdit)="goToEdit($event)"
+  (onDelete)="deletePayMethod($event)"
   [globalFilterFields]="globalFilterFields"
+  [(selection)]="selectedEliminatePayMethods"
 ></app-dynamic-table>
 
 <p-dialog
@@ -73,7 +79,7 @@
       <!-- formulario dos -->
       <div [formGroup]="datosForm" class="grid grid-cols-12 gap-4">
         <!-- ?PAGOMOVIL -->
-        @if (pay_method_selected.type === 'pagomovil' || pay_method_selected.type === 'transferencia') {
+        @if (pay_method_selected.type === 'pagomovil' || pay_method_selected.type === 'tranferencia') {
         <div class="col-span-12 md:col-span-6">
           <label for="phone" class="block mb-2 text-sm text-primary">Teléfono</label>
           <input pInputText id="holder" type="number" placeholder="04123456789" formControlName="phone" class="w-full mb-2" />
@@ -109,7 +115,7 @@
         </div>
         }
         <!-- ?TRANFERENCIA BANCARIA -->
-        @if (pay_method_selected.type === 'transferencia') {
+        @if (pay_method_selected.type === 'tranferencia') {
         <div class="col-span-12">
           <label for="num_account" class="block mb-2 text-sm text-primary">Numero de cuenta</label>
           <input pInputText id="num_account" type="text" formControlName="num_account" class="w-full mb-2" />
