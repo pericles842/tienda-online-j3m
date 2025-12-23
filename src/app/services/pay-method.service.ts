@@ -18,6 +18,10 @@ export class PayMethodService {
   getPayMethods(): Observable<PayMethodData[]> {
     return this.http.get<PayMethodData[]>(`${environment.host}/pay-methods`);
   }
+
+  getPublicPayMethods(): Observable<PayMethodData[]> {
+    return this.http.get<PayMethodData[]>(`${environment.host}/public-pay-methods`);
+  }
   createPayMethod(payMethod: FormData): Observable<PayMethodData> {
     return this.http.post<PayMethodData>(`${environment.host}/pay-methods`, payMethod);
   }

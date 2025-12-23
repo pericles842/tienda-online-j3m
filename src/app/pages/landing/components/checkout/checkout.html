@@ -76,18 +76,23 @@
       <span class="text-xl text-primary-800 font-semibold dark:text-primary-100">Métodos de pago</span>
       <hr />
       <div class="flex flex-wrap justify-between gap-3">
-        @for (item of ['Pago Movil', 'Efectivo', 'Binance']; track $index) {
-        <div class="flex flex-col gap-3 items-center">
+        @for (item of pay_methods(); track $index) {
+        <div
+          (click)="activeMethod=$index"
+          [ngClass]="{'active-pay-method': activeMethod === $index}"
+          class="flex flex-col gap-3 items-center hover-pay-method"
+        >
           <img
-            class="w-20 shadow-md rounded-xl"
-            [src]="'https://i0.wp.com/logoroga.com/wp-content/uploads/2018/02/pago-movil.png?w=800&ssl=1'"
-            [alt]="item"
+            class="w-30 h-30 object-cover bg-white border border-gray-200 shadow-md rounded-xl"
+            [src]="item.url_img"
+            [alt]="item.url_img"
           />
-          <span class="text-primary-800 text-xl">{{item}}</span>
+          <span class="text-primary-800 text-xl">{{item.name}}</span>
         </div>
         }
       </div>
 
+      
       <div class="grid grid-cols-12 gap-5 mt-3">
         <div class="col-span-6 flex flex-col">
           <span class="text-sm text-primary-400">Número de cuenta</span>
