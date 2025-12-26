@@ -1,4 +1,10 @@
-import { PayMethodData } from '@/interfaces/pay_method';
+import {
+  PayMethodData,
+  PayMethodDigitalWallet,
+  PayMethodKeys,
+  PayMethodMobilePay,
+  PayMethodTransfer
+} from '@/interfaces/pay_method';
 import { AuthService } from '@/services/auth.service';
 import { ConfigurationService } from '@/services/configuration.service';
 import { PayMethodService } from '@/services/pay-method.service';
@@ -9,10 +15,11 @@ import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
+import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
 
 @Component({
   selector: 'app-checkout',
-  imports: [Breadcrumb, InputTextModule, TextareaModule, CommonModule],
+  imports: [Breadcrumb, InputTextModule, TextareaModule, CommonModule, DynamicUpload],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
@@ -20,7 +27,10 @@ export class Checkout {
   user: any;
   products: any[] = [];
   pay_methods: WritableSignal<PayMethodData[]> = signal([]);
-  activeMethod: number = 0;
+
+  indexMethod: number = 0;
+  activeMethod!: PayMethodData;
+
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
     { label: 'Tienda', routerLink: '/shop' },
@@ -38,7 +48,29 @@ export class Checkout {
     this.shoppingCartService.cart_products$.subscribe((items) => {
       this.products = items;
     });
-    this.payMethodService.getPublicPayMethods().subscribe((res) => this.pay_methods.set(res));
+    this.payMethodService.getPublicPayMethods().subscribe((res) => {
+      this.pay_methods.set(res);
+      this.activeMethod = this.pay_methods()[this.indexMethod];
+    });
     this.user = this.authService.decodeToken().user;
+  }
+
+  getKeysPayMethod(): [keyof PayMethodData, string][] {
+    return JSON.parse(this.activeMethod?.datos.toString());
+  }
+
+  parseKeyPayMethod(key: string): string {
+    const payMethodLabels: Record<PayMethodKeys, string> = {
+      code_bank: 'Código del banco',
+      documentation: 'Documento de identidad',
+      phone: 'Teléfono',
+      name_bank: 'Nombre del banco',
+      email: 'Correo',
+      num_account: 'Número de cuenta',
+      type_account: 'Tipo de cuenta',
+      type_person: 'Tipo de persona'
+    };
+
+    return payMethodLabels[key as PayMethodKeys] || key;
   }
 }

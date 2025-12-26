@@ -1,4 +1,5 @@
 export interface PayMethodMobilePay {
+  name_bank: string;
   code_bank: string;
   phone: string;
   documentation: number;
@@ -39,3 +40,4 @@ export interface PaymentTypeSelector {
 export type TypePayMethod = 'pagomovil' | 'tranferencia' | 'billetera_digital' | 'divisa';
 
 export type PayMethodForm = FormGroupControls<PayMethod>;
+export type PayMethodKeys = keyof PayMethodMobilePay | keyof PayMethodTransfer | keyof PayMethodDigitalWallet;

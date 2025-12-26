@@ -105,6 +105,15 @@
           }
         </div>
 
+        <div class="col-span-12 md:col-span-6">
+          <label for="name_bank" class="block mb-2 text-sm text-primary">Nombre del banco</label>
+          <input pInputText id="holder" type="text" placeholder="Mercantil" formControlName="name_bank" class="w-full mb-2" />
+
+          @if (datosForm.get('name_bank')?.hasError('required')&& datosForm.get('name_bank')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El nombre del banco es obligatorio</p-message>
+          }
+        </div>
+
         <div class="col-span-12 md:col-span-4">
           <label for="code_bank" class="block mb-2 text-sm text-primary">Código</label>
           <input pInputText id="holder" type="text" placeholder="0102" formControlName="code_bank" class="w-full mb-2" />

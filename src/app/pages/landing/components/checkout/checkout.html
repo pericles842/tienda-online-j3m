@@ -78,8 +78,8 @@
       <div class="flex flex-wrap justify-between gap-3">
         @for (item of pay_methods(); track $index) {
         <div
-          (click)="activeMethod=$index"
-          [ngClass]="{'active-pay-method': activeMethod === $index}"
+          (click)="indexMethod=$index; activeMethod = item"
+          [ngClass]="{'active-pay-method': indexMethod === $index}"
           class="flex flex-col gap-3 items-center hover-pay-method"
         >
           <img
@@ -91,29 +91,27 @@
         </div>
         }
       </div>
-
-      
+      @if (activeMethod) {
       <div class="grid grid-cols-12 gap-5 mt-3">
         <div class="col-span-6 flex flex-col">
-          <span class="text-sm text-primary-400">Número de cuenta</span>
-          <p class="text-primary-800 font-bold">112214125214125</p>
-        </div>
-
-        <div class="col-span-6 flex flex-col">
-          <span class="text-sm text-primary-400">Titular</span>
-          <p class="text-primary-800 font-bold">J3M TITULAR</p>
-        </div>
-
-        <div class="col-span-6 flex flex-col">
-          <span class="text-sm text-primary-400">Banco</span>
-          <p class="text-primary-800 font-bold">VENEZUELA</p>
-        </div>
-
-        <div class="col-span-6 flex flex-col">
-          <span class="text-sm text-primary-400">Tipo de cuenta</span>
-          <p class="text-primary-800 font-bold">Corriente</p>
+          <span class="text-base text-primary-400">Titular</span>
+          <p class="text-primary-800 text-xl">{{activeMethod.holder}}</p>
         </div>
       </div>
+      <!-- DATos del método -->
+
+      <div class="grid grid-cols-12 mt-3">
+        @for(item of getKeysPayMethod() | keyvalue; track $index){
+
+        <div class="col-span-6 flex flex-col">
+          <span class="text-sm text-primary-400">{{parseKeyPayMethod(item.key)}}</span>
+          <p class="text-primary-800 font-bold">{{item.value}}</p>
+        </div>
+        }
+      </div>
+      }
+
+      <app-dynamic-upload class="mt-5" [widthFull]="true" label="subir comprobante de pago"></app-dynamic-upload>
 
       <div class="flex flex-col gap-2 text-xl mt-5">
         <button class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full text-primary-50 font-bold">

@@ -10,6 +10,9 @@ import { Message } from 'primeng/message';
   styleUrl: './dynamic-upload.scss'
 })
 export class DynamicUpload {
+  @Input() widthFull: boolean = false;
+  @Input() label: string = 'Subir imagen';
+  
   @Input() validator: boolean = false;
   @Input() previewUrl: string | ArrayBuffer | null = null;
   @Output() fileSelected = new EventEmitter<File>();

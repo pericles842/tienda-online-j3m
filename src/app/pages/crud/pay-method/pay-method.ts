@@ -117,11 +117,13 @@ export class PayMethod {
 
     const controlsConfig: Record<TypePayMethod, Record<string, { defaultValue: any; validators: any[] }>> = {
       pagomovil: {
+        name_bank: { defaultValue: '', validators: [Validators.required] },
         code_bank: { defaultValue: '0102', validators: [Validators.required] },
         phone: { defaultValue: '', validators: [Validators.required] },
         documentation: { defaultValue: '', validators: [Validators.required] }
       },
       tranferencia: {
+        name_bank: { defaultValue: '', validators: [Validators.required] },
         code_bank: { defaultValue: '0102', validators: [Validators.required] },
         phone: { defaultValue: '', validators: [Validators.required] },
         documentation: { defaultValue: '', validators: [Validators.required] },

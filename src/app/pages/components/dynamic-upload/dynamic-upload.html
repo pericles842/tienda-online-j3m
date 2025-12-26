@@ -1,7 +1,10 @@
 <div class="flex flex-col items-left gap-3">
   <div
-    [ngClass]="condition_validator ?  ' border-red-500' : 'border-primary'"
-    class="relative w-full h-48 md:w-48 md:h-48 border-1 border-solid rounded-2xl flex items-center justify-center cursor-pointer hover:border-primary-emphasis transition-all duration-200"
+    [ngClass]="[
+  condition_validator ? 'border-red-500' : 'border-primary',
+  widthFull ? 'w-full' : 'md:w-48'
+]"
+    class="relative w-full h-48 md:h-48 border-1 border-solid rounded-2xl flex items-center justify-center cursor-pointer hover:border-primary-emphasis transition-all duration-200"
     (click)="fileInput.click()"
   >
     <!-- Vista previa -->
@@ -10,18 +13,18 @@
     <img [src]="previewUrl" [alt]="fileName" class="absolute inset-0 w-full h-full object-contain md:object-cover rounded-2xl" />
     } @else {
     <!-- Icono y texto si no hay imagen -->
-    <div  [ngClass]="condition_validator ?  ' text-red-500' : 'text-primary'" class=" flex flex-col items-center">
+    <div [ngClass]="condition_validator ?  ' text-red-500' : 'text-primary'" class="flex flex-col items-center">
       <i class="pi pi-camera text-4xl mb-2"></i>
-      <span class="text-sm">Subir imagen</span>
+      <span class="text-sm"> {{label}}</span>
     </div>
     }
 
     <!-- Input invisible -->
-     <!-- !validar no subir iamgenes ico -->
+    <!-- !validar no subir iamgenes ico -->
     <input #fileInput type="file" accept="image/*" class="hidden" (change)="onFileSelect($event)" />
   </div>
   @if (condition_validator) {
-    <p-message severity="error" variant="simple" size="small">El archivo es obligatorio</p-message>
+  <p-message severity="error" variant="simple" size="small">El archivo es obligatorio</p-message>
   }
 
   <!-- Nombre del archivo -->
