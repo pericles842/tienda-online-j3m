@@ -1,0 +1,59 @@
+<app-menu-bar (touchNew)="openModal()"></app-menu-bar>
+
+<p-dialog
+  [visible]="modal()"
+  [style]="{ width: '740px' }"
+  header="Crear producto"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+>
+  <ng-template pTemplate="content">
+    <form>
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 md:col-span-4">
+          <app-dynamic-upload
+            [validator]="productForm.errors?.['fileOrUrlRequired'] && productForm.dirty"
+            (fileSelected)="fileSelected($event)"
+            [previewUrl]="productForm.get('url_img')?.value"
+          ></app-dynamic-upload>
+        </div>
+        <!-- //?CONTENEDOR DERECHO -->
+        <div class="col-span-12 md:col-span-8">
+          <!-- //?INPUTS TODOS SON 12 -->
+          <div class="col-span-12">
+            <label for="nombre" class="block mb-2 text-sm text-primary">Nombre</label>
+            <input
+              pInputText
+              id="nombre"
+              type="text"
+              placeholder="Grupo 1"
+              formControlName="name"
+              class="w-full mb-2"
+              [ngClass]="productForm.get('name')?.hasError('invalid') && productForm.get('name')?.dirty ? 'ng-invalid ng-dirty' : ''"
+            />
+            @if (productForm.get('name')?.hasError('required')&& productForm.get('name')?.dirty) {
+            <p-message severity="error" variant="simple" size="small">El nombre es obligatorio</p-message>
+            }
+          </div>
+          <div class="col-span-12">
+            <label for="rif" class="block mb-2 text-sm text-primary">Rif</label>
+            <input
+              pInputText
+              id="rif"
+              type="text"
+              formControlName="rif"
+              class="w-full mb-2"
+              [ngClass]="productForm.get('rif')?.hasError('invalid') && productForm.get('rif')?.dirty ? 'ng-invalid ng-dirty' : ''"
+            />
+            @if (productForm.get('rif')?.hasError('required')&& productForm.get('rif')?.dirty) {
+            <p-message severity="error" variant="simple" size="small">El rif es obligatorio</p-message>
+            }
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-dialog>

@@ -9,6 +9,7 @@ import { Groups } from './crud/groups/groups';
 import { Categories } from './crud/categories/categories';
 import { Configuration } from './crud/configuration/configuration';
 import { PayMethod } from './crud/pay-method/pay-method';
+import { Products } from './crud/products/products';
 
 //!LOS PATH SE TIENE QUE LLAMAR COMO LAS LLAVES DEL OBJETO MODULES
 export default [
@@ -22,5 +23,6 @@ export default [
   { path: 'categorias', component: Categories },
   { path: 'configuracion', component: Configuration },
   { path: 'metodos_pago', component: PayMethod },
+  { path: 'productos', component: Products },
   { path: '**', redirectTo: '/notfound' }
 ] as Routes;

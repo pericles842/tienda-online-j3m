@@ -1,38 +1,80 @@
+import { UserTracking } from './user';
+
 export interface Product extends UserTracking {
   id: number;
   name: string;
-  description: string;
-  /**
-   *Marca del producto
-   *
-   * @type {string}
-   * @memberof Product
-   */
+  // marca del producto
   brand: string;
-  color: string;
+  description: string;
   discount: number;
   reference: string;
-  price: number;
 
-  /**
-   *costo de adquisición
-   *
-   * @type {number}
-   * @memberof Product
-   */
+  //costo del producto
   cost: number;
+  price: number;
   stock: number;
 
-  /**
-   *stock mínimo permitido antes de reabastecer
-   *
-   * @type {number}
-   * @memberof Product
-   */
+  //cantidad del productos para la notification de reabastecer
   min_stock: number;
   category_id: number;
-  category: string;
-  status: 'active' | 'inactive' | 'damaged';
-  url_img: string;
-  expiration_date: string;
+  name_category: string;
+
+  status: StatusProduct;
+  url_img?: string;
+
+  attributes: ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>;
+
+  created_at?: string;
+  updated_at?: string;
 }
+
+export interface ProductAttributes<T, C = any> {
+  id?: number;
+  name: string;
+  key: T;
+  description: string;
+  created_at: string;
+  data?: DataProductAttributes;
+  value?: UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct;
+  attributes: ProductAttributes<C>[];
+}
+
+export type StatusProduct = 'active' | 'inactive' | 'damaged';
+
+export type UnitsOfProduct = 'un' | 'mg' | 'oz' | 'lb' | 'kg' | 'lt' | 'ml' | 'g';
+export type TallaProduct = 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl';
+export type StyleClothesProduct = 'casual' | 'formal' | 'sport';
+export type PharmaceuticalPresentationProduct =
+  | 'tablets'
+  | 'capsules'
+  | 'syrup'
+  | 'jarabe'
+  | 'crema'
+  | 'polvo'
+  | 'gel'
+  | 'pomada'
+  | 'pasta'
+  | 'liquido'
+  | 'injectable';
+
+export type DataProductAttributes = {
+  key: UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct;
+  value: string;
+}[];
+
+export type ProductTemplateKeys = 'food' | 'technology' | 'textile' | 'farmacia' | 'otros';
+export type productKeyGeneralAttributes =
+  | 'color'
+  | 'model'
+  | 'storage'
+  | 'talla'
+  | 'gender'
+  | 'style_clothes'
+  | 'marca'
+  | 'unit'
+  | 'amount'
+  | 'expiration_date'
+  | 'manufacturer'
+  | 'pharmaceutical_presentation';
+
+export type ProductFormGroup = FormGroupControls<Product>;

@@ -55,7 +55,7 @@ export const menu: CustomMenuItem[] = [
   {
     label: 'inventario',
     items: [
-      { label: 'Productos', icon: 'pi pi-fw pi-barcode', routerLink: ['/'], module_id: Modules['productos'].id },
+      { label: 'Productos', icon: 'pi pi-fw pi-barcode', routerLink: ['/pages/productos'], module_id: Modules['productos'].id },
       { label: 'Categorías', icon: 'pi pi-fw pi-tag', routerLink: ['/pages/categorias'], module_id: Modules['categorias'].id }
     ]
   }
