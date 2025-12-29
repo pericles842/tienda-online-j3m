@@ -13,6 +13,10 @@ export class CategoriesService {
     return this.http.get<TreeNode[]>(`${environment.host}/categories-tree`);
   }
 
+  getPublicCategories(): Observable<Category[]> {
+    return this.http.get<Category[]>(`${environment.host}/categories-public`);
+  }
+
   getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(`${environment.host}/categories`);
   }

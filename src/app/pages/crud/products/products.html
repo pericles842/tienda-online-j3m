@@ -2,7 +2,7 @@
 
 <p-dialog
   [visible]="modal()"
-  [style]="{ width: '740px' }"
+  [style]="{ width: '640px' }"
   header="Crear producto"
   [modal]="true"
   [closable]="false"
@@ -11,7 +11,7 @@
   [closeOnEscape]="true"
 >
   <ng-template pTemplate="content">
-    <form>
+    <form [formGroup]="productForm" class="space-y-6">
       <div class="grid grid-cols-12 gap-4">
         <div class="col-span-12 md:col-span-4">
           <app-dynamic-upload
@@ -22,38 +22,102 @@
         </div>
         <!-- //?CONTENEDOR DERECHO -->
         <div class="col-span-12 md:col-span-8">
-          <!-- //?INPUTS TODOS SON 12 -->
+          <div class="col-span-12 flex justify-end">
+            <p-tag [value]="productForm.get('status')?.value " [severity]="severityValueStatus()" />
+          </div>
           <div class="col-span-12">
-            <label for="nombre" class="block mb-2 text-sm text-primary">Nombre</label>
+            <label for="nombre" class="block mb-2 text-sm text-primary">Nombre del producto</label>
             <input
               pInputText
               id="nombre"
               type="text"
-              placeholder="Grupo 1"
+              placeholder="Lenovo Thinkpad X1 Carbon"
               formControlName="name"
               class="w-full mb-2"
-              [ngClass]="productForm.get('name')?.hasError('invalid') && productForm.get('name')?.dirty ? 'ng-invalid ng-dirty' : ''"
             />
             @if (productForm.get('name')?.hasError('required')&& productForm.get('name')?.dirty) {
-            <p-message severity="error" variant="simple" size="small">El nombre es obligatorio</p-message>
+            <p-message severity="error" variant="simple" size="small">El nombre del producto es obligatorio</p-message>
             }
           </div>
           <div class="col-span-12">
-            <label for="rif" class="block mb-2 text-sm text-primary">Rif</label>
-            <input
-              pInputText
-              id="rif"
-              type="text"
-              formControlName="rif"
-              class="w-full mb-2"
-              [ngClass]="productForm.get('rif')?.hasError('invalid') && productForm.get('rif')?.dirty ? 'ng-invalid ng-dirty' : ''"
-            />
-            @if (productForm.get('rif')?.hasError('required')&& productForm.get('rif')?.dirty) {
-            <p-message severity="error" variant="simple" size="small">El rif es obligatorio</p-message>
-            }
+            <label for="nombre" class="block mb-2 text-sm text-primary">Categoría</label>
+            <p-select
+              [options]="categories()"
+              formControlName="category_id"
+              optionLabel="name"
+              optionValue="id"
+              [filter]="true"
+              filterBy="name"
+              [showClear]="true"
+              appendTo="body"
+              placeholder="Seleccionar categoría"
+              class="w-full"
+            >
+            </p-select>
           </div>
+        </div>
+        <!-- FILA DE ABAJO -->
+        <div class="col-span-12 md:col-span-5">
+          <label for="brand" class="block mb-2 text-sm text-primary">Marca del producto</label>
+          <input pInputText id="brand" type="text" formControlName="brand" class="w-full mb-2" />
+          @if (productForm.get('brand')?.hasError('required')&& productForm.get('brand')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">La marca es obligatoria</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-4">
+          <label for="reference" class="block mb-2 text-sm text-primary">Referencia</label>
+          <input pInputText id="reference" type="text" formControlName="reference" class="w-full mb-2" />
+          @if (productForm.get('reference')?.hasError('required')&& productForm.get('reference')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">La referencia es obligatoria</p-message>
+          }
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 md:col-span-2">
+          <label for="price" class="block mb-2 text-sm text-primary">Precio ($)</label>
+          <input pInputText id="price" type="text" formControlName="price" class="w-full mb-2" />
+          @if (productForm.get('price')?.hasError('required')&& productForm.get('price')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El precio obligatoria</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-2">
+          <label for="cost" class="block mb-2 text-sm text-primary">Costo</label>
+          <input pInputText id="cost" type="text" formControlName="cost" class="w-full mb-2" />
+          @if (productForm.get('cost')?.hasError('required')&& productForm.get('cost')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">El Costo del producto obligatoria</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-2">
+          <label for="discount" class="block mb-2 text-sm text-primary">Descuento</label>
+          <input pInputText id="discount" type="text" formControlName="discount" class="w-full mb-2" />
+          @if (productForm.get('discount')?.hasError('required')&& productForm.get('discount')?.dirty) { }
+        </div>
+
+        <div class="col-span-12 md:col-span-2">
+          <label for="min_stock" class="block mb-2 text-sm text-primary">Stock mínimo</label>
+          <input pInputText id="min_stock" type="text" formControlName="min_stock" class="w-full mb-2" />
+          @if (productForm.get('min_stock')?.hasError('required')&& productForm.get('min_stock')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">Obligatorio</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-2">
+          <label class="block mb-2 text-sm text-primary">Stock</label>
+          <p-tag [value]="productForm.get('stock')?.value" [severity]="stockValueStatus()" />
         </div>
       </div>
     </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 p-3">
+      <p-button label="Cancelar" icon="pi pi-times" (onClick)="modal.set(false)" severity="danger" outlined text></p-button>
+
+      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+    </div>
   </ng-template>
 </p-dialog>
