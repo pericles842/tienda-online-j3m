@@ -1,8 +1,9 @@
 import { Category } from '@/interfaces/category';
-import { ProductFormGroup } from '@/interfaces/product';
+import { ProductAttributes, ProductFormGroup, productKeyGeneralAttributes, ProductTemplateKeys } from '@/interfaces/product';
 import { AppMenuBar } from '@/pages/components/app-menu-bar/app-menu-bar';
 import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
 import { CategoriesService } from '@/services/categories.service';
+import { ProductJ3mService } from '@/services/products.service';
 import { fileOrUrlValidator } from '@/utils/forms';
 import { CommonModule } from '@angular/common';
 import { Component, signal, WritableSignal } from '@angular/core';
@@ -40,7 +41,9 @@ import { TreeTableModule } from 'primeng/treetable';
 })
 export class Products {
   modal: WritableSignal<boolean> = signal(true);
+
   categories: WritableSignal<Category[]> = signal([]);
+  attributes_products: WritableSignal<ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>[]> = signal([]);
 
   productForm: FormGroup<ProductFormGroup> = new FormGroup(
     {
@@ -58,6 +61,7 @@ export class Products {
       stock: new FormControl(0),
       min_stock: new FormControl(0, [Validators.required]),
       status: new FormControl('active', [Validators.required]),
+      type_product: new FormControl('other', [Validators.required]),
       attributes: new FormGroup({})
     },
     { validators: fileOrUrlValidator() }
@@ -65,10 +69,12 @@ export class Products {
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
-    private categoriesService: CategoriesService
+    private categoriesService: CategoriesService,
+    private productService: ProductJ3mService
   ) {}
   ngOnInit() {
     this.categoriesService.getPublicCategories().subscribe((data) => this.categories.set(data));
+    this.productService.getAllAttributesProduct().subscribe((data) => this.attributes_products.set(data));
   }
   openModal() {
     this.modal.set(true);

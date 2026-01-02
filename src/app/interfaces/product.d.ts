@@ -22,6 +22,7 @@ export interface Product extends UserTracking {
   status: StatusProduct;
   url_img?: string;
 
+  type_product: ProductTemplateKeys;
   attributes: ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>;
 
   created_at?: string;
@@ -62,7 +63,7 @@ export type DataProductAttributes = {
   value: string;
 }[];
 
-export type ProductTemplateKeys = 'food' | 'technology' | 'textile' | 'farmacia' | 'otros';
+export type ProductTemplateKeys = 'food' | 'technology' | 'textile' | 'farmacia' | 'other';
 export type productKeyGeneralAttributes =
   | 'color'
   | 'model'

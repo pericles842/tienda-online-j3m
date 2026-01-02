@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CategoriesService } from './categories.service';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { ProductAttributes, productKeyGeneralAttributes, ProductTemplateKeys } from '@/interfaces/product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductJ3mService {
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
   products = [
     {
       id: 1,
@@ -154,5 +155,11 @@ export class ProductJ3mService {
 
   findProduct(id: number) {
     return this.products.find((p) => p.id == id);
+  }
+
+  getAllAttributesProduct(): Observable<ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>[]> {
+    return this.http.get<ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>[]>(
+      `${environment.host}/products-attributes`
+    );
   }
 }

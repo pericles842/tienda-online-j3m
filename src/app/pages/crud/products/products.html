@@ -110,6 +110,27 @@
           <p-tag [value]="productForm.get('stock')?.value" [severity]="stockValueStatus()" />
         </div>
       </div>
+
+      <div class="grid-cols-12 gap-4">
+        <div class="col-span-12">
+          <label for="nombre" class="block mb-2 text-sm text-primary">Tipo de producto</label>
+          <p-select
+            [options]="attributes_products()"
+            formControlName="type_product"
+            optionLabel="name"
+            optionValue="key"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            appendTo="body"
+            placeholder="Seleccionar tipo de producto"
+            class="w-full"
+          >
+          </p-select>
+        </div>
+      </div>
+
+      {{ productForm.get('type_product')?.value | json }}
     </form>
   </ng-template>
 
