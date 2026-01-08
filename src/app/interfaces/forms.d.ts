@@ -1,3 +1,17 @@
+import { FormControl, FormGroup } from '@angular/forms';
+import {
+  FormGroupTemplateAttributes,
+  DataProductAttributes,
+  ProductTemplateKeys,
+  FormGroupTemplateAttributes,
+  ProductAttributes,
+  SubAttributesForTextile,
+  UnitsOfProduct,
+  TallaProduct,
+  StyleClothesProduct,
+  PharmaceuticalPresentationProduct
+} from './product';
+
 export interface Column {
   style?: string;
   label: string;
@@ -30,3 +44,16 @@ export type FormGroupControls<T> = {
  * Tipado de las respuesta en el delete
  */
 export type ResponseDeleteResource = { ids: number[] };
+
+export interface ComponentTemplateAttributesProduct {
+  formGroup: FormGroup<FormGroupTemplateAttributes>;
+  attributes: ProductAttributes<ProductTemplateKeys, SubAttributesForTextile>;
+  getDataAttributeProduct(
+    attribute: ProductAttributes,
+    key: SubAttributesForTextile
+  ): {
+    data: DataProductAttributes;
+    value: UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct | null;
+    key: ProductTemplateKeys;
+  };
+}

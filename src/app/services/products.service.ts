@@ -1,9 +1,19 @@
+import {
+  DataProductAttributes,
+  FormGroupTemplateAttributes,
+  PharmaceuticalPresentationProduct,
+  ProductAttributes,
+  ProductKeyGeneralAttributes,
+  ProductTemplateKeys,
+  StyleClothesProduct,
+  TallaProduct,
+  UnitsOfProduct
+} from '@/interfaces/product';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CategoriesService } from './categories.service';
-import { environment } from 'src/environments/environment';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ProductAttributes, productKeyGeneralAttributes, ProductTemplateKeys } from '@/interfaces/product';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -157,8 +167,66 @@ export class ProductJ3mService {
     return this.products.find((p) => p.id == id);
   }
 
-  getAllAttributesProduct(): Observable<ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>[]> {
-    return this.http.get<ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>[]>(
+  /**
+   * Obtiene sub atributos  atributo de producto por su clave.
+   *
+   * @param {ProductAttributes} attribute - Atributo de producto.
+   * @param {ProductKeyGeneralAttributes} key - Clave del atributo de producto.
+   * @returns {data: DataProductAttributes, value: UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct | null, key: ProductTemplateKeys} - Atributo de producto con su valor y clave.
+   */
+  public getDataAttributeProduct(
+    attribute: ProductAttributes,
+    key: ProductKeyGeneralAttributes
+  ): {
+    data: DataProductAttributes;
+    value: UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct | null;
+    key: ProductTemplateKeys;
+  } {
+    let result: ProductAttributes = attribute.attributes.find((a) => a.key == key) as unknown as ProductAttributes;
+
+    return {
+      data: result.data as DataProductAttributes,
+      value: result.value as UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct | null,
+      key: result.key
+    };
+  }
+
+  generateTemplatesFormGroup(template: ProductTemplateKeys): FormGroup<FormGroupTemplateAttributes> {
+    if (template === 'textile') {
+      return new FormGroup<FormGroupTemplateAttributes>({
+        color: new FormControl('#6466f1', { nonNullable: true, validators: [Validators.required] }),
+        talla: new FormControl('s', { nonNullable: true, validators: [Validators.required] }),
+        gender: new FormControl('male', { nonNullable: true, validators: [Validators.required] }),
+        style_clothes: new FormControl('casual', { nonNullable: true, validators: [Validators.required] })
+      });
+    } else if (template === 'farmacia') {
+      return new FormGroup<FormGroupTemplateAttributes>({
+        manufacturer: new FormControl(null, { nonNullable: true, validators: [Validators.required] }),
+        pharmaceutical_presentation: new FormControl('tablets', { nonNullable: true, validators: [Validators.required] }),
+        unit: new FormControl('g', { nonNullable: true, validators: [Validators.required] }),
+        amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+        expiration_date: new FormControl(Date.now(), { nonNullable: true, validators: [Validators.required] })
+      });
+    } else if (template === 'technology') {
+      return new FormGroup<FormGroupTemplateAttributes>({
+        color: new FormControl('#6466f1', { nonNullable: true, validators: [Validators.required] }),
+        model: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+        storage: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+      });
+    } else if (template === 'food') {
+      return new FormGroup<FormGroupTemplateAttributes>({
+        marca: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+        unit: new FormControl('kg', { nonNullable: true, validators: [Validators.required] }),
+        amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
+        expiration_date: new FormControl(Date.now(), { nonNullable: true, validators: [Validators.required] })
+      });
+    } else {
+      return new FormGroup<FormGroupTemplateAttributes>({});
+    }
+  }
+
+  getAllAttributesProduct(): Observable<ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>[]> {
+    return this.http.get<ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>[]>(
       `${environment.host}/products-attributes`
     );
   }

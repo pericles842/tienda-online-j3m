@@ -48,29 +48,12 @@
               optionValue="id"
               [filter]="true"
               filterBy="name"
-              [showClear]="true"
               appendTo="body"
               placeholder="Seleccionar categoría"
               class="w-full"
             >
             </p-select>
           </div>
-        </div>
-        <!-- FILA DE ABAJO -->
-        <div class="col-span-12 md:col-span-5">
-          <label for="brand" class="block mb-2 text-sm text-primary">Marca del producto</label>
-          <input pInputText id="brand" type="text" formControlName="brand" class="w-full mb-2" />
-          @if (productForm.get('brand')?.hasError('required')&& productForm.get('brand')?.dirty) {
-          <p-message severity="error" variant="simple" size="small">La marca es obligatoria</p-message>
-          }
-        </div>
-
-        <div class="col-span-12 md:col-span-4">
-          <label for="reference" class="block mb-2 text-sm text-primary">Referencia</label>
-          <input pInputText id="reference" type="text" formControlName="reference" class="w-full mb-2" />
-          @if (productForm.get('reference')?.hasError('required')&& productForm.get('reference')?.dirty) {
-          <p-message severity="error" variant="simple" size="small">La referencia es obligatoria</p-message>
-          }
         </div>
       </div>
 
@@ -111,7 +94,26 @@
         </div>
       </div>
 
-      <div class="grid-cols-12 gap-4">
+      <div class="grid grid-cols-12 gap-4">
+        <!-- FILA DE ABAJO -->
+        <div class="col-span-12 md:col-span-5">
+          <label for="brand" class="block mb-2 text-sm text-primary">Marca del producto</label>
+          <input pInputText id="brand" type="text" formControlName="brand" class="w-full mb-2" />
+          @if (productForm.get('brand')?.hasError('required')&& productForm.get('brand')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">La marca es obligatoria</p-message>
+          }
+        </div>
+
+        <div class="col-span-12 md:col-span-4">
+          <label for="reference" class="block mb-2 text-sm text-primary">Referencia</label>
+          <input pInputText id="reference" type="text" formControlName="reference" class="w-full mb-2" />
+          @if (productForm.get('reference')?.hasError('required')&& productForm.get('reference')?.dirty) {
+          <p-message severity="error" variant="simple" size="small">La referencia es obligatoria</p-message>
+          }
+        </div>
+      </div>
+
+      <div class="grid grid-cols-12 gap-4">
         <div class="col-span-12">
           <label for="nombre" class="block mb-2 text-sm text-primary">Tipo de producto</label>
           <p-select
@@ -121,7 +123,6 @@
             optionValue="key"
             [filter]="true"
             filterBy="name"
-            [showClear]="true"
             appendTo="body"
             placeholder="Seleccionar tipo de producto"
             class="w-full"
@@ -130,7 +131,13 @@
         </div>
       </div>
 
-      {{ productForm.get('type_product')?.value | json }}
+      <section class="mt-7">
+        @for (item of template_attributes_product ; track $index) {
+        <!-- templates -->
+        @if (productForm.get('type_product')?.value == item.key) {
+        <ng-container *ngComponentOutlet="item.component; inputs: item.inputs"></ng-container>
+        } }
+      </section>
     </form>
   </ng-template>
 

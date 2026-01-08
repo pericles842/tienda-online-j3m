@@ -1,0 +1,58 @@
+<div class="flex flex-col gap-2">
+  <span class="text-primary-900 text-2xl">Producto {{attributes.name}}</span>
+  <span class="text-primary-800 font-light">Atributos para la creación de un producto textil</span>
+</div>
+
+<section [formGroup]="formGroup" class="grid grid-cols-12 gap-4 mt-7">
+  <div class="col-span-12 md:col-span-6">
+    <label for="talla" class="block mb-2 text-sm text-primary">Talla</label>
+    <p-select
+      [options]="getDataAttributeProduct(attributes, 'talla').data"
+      optionLabel="value"
+      formControlName="talla"
+      optionValue="key"
+      filterBy="name"
+      appendTo="body"
+      class="w-full"
+    >
+    </p-select>
+  </div>
+
+  <div class="col-span-12 md:col-span-6">
+    <label for="talla" class="block mb-2 text-sm text-primary">Genero</label>
+    <p-select
+      [options]="getDataAttributeProduct(attributes, 'gender').data"
+      optionLabel="value"
+      optionValue="key"
+      formControlName="gender"
+      filterBy="name"
+      appendTo="body"
+      class="w-full"
+    >
+    </p-select>
+  </div>
+
+  <div class="col-span-12 md:col-span-6">
+    <label for="talla" class="block mb-2 text-sm text-primary">Estilo de ropa</label>
+    <p-select
+      [options]="getDataAttributeProduct(attributes, 'style_clothes').data"
+      optionLabel="value"
+      optionValue="key"
+      formControlName="style_clothes"
+      filterBy="name"
+      appendTo="body"
+      class="w-full"
+    >
+    </p-select>
+  </div>
+
+  <div class="col-span-12 md:col-span-3">
+    <label for="reference" class="block mb-2 text-sm text-primary">Color del producto</label>
+    <!-- <input pInputText id="reference" type="text" class="w-full mb-2" /> -->
+    <p-colorpicker formControlName="color" format="hex" />
+    <span class="ml-2">{{formGroup.get('color')?.value}}</span>
+    <!-- @if (productForm.get('reference')?.hasError('required')&& productForm.get('reference')?.dirty) {
+    <p-message severity="error" variant="simple" size="small">La referencia es obligatoria</p-message>
+    } -->
+  </div>
+</section>

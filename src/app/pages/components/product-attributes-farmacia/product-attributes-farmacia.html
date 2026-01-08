@@ -1,0 +1,43 @@
+<div class="flex flex-col gap-2">
+  <span class="text-primary-900 text-2xl">Producto {{attributes.name}}</span>
+  <span class="text-primary-800 font-light">Atributos para la creación de un producto textil</span>
+</div>
+
+<section [formGroup]="formGroup" class="grid grid-cols-12 gap-4 mt-7">
+  <div class="col-span-12 md:col-span-5">
+    <label for="manufacturer" class="block mb-2 text-sm text-primary">Fabricante</label>
+    <input pInputText id="manufacturer" type="text" formControlName="manufacturer" class="w-full mb-2" />
+    @if (formGroup.get('manufacturer')?.hasError('required')&& formGroup.get('manufacturer')?.dirty) {
+    <p-message severity="error" variant="simple" size="small">El fabricante es obligatorio</p-message>
+    }
+  </div>
+
+  <div class="col-span-12 md:col-span-2">
+    <label for="nombre" class="block mb-2 text-sm text-primary">Unidad</label>
+    <p-select
+      [options]="getDataAttributeProduct(attributes, 'unit').data"
+      formControlName="unit"
+      optionLabel="value"
+      optionValue="key"
+      [filter]="true"
+      filterBy="name"
+      appendTo="body"
+      class="w-full"
+    >
+    </p-select>
+  </div>
+
+  <div class="col-span-12 md:col-span-2">
+    <label for="amount" class="block mb-2 text-sm text-primary">Cantidad</label>
+    <input pInputText id="amount" type="text" formControlName="amount" class="w-full mb-2" />
+    @if (formGroup.get('amount"')?.hasError('required')&& formGroup.get('amount"')?.dirty) {
+    <p-message severity="error" variant="simple" size="small">La cantidad es obligatoria</p-message>
+    }
+  </div>
+  <div class="col-span-12 md:col-span-3">
+    <label for="amount" class="block mb-2 text-sm text-primary">Ejemplo</label>
+    <label for="amount" class="block mb-2 text-xl text-segundary-900"
+      >{{ formGroup.get('amount')?.value + formGroup.get('unit')?.value }}</label
+    >
+  </div>
+</section>

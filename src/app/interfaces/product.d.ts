@@ -29,15 +29,15 @@ export interface Product extends UserTracking {
   updated_at?: string;
 }
 
-export interface ProductAttributes<T, C = any> {
+export interface ProductAttributes<T = ProductTemplateKeys, C = ProductKeyGeneralAttributes> {
   id?: number;
   name: string;
   key: T;
   description: string;
-  created_at: string;
   data?: DataProductAttributes;
   value?: UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct;
   attributes: ProductAttributes<C>[];
+  created_at: string;
 }
 
 export type StatusProduct = 'active' | 'inactive' | 'damaged';
@@ -64,7 +64,7 @@ export type DataProductAttributes = {
 }[];
 
 export type ProductTemplateKeys = 'food' | 'technology' | 'textile' | 'farmacia' | 'other';
-export type productKeyGeneralAttributes =
+export type ProductKeyGeneralAttributes =
   | 'color'
   | 'model'
   | 'storage'
@@ -78,4 +78,14 @@ export type productKeyGeneralAttributes =
   | 'manufacturer'
   | 'pharmaceutical_presentation';
 
+export type SubAttributesForTextile = Extract<ProductKeyGeneralAttributes, 'color' | 'talla' | 'gender' | 'style_clothes'>;
+
 export type ProductFormGroup = FormGroupControls<Product>;
+export interface FormGroupTemplateAttributes extends Partial<Record<ProductKeyGeneralAttributes, FormControl<string | null>>> {}
+
+export interface TemplateAttributesProduct {
+  key: ProductTemplateKeys;
+  label: string;
+  component: any;
+  inputs: { [key: string]: any };
+}
