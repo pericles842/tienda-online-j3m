@@ -2,6 +2,7 @@ import {
   DataProductAttributes,
   FormGroupTemplateAttributes,
   PharmaceuticalPresentationProduct,
+  Product,
   ProductAttributes,
   ProductKeyGeneralAttributes,
   ProductTemplateKeys,
@@ -167,6 +168,13 @@ export class ProductJ3mService {
     return this.products.find((p) => p.id == id);
   }
 
+  createProduct(product: FormData): Observable<Product> {
+    return this.http.post<Product>(`${environment.host}/products`, product);
+  }
+  getFullProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${environment.host}/full-products`);
+  }
+
   /**
    * Obtiene sub atributos  atributo de producto por su clave.
    *
@@ -204,20 +212,20 @@ export class ProductJ3mService {
         manufacturer: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
         pharmaceutical_presentation: new FormControl('tablets', { nonNullable: false, validators: [Validators.required] }),
         unit: new FormControl('g', { nonNullable: false, validators: [Validators.required] }),
-        amount: new FormControl(0, { nonNullable: false, validators: [Validators.required] }),
+        amount: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
         expiration_date: new FormControl(new Date(), { nonNullable: false, validators: [Validators.required] })
       });
     } else if (template === 'technology') {
       return new FormGroup<FormGroupTemplateAttributes>({
         color: new FormControl('#6466f1', { nonNullable: false, validators: [Validators.required] }),
-        model: new FormControl('', { nonNullable: false, validators: [Validators.required] }),
-        storage: new FormControl('', { nonNullable: false, validators: [Validators.required] })
+        model: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
+        storage: new FormControl(null, { nonNullable: false, validators: [Validators.required] })
       });
     } else if (template === 'food') {
       return new FormGroup<FormGroupTemplateAttributes>({
-        marca: new FormControl('', { nonNullable: false, validators: [Validators.required] }),
+        marca: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
         unit: new FormControl('kg', { nonNullable: false, validators: [Validators.required] }),
-        amount: new FormControl(0, { nonNullable: false, validators: [Validators.required] }),
+        amount: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
         expiration_date: new FormControl(new Date(), { nonNullable: false, validators: [Validators.required] })
       });
     } else {

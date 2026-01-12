@@ -1,5 +1,12 @@
 <app-menu-bar (touchNew)="openModal()"></app-menu-bar>
 
+<app-dynamic-table
+  [columns]="columns"
+  name_table="Productos"
+  [data]="products()"
+  [globalFilterFields]="globalFilterFields"
+></app-dynamic-table>
+
 <p-dialog
   [visible]="modal()"
   [style]="{ width: '640px' }"
@@ -59,8 +66,15 @@
 
       <div class="grid grid-cols-12 gap-4">
         <div class="col-span-12 md:col-span-2">
-          <label for="price" class="block mb-2 text-sm text-primary">Precio ($)</label>
-          <input pInputText id="price" type="text" formControlName="price" class="w-full mb-2" />
+          <label for="price" class="block mb-2 text-sm text-primary">Precio</label>
+          <p-inputnumber
+            id="price"
+            inputId="currency-us"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            formControlName="price"
+          ></p-inputnumber>
           @if (productForm.get('price')?.hasError('required')&& productForm.get('price')?.dirty) {
           <p-message severity="error" variant="simple" size="small">El precio obligatoria</p-message>
           }
@@ -68,7 +82,14 @@
 
         <div class="col-span-12 md:col-span-2">
           <label for="cost" class="block mb-2 text-sm text-primary">Costo</label>
-          <input pInputText id="cost" type="text" formControlName="cost" class="w-full mb-2" />
+          <p-inputnumber
+            id="cost"
+            inputId="currency-us"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            formControlName="cost"
+          ></p-inputnumber>
           @if (productForm.get('cost')?.hasError('required')&& productForm.get('cost')?.dirty) {
           <p-message severity="error" variant="simple" size="small">El Costo del producto obligatoria</p-message>
           }
@@ -76,22 +97,25 @@
 
         <div class="col-span-12 md:col-span-2">
           <label for="discount" class="block mb-2 text-sm text-primary">Descuento</label>
-          <input pInputText id="discount" type="text" formControlName="discount" class="w-full mb-2" />
+          <p-inputnumber id="discount" inputId="percent" prefix="%" formControlName="discount"></p-inputnumber>
           @if (productForm.get('discount')?.hasError('required')&& productForm.get('discount')?.dirty) { }
         </div>
 
         <div class="col-span-12 md:col-span-2">
           <label for="min_stock" class="block mb-2 text-sm text-primary">Stock mínimo</label>
-          <input pInputText id="min_stock" type="text" formControlName="min_stock" class="w-full mb-2" />
-          @if (productForm.get('min_stock')?.hasError('required')&& productForm.get('min_stock')?.dirty) {
+
+          <p-inputnumber id="min_stock" formControlName="min_stock"></p-inputnumber>
+          <!-- @if (productForm.get('min_stock')?.hasError('required')&& productForm.get('min_stock')?.dirty) {
           <p-message severity="error" variant="simple" size="small">Obligatorio</p-message>
-          }
+          } -->
         </div>
 
+        @if (productForm.get('stock')?.value != null) {
         <div class="col-span-12 md:col-span-2">
           <label class="block mb-2 text-sm text-primary">Stock</label>
           <p-tag [value]="productForm.get('stock')?.value" [severity]="stockValueStatus()" />
         </div>
+        }
       </div>
 
       <div class="grid grid-cols-12 gap-4">
@@ -161,7 +185,7 @@
     <div class="flex justify-end gap-3 p-3">
       <p-button label="Cancelar" icon="pi pi-times" (onClick)="modal.set(false)" severity="danger" outlined text></p-button>
 
-      <p-button label="Guardar" icon="pi pi-check" type="button"></p-button>
+      <p-button label="Guardar" (click)="saveProduct()" icon="pi pi-check" type="button"></p-button>
     </div>
   </ng-template>
 </p-dialog>

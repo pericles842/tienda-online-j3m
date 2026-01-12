@@ -14,8 +14,8 @@
 
   <div class="col-span-12 md:col-span-3">
     <label for="storage" class="block mb-2 text-sm text-primary">Almacenamiento</label>
-    <input pInputText id="storage" type="number" formControlName="storage" class="w-full mb-2" />
-    <small>Ej: 16 Gb</small>
+    <p-inputnumber id="storage" formControlName="storage"></p-inputnumber>
+    <small>Ej: {{formGroup.get('storage')?.value ? formGroup.get('storage')?.value: '16'}} Gb</small>
     @if (formGroup.get('storage')?.hasError('required') && formGroup.get('storage')?.dirty) {
     <p-message severity="error" variant="simple" size="small"> El Almacenamiento es requerido </p-message>
     }

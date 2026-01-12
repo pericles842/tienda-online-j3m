@@ -17,7 +17,16 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-product-attributes-farmacia',
-  imports: [Message, ReactiveFormsModule, CommonModule, InputTextModule, Select, InputNumberModule, DatePickerModule],
+  imports: [
+    Message,
+    ReactiveFormsModule,
+    CommonModule,
+    InputTextModule,
+    InputTextModule,
+    Select,
+    InputNumberModule,
+    DatePickerModule
+  ],
   templateUrl: './product-attributes-farmacia.html',
   styleUrl: './product-attributes-farmacia.scss'
 })

@@ -29,7 +29,7 @@
 
   <div class="col-span-12 md:col-span-2">
     <label for="amount" class="block mb-2 text-sm text-primary">Cantidad</label>
-    <input pInputText id="amount" type="number" formControlName="amount" class="w-full mb-2" />
+    <p-inputnumber id="amount" formControlName="amount"></p-inputnumber>
     @if (formGroup.get('amount')?.hasError('required') && formGroup.get('amount')?.dirty) {
     <p-message severity="error" variant="simple" size="small"> La cantidad es obligatoria </p-message>
     }

@@ -29,7 +29,7 @@
 
   <div class="col-span-12 md:col-span-2">
     <label for="amount" class="block mb-2 text-sm text-primary">Cantidad</label>
-    <input pInputText id="amount" type="number" formControlName="amount" class="w-full mb-2" />
+    <p-inputnumber id="amount" formControlName="amount"></p-inputnumber>
     @if (formGroup.get('amount')?.hasError('required') && formGroup.get('amount')?.dirty) {
     <p-message severity="error" variant="simple" size="small"> La cantidad es obligatoria </p-message>
     }
@@ -58,7 +58,7 @@
   </div>
 
   <div class="col-span-12 md:col-span-5">
-    <label for="nombre" class="block mb-2 text-sm text-primary">Fecha de expiracion</label>
+    <label for="nombre" class="block mb-2 text-sm text-primary">Fecha de expiración</label>
     <p-datepicker formControlName="expiration_date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
     @if (formGroup.get('expiration_date')?.hasError('required') && formGroup.get('expiration_date')?.dirty) {
     <p-message severity="error" variant="simple" size="small"> La fecha es obligatoria </p-message>

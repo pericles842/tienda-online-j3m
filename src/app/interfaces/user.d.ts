@@ -79,4 +79,6 @@ type UserLoginResponse = {
 export interface UserTracking {
   user_create_id: number;
   user_update_id: number;
+  email_user_create: string;
+  email_user_update: string;
 }

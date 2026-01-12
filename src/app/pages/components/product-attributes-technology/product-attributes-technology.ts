@@ -5,12 +5,13 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'primeng/colorpicker';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
-import { Message } from "primeng/message";
+import { Message } from 'primeng/message';
 
 @Component({
   selector: 'app-product-attributes-technology',
-  imports: [CommonModule, ReactiveFormsModule, ColorPickerModule, InputTextModule, Message],
+  imports: [CommonModule, ReactiveFormsModule, ColorPickerModule, InputTextModule, Message, InputNumberModule],
   templateUrl: './product-attributes-technology.html',
   styleUrl: './product-attributes-technology.scss'
 })

@@ -5,8 +5,8 @@ export interface Product extends UserTracking {
   name: string;
   // marca del producto
   brand: string;
-  description: string;
-  discount: number;
+  description: string | null;
+  discount: number | null;
   reference: string;
 
   //costo del producto
@@ -15,15 +15,15 @@ export interface Product extends UserTracking {
   stock: number;
 
   //cantidad del productos para la notification de reabastecer
-  min_stock: number;
+  min_stock: number | null;
   category_id: number;
-  name_category: string;
+  category_name: string;
 
   status: StatusProduct;
-  url_img?: string;
+  url_img: string | null;
 
   type_product: ProductTemplateKeys;
-  attributes: ProductAttributes<ProductTemplateKeys, productKeyGeneralAttributes>;
+  attributes: ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>;
 
   created_at?: string;
   updated_at?: string;

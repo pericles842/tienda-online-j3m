@@ -60,7 +60,7 @@ export class PayMethod {
     { label: 'url_img', key: 'url_img', sortTable: false, dataType: 'image' },
     { label: 'Titular', key: 'holder', sortTable: true },
     { label: 'Tipo', key: 'type', sortTable: true },
-    { label: 'created_at', dataType: 'date', key: 'created_at', sortTable: true }
+    { label: 'Fecha de creación', dataType: 'date', key: 'created_at', sortTable: true }
   ];
   globalFilterFields: string[] = ['name', 'holder', 'type'];
   selectedEliminatePayMethods: PayMethodData[] = [];
