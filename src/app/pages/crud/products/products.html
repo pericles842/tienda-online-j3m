@@ -23,7 +23,7 @@
         <!-- //?CONTENEDOR DERECHO -->
         <div class="col-span-12 md:col-span-8">
           <div class="col-span-12 flex justify-end">
-            <p-tag [value]="productForm.get('status')?.value " [severity]="severityValueStatus()" />
+            <p-tag [value]="severityStatusLabel()" [severity]="severityValueStatus()" />
           </div>
           <div class="col-span-12">
             <label for="nombre" class="block mb-2 text-sm text-primary">Nombre del producto</label>
@@ -138,6 +138,22 @@
         <ng-container *ngComponentOutlet="item.component; inputs: item.inputs"></ng-container>
         } }
       </section>
+
+      <div class="col-span-12">
+        <label for="descripcion" class="block mb-2 text-sm text-primary">Descripción</label>
+        <textarea
+          rows="5"
+          cols="30"
+          pTextarea
+          formControlName="description"
+          class="w-full mb-2"
+          [autoResize]="true"
+          [ngClass]="productForm.get('description')?.hasError('invalid') && productForm.get('description')?.dirty ? 'ng-invalid ng-dirty' : ''"
+        ></textarea>
+        <!-- @if (productForm.get('description')?.hasError('required')&& productForm.get('description')?.dirty) {
+        <p-message severity="error" variant="simple" size="small">La descripción es obligatoria</p-message>
+        } -->
+      </div>
     </form>
   </ng-template>
 

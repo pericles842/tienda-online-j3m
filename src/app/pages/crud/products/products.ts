@@ -73,7 +73,7 @@ export class Products {
       stock: new FormControl(0),
       min_stock: new FormControl(0, [Validators.required]),
       status: new FormControl('inactive', [Validators.required]),
-      type_product: new FormControl('farmacia', [Validators.required]),
+      type_product: new FormControl('food', [Validators.required]),
       attributes: new FormGroup({})
     },
     { validators: fileOrUrlValidator() }
@@ -117,13 +117,19 @@ export class Products {
         key: 'food',
         label: 'Alimentos',
         component: ProductAttributesFood,
-        inputs: {}
+        inputs: {
+          attributes: attributes_products.food,
+          formGroup: this.productForm.get('attributes')
+        }
       },
       {
         key: 'other',
         label: 'Otro',
         component: ProductAttributesOther,
-        inputs: {}
+        inputs: {
+          attributes: attributes_products.other,
+          formGroup: this.productForm.get('attributes')
+        }
       },
       {
         key: 'farmacia',
@@ -138,7 +144,10 @@ export class Products {
         key: 'technology',
         label: 'Tecnología',
         component: ProductAttributesTechnology,
-        inputs: {}
+        inputs: {
+          attributes: attributes_products.technology,
+          formGroup: this.productForm.get('attributes')
+        }
       },
       {
         key: 'textile',
@@ -174,6 +183,19 @@ export class Products {
       return 'warning';
     } else {
       return 'danger';
+    }
+  }
+
+  severityStatusLabel() {
+    switch (this.productForm.get('status')?.value) {
+      case 'active':
+        return 'Activo';
+      case 'inactive':
+        return 'Inactivo';
+      case 'damaged':
+        return 'Dañado';
+      default:
+        return 'Desconocido';
     }
   }
 }

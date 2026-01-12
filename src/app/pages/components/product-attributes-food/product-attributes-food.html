@@ -1,1 +1,52 @@
-<p>product-attributes-food works!</p>
+<div class="flex flex-col gap-2">
+  <span class="text-primary-900 text-2xl">Producto {{attributes.name}}</span>
+  <span class="text-primary-800 font-light">Atributos para la creación de un productos de alimento</span>
+</div>
+
+<section [formGroup]="formGroup" class="grid grid-cols-12 gap-4 mt-7">
+  <div class="col-span-12 md:col-span-5">
+    <label for="marca" class="block mb-2 text-sm text-primary">Marca</label>
+    <input pInputText id="marca" type="text" formControlName="marca" class="w-full mb-2" />
+    @if (formGroup.get('marca')?.hasError('required')&& formGroup.get('marca')?.dirty) {
+    <p-message severity="error" variant="simple" size="small">La marca es obligatoria</p-message>
+    }
+  </div>
+
+  <div class="col-span-12 md:col-span-2">
+    <label for="nombre" class="block mb-2 text-sm text-primary">Unidad</label>
+    <p-select
+      [options]="getDataAttributeProduct(attributes, 'unit').data"
+      formControlName="unit"
+      optionLabel="value"
+      optionValue="key"
+      [filter]="true"
+      filterBy="name"
+      appendTo="body"
+      class="w-full"
+    >
+    </p-select>
+  </div>
+
+  <div class="col-span-12 md:col-span-2">
+    <label for="amount" class="block mb-2 text-sm text-primary">Cantidad</label>
+    <input pInputText id="amount" type="number" formControlName="amount" class="w-full mb-2" />
+    @if (formGroup.get('amount')?.hasError('required') && formGroup.get('amount')?.dirty) {
+    <p-message severity="error" variant="simple" size="small"> La cantidad es obligatoria </p-message>
+    }
+  </div>
+
+  <div class="col-span-12 md:col-span-3">
+    <label for="amount" class="block mb-2 text-sm text-primary">Ejemplo</label>
+    <label for="amount" class="block mb-2 text-xl text-segundary-900"
+      >{{ (formGroup.get('amount')?.value ? formGroup.get('amount')?.value:0) + ' ' + formGroup.get('unit')?.value }}</label
+    >
+  </div>
+
+  <div class="col-span-12 md:col-span-5">
+    <label for="nombre" class="block mb-2 text-sm text-primary">Fecha de expiracion</label>
+    <p-datepicker formControlName="expiration_date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" />
+    @if (formGroup.get('expiration_date')?.hasError('required') && formGroup.get('expiration_date')?.dirty) {
+    <p-message severity="error" variant="simple" size="small"> La fecha es obligatoria </p-message>
+    }
+  </div>
+</section>

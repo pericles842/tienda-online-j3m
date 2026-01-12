@@ -42,6 +42,7 @@ export interface ProductAttributes<T = ProductTemplateKeys, C = ProductKeyGenera
 
 export type StatusProduct = 'active' | 'inactive' | 'damaged';
 
+//Tipos de unidades y datos generales
 export type UnitsOfProduct = 'un' | 'mg' | 'oz' | 'lb' | 'kg' | 'lt' | 'ml' | 'g';
 export type TallaProduct = 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl';
 export type StyleClothesProduct = 'casual' | 'formal' | 'sport';
@@ -63,6 +64,7 @@ export type DataProductAttributes = {
   value: string;
 }[];
 
+//Tipos de plantillas general
 export type ProductTemplateKeys = 'food' | 'technology' | 'textile' | 'farmacia' | 'other';
 export type ProductKeyGeneralAttributes =
   | 'color'
@@ -78,8 +80,16 @@ export type ProductKeyGeneralAttributes =
   | 'manufacturer'
   | 'pharmaceutical_presentation';
 
+//Sub propieades de plantillas
 export type SubAttributesForTextile = Extract<ProductKeyGeneralAttributes, 'color' | 'talla' | 'gender' | 'style_clothes'>;
+export type SubAttributesForFarmacia = Extract<
+  ProductKeyGeneralAttributes,
+  'manufacturer' | 'pharmaceutical_presentation' | 'amount' | 'unit' | 'expiration_date'
+>;
+export type SubAttributesForTechnology = Extract<ProductKeyGeneralAttributes, 'color' | 'model' | 'storage'>;
+export type SubAttributesForFood = Extract<ProductKeyGeneralAttributes, 'marca' | 'unit' | 'amount' | 'expiration_date'>;
 
+//Formularios reactivos
 export type ProductFormGroup = FormGroupControls<Product>;
 export interface FormGroupTemplateAttributes extends Partial<Record<ProductKeyGeneralAttributes, FormControl<string | null>>> {}
 

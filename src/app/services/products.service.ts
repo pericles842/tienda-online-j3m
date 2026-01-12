@@ -194,31 +194,31 @@ export class ProductJ3mService {
   generateTemplatesFormGroup(template: ProductTemplateKeys): FormGroup<FormGroupTemplateAttributes> {
     if (template === 'textile') {
       return new FormGroup<FormGroupTemplateAttributes>({
-        color: new FormControl('#6466f1', { nonNullable: true, validators: [Validators.required] }),
-        talla: new FormControl('s', { nonNullable: true, validators: [Validators.required] }),
-        gender: new FormControl('male', { nonNullable: true, validators: [Validators.required] }),
-        style_clothes: new FormControl('casual', { nonNullable: true, validators: [Validators.required] })
+        color: new FormControl('#6466f1', { nonNullable: false, validators: [Validators.required] }),
+        talla: new FormControl('s', { nonNullable: false, validators: [Validators.required] }),
+        gender: new FormControl('male', { nonNullable: false, validators: [Validators.required] }),
+        style_clothes: new FormControl('casual', { nonNullable: false, validators: [Validators.required] })
       });
     } else if (template === 'farmacia') {
       return new FormGroup<FormGroupTemplateAttributes>({
-        manufacturer: new FormControl(null, { nonNullable: true, validators: [Validators.required] }),
-        pharmaceutical_presentation: new FormControl('tablets', { nonNullable: true, validators: [Validators.required] }),
-        unit: new FormControl('g', { nonNullable: true, validators: [Validators.required] }),
-        amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-        expiration_date: new FormControl(Date.now(), { nonNullable: true, validators: [Validators.required] })
+        manufacturer: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
+        pharmaceutical_presentation: new FormControl('tablets', { nonNullable: false, validators: [Validators.required] }),
+        unit: new FormControl('g', { nonNullable: false, validators: [Validators.required] }),
+        amount: new FormControl(0, { nonNullable: false, validators: [Validators.required] }),
+        expiration_date: new FormControl(new Date(), { nonNullable: false, validators: [Validators.required] })
       });
     } else if (template === 'technology') {
       return new FormGroup<FormGroupTemplateAttributes>({
-        color: new FormControl('#6466f1', { nonNullable: true, validators: [Validators.required] }),
-        model: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-        storage: new FormControl('', { nonNullable: true, validators: [Validators.required] })
+        color: new FormControl('#6466f1', { nonNullable: false, validators: [Validators.required] }),
+        model: new FormControl('', { nonNullable: false, validators: [Validators.required] }),
+        storage: new FormControl('', { nonNullable: false, validators: [Validators.required] })
       });
     } else if (template === 'food') {
       return new FormGroup<FormGroupTemplateAttributes>({
-        marca: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-        unit: new FormControl('kg', { nonNullable: true, validators: [Validators.required] }),
-        amount: new FormControl(0, { nonNullable: true, validators: [Validators.required] }),
-        expiration_date: new FormControl(Date.now(), { nonNullable: true, validators: [Validators.required] })
+        marca: new FormControl('', { nonNullable: false, validators: [Validators.required] }),
+        unit: new FormControl('kg', { nonNullable: false, validators: [Validators.required] }),
+        amount: new FormControl(0, { nonNullable: false, validators: [Validators.required] }),
+        expiration_date: new FormControl(new Date(), { nonNullable: false, validators: [Validators.required] })
       });
     } else {
       return new FormGroup<FormGroupTemplateAttributes>({});

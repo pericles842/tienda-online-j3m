@@ -9,7 +9,8 @@ import {
   UnitsOfProduct,
   TallaProduct,
   StyleClothesProduct,
-  PharmaceuticalPresentationProduct
+  PharmaceuticalPresentationProduct,
+  ProductKeyGeneralAttributes
 } from './product';
 
 export interface Column {
@@ -47,10 +48,10 @@ export type ResponseDeleteResource = { ids: number[] };
 
 export interface ComponentTemplateAttributesProduct {
   formGroup: FormGroup<FormGroupTemplateAttributes>;
-  attributes: ProductAttributes<ProductTemplateKeys, SubAttributesForTextile>;
+  attributes: ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>;
   getDataAttributeProduct(
     attribute: ProductAttributes,
-    key: SubAttributesForTextile
+    key: ProductKeyGeneralAttributes
   ): {
     data: DataProductAttributes;
     value: UnitsOfProduct | TallaProduct | StyleClothesProduct | PharmaceuticalPresentationProduct | null;
