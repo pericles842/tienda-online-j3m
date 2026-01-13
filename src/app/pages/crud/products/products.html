@@ -5,6 +5,8 @@
   name_table="Productos"
   [data]="products()"
   [globalFilterFields]="globalFilterFields"
+  [actions_button]="actions_table_button"
+  (onEdit)="goToEdit($event)"
 ></app-dynamic-table>
 
 <p-dialog
@@ -110,12 +112,10 @@
           } -->
         </div>
 
-        @if (productForm.get('stock')?.value != null) {
         <div class="col-span-12 md:col-span-2">
           <label class="block mb-2 text-sm text-primary">Stock</label>
-          <p-tag [value]="productForm.get('stock')?.value" [severity]="stockValueStatus()" />
+          <p-inputnumber id="stock" formControlName="stock"></p-inputnumber>
         </div>
-        }
       </div>
 
       <div class="grid grid-cols-12 gap-4">

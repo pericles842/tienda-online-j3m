@@ -171,6 +171,10 @@ export class ProductJ3mService {
   createProduct(product: FormData): Observable<Product> {
     return this.http.post<Product>(`${environment.host}/products`, product);
   }
+
+  updateProduct(product: FormData): Observable<Product> {
+    return this.http.put<Product>(`${environment.host}/products`, product);
+  }
   getFullProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${environment.host}/full-products`);
   }

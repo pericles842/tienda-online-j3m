@@ -37,6 +37,8 @@ export interface ActionTableButton {
   method: (event: any) => void;
 }
 
+export type ButtonSeverity = 'primary' | 'secondary' | 'success' | 'info' | 'warn' | 'help' | 'danger' | 'contrast';
+
 export type FormGroupControls<T> = {
   [K in keyof T]: FormControl<T[K]>;
 };

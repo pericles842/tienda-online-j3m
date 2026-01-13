@@ -32,8 +32,8 @@ import { TextareaModule } from 'primeng/textarea';
 import { TreeTableModule } from 'primeng/treetable';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { StyleClass } from 'primeng/styleclass';
-import { Column } from '@/interfaces/forms';
-import { DynamicTable } from "@/pages/components/dynamic-table/dynamic-table";
+import { ActionTableButton, Column } from '@/interfaces/forms';
+import { DynamicTable } from '@/pages/components/dynamic-table/dynamic-table';
 
 @Component({
   selector: 'app-products',
@@ -55,15 +55,43 @@ import { DynamicTable } from "@/pages/components/dynamic-table/dynamic-table";
     TagModule,
     Select,
     DynamicTable
-],
+  ],
   templateUrl: './products.html',
   styleUrl: './products.scss'
 })
 export class Products {
   modal: WritableSignal<boolean> = signal(false);
+
+  actions_table_button: ActionTableButton[] = [
+    {
+      icon: 'pi pi-check',
+      tooltip: 'Activar producto',
+      severity: 'success',
+      rounded: true,
+      outlined: false,
+      method: (event: any) => {}
+    },
+    {
+      icon: 'pi pi-times',
+      tooltip: 'Desactivar',
+      severity: 'danger',
+      rounded: true,
+      outlined: false,
+      method: (event: any) => {}
+    },
+    {
+      icon: 'pi pi-box',
+      tooltip: 'Agregar inventario',
+      severity: 'warn',
+      rounded: true,
+      outlined: false,
+      method: (event: any) => {}
+    }
+  ];
+
   columns: Column[] = [
     { label: 'Nombre', key: 'name', sortTable: true },
-    { label: 'url_img', key: 'url_img', sortTable: false, dataType: 'image' },
+    { label: 'Imagen', key: 'url_img', sortTable: false, dataType: 'image' },
     { label: 'Categoría', key: 'category_name', sortTable: true },
     { label: 'Marca', key: 'brand', sortTable: true },
     { label: 'Referencia', key: 'reference', sortTable: true },
@@ -229,19 +257,6 @@ export class Products {
     }
   }
 
-  stockValueStatus() {
-    const stock = this.productForm.get('stock')?.value;
-    const minStock = this.productForm.get('min_stock')?.value;
-
-    if (stock > minStock) {
-      return 'success';
-    } else if (stock < minStock) {
-      return 'warning';
-    } else {
-      return 'danger';
-    }
-  }
-
   severityStatusLabel() {
     switch (this.productForm.get('status')?.value) {
       case 'active':
@@ -255,11 +270,29 @@ export class Products {
     }
   }
 
+  goToEdit(product: Product) {
+    this.openModal();
+
+    if (typeof product.attributes === 'string') {
+      product.attributes = JSON.parse(product.attributes);
+    }
+
+    this.productForm.patchValue(product);
+    this.productForm.get('attributes')?.patchValue(product.attributes);
+  }
   createProductService(formData: FormData) {
     this.productService.createProduct(formData).subscribe((data) => {
       this.products.update((current) => [...current, data]);
       this.modal.set(false);
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Producto creado exitosamente' });
+    });
+  }
+
+  updateProductService(formData: FormData) {
+    this.productService.updateProduct(formData).subscribe((data) => {
+      this.products.update((current) => current.map((item) => (item.id === data.id ? data : item)));
+      this.modal.set(false);
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Producto actualizado exitosamente' });
     });
   }
 
@@ -274,6 +307,6 @@ export class Products {
     formData.append('product', JSON.stringify(this.productForm.value));
     formData.append('image', this.productForm.value.image);
 
-    this.createProductService(formData);
+    this.productForm.value.id == 0 ? this.createProductService(formData) : this.updateProductService(formData);
   }
 }

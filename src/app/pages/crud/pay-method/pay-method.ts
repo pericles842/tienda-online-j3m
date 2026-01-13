@@ -190,7 +190,6 @@ export class PayMethod {
   updatePayMethodService(pay_method: FormData) {
     this.payMethodService.updatePayMethod(pay_method).subscribe({
       next: (res) => {
-        console.log(res);
 
         this.list_pay_methods.update((current) => current.map((item) => (item.id === res.id ? res : item)));
         this.modal.set(false);
