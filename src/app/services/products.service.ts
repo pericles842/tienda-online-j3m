@@ -231,7 +231,7 @@ export class ProductJ3mService {
       });
     } else if (template === 'farmacia') {
       return new FormGroup<FormGroupTemplateAttributes>({
-        manufacturer: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
+        manufacturer: new FormControl(null, { nonNullable: false, validators: [] }),
         pharmaceutical_presentation: new FormControl('tablets', { nonNullable: false, validators: [Validators.required] }),
         unit: new FormControl('g', { nonNullable: false, validators: [Validators.required] }),
         amount: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
@@ -240,8 +240,8 @@ export class ProductJ3mService {
     } else if (template === 'technology') {
       return new FormGroup<FormGroupTemplateAttributes>({
         color: new FormControl('#6466f1', { nonNullable: false, validators: [Validators.required] }),
-        model: new FormControl(null, { nonNullable: false, validators: [Validators.required] }),
-        storage: new FormControl(null, { nonNullable: false, validators: [Validators.required] })
+        model: new FormControl(null, { nonNullable: false, validators: [] }),
+        storage: new FormControl(null, { nonNullable: false, validators: [] })
       });
     } else if (template === 'food') {
       return new FormGroup<FormGroupTemplateAttributes>({

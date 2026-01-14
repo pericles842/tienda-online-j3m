@@ -142,7 +142,15 @@
 
         <div class="col-span-12 md:col-span-4">
           <label for="reference" class="block mb-2 text-sm text-primary">Referencia / Código de barras</label>
-          <input appUppercase pInputText id="reference" type="text" formControlName="reference" class="w-full mb-2" />
+          <input
+            [readonly]="productForm.get('id')?.value !=0"
+            appUppercase
+            pInputText
+            id="reference"
+            type="text"
+            formControlName="reference"
+            class="w-full mb-2"
+          />
           @if (productForm.get('reference')?.hasError('required')&& productForm.get('reference')?.dirty) {
           <p-message severity="error" variant="simple" size="small">La referencia es obligatoria</p-message>
           }
@@ -251,7 +259,7 @@
 
       <p-button
         [disabled]="productForm.get('stock')?.invalid"
-        (click)="saveProduct()"
+        (click)="saveStock()"
         label="Guardar"
         icon="pi pi-check"
         type="button"

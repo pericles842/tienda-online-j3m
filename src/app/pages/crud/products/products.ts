@@ -122,14 +122,14 @@ export class Products {
 
   columns: Column[] = [
     { label: 'Nombre', key: 'name', sortTable: true },
-    { label: 'Imagen', key: 'url_img', sortTable: false, dataType: 'image' },
+    { label: 'Imagen', key: 'url_img',  style: 'w-16', sortTable: false, dataType: 'image' },
     { label: 'Categoría', key: 'category_name', sortTable: true },
     { label: 'Marca', key: 'brand', sortTable: true },
-    { label: 'Referencia', key: 'reference', sortTable: true },
-    { label: 'Precio', key: 'price', sortTable: true },
-    { label: 'Descuento', key: 'discount', sortTable: true },
-    { label: 'Stock', key: 'stock', sortTable: true },
-    { label: 'Estatus', key: 'status', sortTable: true },
+    { label: 'Referencia', key: 'reference',  style: 'w-16',sortTable: true },
+    { label: 'Precio', key: 'price', sortTable: true , style: 'w-16', },
+    { label: 'Descuento', key: 'discount', sortTable: true , style: 'w-16',},
+    { label: 'Stock', key: 'stock', sortTable: true , style: 'w-16',},
+    { label: 'Estatus', key: 'status', sortTable: true , style: 'w-16',},
     { label: 'Fecha de creación', dataType: 'date', key: 'created_at', sortTable: true },
     { label: 'Creador email', key: 'email_user_create', sortTable: true },
     { label: 'fecha de actualización', dataType: 'date', key: 'updated_at', sortTable: true },
@@ -155,7 +155,7 @@ export class Products {
       reference: new FormControl(null, [Validators.required]),
       cost: new FormControl(null, [Validators.required]),
       price: new FormControl(null, [Validators.required]),
-      stock: new FormControl(null),
+      stock: new FormControl(0),
       min_stock: new FormControl(20),
       status: new FormControl('inactive', [Validators.required]),
       type_product: new FormControl('technology', [Validators.required]),
@@ -194,7 +194,7 @@ export class Products {
       category_id: null,
       brand: null,
       description: null,
-      discount: null,
+      discount: 0,
       reference: null,
       cost: null,
       price: null,
@@ -205,6 +205,19 @@ export class Products {
     });
   }
 
+  saveStock() {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro que desea aumentar el stock de este producto?',
+      header: 'Aumentar el stock',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.productService.supplyStock(this.productForm.value).subscribe((data) => {
+          this.products.update((current) => current.map((item) => (item.id === data.id ? data : item)));
+        });
+        this.modal_supply.set(false);
+      }
+    });
+  }
   updateStatusProduct(product: Product, for_update: StatusProduct) {
     const data: ProductStatusUpdate = {
       id: product.id,
