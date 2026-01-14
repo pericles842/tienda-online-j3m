@@ -11,6 +11,7 @@ import { Home } from '../components/home/home';
 import { ProductDetailComponent } from '../components/product-detail/product-detail';
 import { ProductComponent } from '../components/product/product';
 import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
+import { Product } from '@/interfaces/product';
 
 @Component({
   selector: 'app-landing',
@@ -30,13 +31,15 @@ import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
   templateUrl: './landing.html'
 })
 export class Landing {
-  products: any[] = [];
+  products: Product[] = [];
   constructor(
     public layoutService: LayoutService,
     private productJ3mService: ProductJ3mService
   ) {}
 
   ngOnInit() {
-    this.products = this.productJ3mService.getAllProducts();
+    this.productJ3mService.getPublicProducts().subscribe((products) => {
+      this.products = products;
+    });
   }
 }

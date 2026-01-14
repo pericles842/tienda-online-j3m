@@ -31,13 +31,17 @@
         </button>
       </div>
       @if(layoutService.isDesktop()){
-      <img class="right-25 top-0 absolute hidden md:block" [src]="product.url" alt="sss" />
+      <img class="right-25 top-0 absolute hidden md:block" [src]="product.url_img" [alt]="product.url_img" />
       }
     </div>
 
     <div class="flex flex-col md:flex-row justify-between gap-10">
       <!-- Tarjeta producto 1 -->
-      <div appScrollReveal [rotate]=" { x: 0, y: 0, z: 50 }" class="bg-primary-50 rounded-xl w-full p-5 flex items-center justify-between shadow-md">
+      <div
+        appScrollReveal
+        [rotate]=" { x: 0, y: 0, z: 50 }"
+        class="bg-primary-50 rounded-xl w-full p-5 flex items-center justify-between shadow-md"
+      >
         <div>
           <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
           <span class="text-primary text-base">Featured category</span>
@@ -53,7 +57,11 @@
       </div>
 
       <!-- Tarjeta producto 2 -->
-      <div appScrollReveal [rotate]=" { x: 0, y: 0, z: -50 }"  class="bg-primary-50 rounded-xl w-full p-5 flex items-center justify-between shadow-md">
+      <div
+        appScrollReveal
+        [rotate]=" { x: 0, y: 0, z: -50 }"
+        class="bg-primary-50 rounded-xl w-full p-5 flex items-center justify-between shadow-md"
+      >
         <div>
           <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
           <span class="text-primary text-base">Featured category</span>

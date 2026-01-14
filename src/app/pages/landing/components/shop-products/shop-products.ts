@@ -13,6 +13,7 @@ import { StoreFilterSettings } from '../store-filter-settings/store-filter-setti
 import { LayoutService } from '@/layout/service/layout.service';
 import { DrawerModule } from 'primeng/drawer';
 import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
+import { Product } from '@/interfaces/product';
 
 @Component({
   selector: 'app-shop-products',
@@ -27,13 +28,13 @@ import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
     ScrollRevealAnimations,
     StoreFilterSettings,
     Button
-],
+  ],
   templateUrl: './shop-products.html',
   styleUrl: './shop-products.scss'
 })
 export class ShopProducts {
   viewMenuFilter: WritableSignal<boolean> = signal(false);
-  products: any[] = [];
+  products: Product[] = [];
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
     { label: 'Tienda', routerLink: '/shop' }
@@ -45,6 +46,8 @@ export class ShopProducts {
   ) {}
 
   ngOnInit() {
-    this.products = this.productJ3mService.getAllProducts();
+    this.productJ3mService.getPublicProducts().subscribe((products) => {
+      this.products = products;
+    });
   }
 }

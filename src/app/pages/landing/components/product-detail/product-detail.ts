@@ -1,3 +1,4 @@
+import { Product } from '@/interfaces/product';
 import { ConfigurationService } from '@/services/configuration.service';
 import { ProductJ3mService } from '@/services/products.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
@@ -17,9 +18,9 @@ import { TabsModule } from 'primeng/tabs';
   styleUrl: './product-detail.scss'
 })
 export class ProductDetailComponent {
-  @Input() product: any = {};
+  @Input() product!: Product;
   @ViewChild('productContainer', { read: ViewContainerRef })
-  products: any[] = [];
+  products: Product[] = [];
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
     { label: 'Tienda', routerLink: '/shop' }
@@ -30,7 +31,7 @@ export class ProductDetailComponent {
     private productJ3mService: ProductJ3mService,
     private shoppingCartService: ShoppingCartService,
     private viewContainer: ViewContainerRef,
-    public configurationService:ConfigurationService
+    public configurationService: ConfigurationService
   ) {}
 
   /**
@@ -58,16 +59,15 @@ export class ProductDetailComponent {
   }
 
   ngOnInit() {
+    
     if (this.route.snapshot.paramMap.get('id')) {
       const id = this.route.snapshot.paramMap.get('id');
-      this.product = this.productJ3mService.findProduct(Number(id));
+      this.productJ3mService.getProductsById(Number(id)).subscribe((product) => (this.product = product));
     }
-
     if (this.product) {
       this.items.push({ label: this.product.name });
     }
-
-    this.products = this.productJ3mService.getAllProducts().slice(0, 4);
+    // this.products = this.productJ3mService.getAllProducts().slice(0, 4);
   }
 
   addAmount(product: any) {

@@ -1,25 +1,38 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
-import { TagModule } from 'primeng/tag';
-import { ButtonModule } from 'primeng/button';
-import { RouterLink } from '@angular/router';
-import { DialogModule } from 'primeng/dialog';
-import { ProductDetailComponent } from '../product-detail/product-detail';
-import { ImageModule } from 'primeng/image';
+import { Product } from '@/interfaces/product';
+import { Loading } from '@/pages/loading/loading';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
+import { CommonModule } from '@angular/common';
+import { Component, Input, signal, WritableSignal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { ImageModule } from 'primeng/image';
+import { ProgressSpinner } from 'primeng/progressspinner';
+import { TagModule } from 'primeng/tag';
+import { ProductDetailComponent } from '../product-detail/product-detail';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [TagModule, ButtonModule, RouterLink, ImageModule, DialogModule, ProductDetailComponent],
+  imports: [
+    TagModule,
+    ButtonModule,
+    RouterLink,
+    ImageModule,
+    DialogModule,
+    CommonModule,
+    ProductDetailComponent,
+    ProgressSpinner
+  ],
   templateUrl: './product.html',
   styleUrl: './product.scss'
 })
 export class ProductComponent {
-  @Input() product: any;
+  @Input() product!: Product;
   modalViewProduct: WritableSignal<boolean> = signal(false);
 
   constructor(private shoppingCartService: ShoppingCartService) {}
-  addToCart(product: any, event: Event) {
+  addToCart(product: Product, event: Event) {
     this.shoppingCartService.addToCart(product);
     event.stopPropagation();
   }
@@ -30,7 +43,7 @@ export class ProductComponent {
    * @param product - El producto que se va a mostrar.
    * @param event - El evento que se va a propagar.
    */
-  viewProduct(product: any, event: Event) {
+  viewProduct(product: Product, event: Event) {
     event.stopPropagation();
     this.modalViewProduct.set(true);
   }
