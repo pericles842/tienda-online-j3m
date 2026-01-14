@@ -99,3 +99,13 @@ export interface TemplateAttributesProduct {
   component: any;
   inputs: { [key: string]: any };
 }
+
+export interface ProductStatusUpdate {
+  id: number;
+  status: StatusProduct;
+}
+
+export interface ProductSupply {
+  id: number;
+  quantity: number;
+}

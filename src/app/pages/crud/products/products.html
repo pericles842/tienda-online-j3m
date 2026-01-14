@@ -1,4 +1,8 @@
-<app-menu-bar (touchNew)="openModal()"></app-menu-bar>
+<app-menu-bar
+  (touchNew)="openModal()"
+  [disableDeleteButton]="selectedEliminateProducts.length == 0"
+  (touchDelete)="deleteProducts()"
+></app-menu-bar>
 
 <app-dynamic-table
   [columns]="columns"
@@ -6,7 +10,9 @@
   [data]="products()"
   [globalFilterFields]="globalFilterFields"
   [actions_button]="actions_table_button"
+  (onDelete)="deleteProduct($event)"
   (onEdit)="goToEdit($event)"
+  [(selection)]="selectedEliminateProducts"
 ></app-dynamic-table>
 
 <p-dialog
@@ -112,9 +118,15 @@
           } -->
         </div>
 
-        <div class="col-span-12 md:col-span-2">
+        <div class="col-span-12 md:col-span-3">
           <label class="block mb-2 text-sm text-primary">Stock</label>
           <p-inputnumber id="stock" formControlName="stock"></p-inputnumber>
+          @if (productForm.get('stock')?.hasError('min') || productForm.get('stock')?.hasError('required') &&
+          productForm.get('stock')?.dirty) {
+          <p-message severity="error" variant="simple" size="small"
+            >La cantidad debe ser mayor o igual a {{defaultStock}}</p-message
+          >
+          }
         </div>
       </div>
 
@@ -129,8 +141,8 @@
         </div>
 
         <div class="col-span-12 md:col-span-4">
-          <label for="reference" class="block mb-2 text-sm text-primary">Referencia</label>
-          <input pInputText id="reference" type="text" formControlName="reference" class="w-full mb-2" />
+          <label for="reference" class="block mb-2 text-sm text-primary">Referencia / Código de barras</label>
+          <input appUppercase pInputText id="reference" type="text" formControlName="reference" class="w-full mb-2" />
           @if (productForm.get('reference')?.hasError('required')&& productForm.get('reference')?.dirty) {
           <p-message severity="error" variant="simple" size="small">La referencia es obligatoria</p-message>
           }
@@ -186,6 +198,64 @@
       <p-button label="Cancelar" icon="pi pi-times" (onClick)="modal.set(false)" severity="danger" outlined text></p-button>
 
       <p-button label="Guardar" (click)="saveProduct()" icon="pi pi-check" type="button"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-dialog
+  [visible]="modal_supply()"
+  [style]="{ width: '340px' }"
+  header="Abastecer stock"
+  [modal]="true"
+  [closable]="false"
+  [draggable]="false"
+  [resizable]="false"
+  [closeOnEscape]="true"
+>
+  <ng-template pTemplate="content">
+    <section [formGroup]="productForm" class="grid grid-cols-12 gap-4">
+      <div class="col-span-12">
+        <label for="min_stock" class="block mb-2 text-sm text-primary">Stock mínimo</label>
+        <p-inputnumber id="min_stock" formControlName="min_stock"></p-inputnumber>
+      </div>
+
+      <div class="col-span-12">
+        <label class="block mb-2 text-sm text-primary">Stock</label>
+        <p-inputnumber
+          id="stock"
+          [ngClass]="productForm.get('stock')?.hasError('invalid') && productForm.get('stock')?.dirty ? 'ng-invalid ng-dirty' : ''"
+          formControlName="stock"
+        ></p-inputnumber>
+        @if (productForm.get('stock')?.hasError('min') || productForm.get('stock')?.hasError('required') &&
+        productForm.get('stock')?.dirty) {
+        <p-message severity="error" variant="simple" size="small"
+          >La cantidad debe ser mayor o igual a {{defaultStock}}</p-message
+        >
+        }
+      </div>
+    </section>
+  </ng-template>
+
+  <!-- FOOTER CORRECTO -->
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3 p-3">
+      <p-button
+        label="Cancelar"
+        icon="pi pi-times"
+        (onClick)="modal_supply.set(false)"
+        severity="danger"
+        outlined
+        class="p-button-text"
+        text
+      ></p-button>
+
+      <p-button
+        [disabled]="productForm.get('stock')?.invalid"
+        (click)="saveProduct()"
+        label="Guardar"
+        icon="pi pi-check"
+        type="button"
+      ></p-button>
     </div>
   </ng-template>
 </p-dialog>

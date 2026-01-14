@@ -1,3 +1,4 @@
+import { ResponseDeleteResource } from '@/interfaces/forms';
 import {
   DataProductAttributes,
   FormGroupTemplateAttributes,
@@ -5,7 +6,10 @@ import {
   Product,
   ProductAttributes,
   ProductKeyGeneralAttributes,
+  ProductStatusUpdate,
+  ProductSupply,
   ProductTemplateKeys,
+  StatusProduct,
   StyleClothesProduct,
   TallaProduct,
   UnitsOfProduct
@@ -15,12 +19,16 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { BaseCrudService } from './base-crud.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductJ3mService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private baseCrudService: BaseCrudService
+  ) {}
   products = [
     {
       id: 1,
@@ -178,7 +186,17 @@ export class ProductJ3mService {
   getFullProducts(): Observable<Product[]> {
     return this.http.get<Product[]>(`${environment.host}/full-products`);
   }
+  deleteProduct(id: number[]): Observable<ResponseDeleteResource> {
+    return this.baseCrudService.eliminateResources('products', id);
+  }
 
+  updateStatusProduct(data: ProductStatusUpdate): Observable<Product> {
+    return this.http.put<Product>(`${environment.host}/products-status`, { data: data });
+  }
+  
+  supplyStock(product: ProductSupply): Observable<Product> {
+    return this.http.put<Product>(`${environment.host}/products-supply-stock`, { data: product });
+  }
   /**
    * Obtiene sub atributos  atributo de producto por su clave.
    *

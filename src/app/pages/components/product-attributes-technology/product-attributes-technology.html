@@ -6,7 +6,7 @@
 <section [formGroup]="formGroup" class="grid grid-cols-12 gap-4 mt-7">
   <div class="col-span-12 md:col-span-4">
     <label for="model" class="block mb-2 text-sm text-primary">Modelo</label>
-    <input pInputText id="model" type="number" formControlName="model" class="w-full mb-2" />
+    <input pInputText id="model" type="text" formControlName="model" class="w-full mb-2" />
     @if (formGroup.get('model')?.hasError('required') && formGroup.get('model')?.dirty) {
     <p-message severity="error" variant="simple" size="small"> El modelo es requerido </p-message>
     }

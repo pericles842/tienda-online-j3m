@@ -1,20 +1,24 @@
+import { UppercaseDirective } from '@/directives/app-uppercase';
 import { Category } from '@/interfaces/category';
+import { ActionTableButton, Column } from '@/interfaces/forms';
 import {
   Product,
   ProductAttributes,
   ProductFormGroup,
   ProductKeyGeneralAttributes,
+  ProductStatusUpdate,
   ProductTemplateKeys,
+  StatusProduct,
   TemplateAttributesProduct
 } from '@/interfaces/product';
 import { AppMenuBar } from '@/pages/components/app-menu-bar/app-menu-bar';
+import { DynamicTable } from '@/pages/components/dynamic-table/dynamic-table';
 import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
 import { ProductAttributesFarmacia } from '@/pages/components/product-attributes-farmacia/product-attributes-farmacia';
 import { ProductAttributesFood } from '@/pages/components/product-attributes-food/product-attributes-food';
 import { ProductAttributesOther } from '@/pages/components/product-attributes-other/product-attributes-other';
 import { ProductAttributesTechnology } from '@/pages/components/product-attributes-technology/product-attributes-technology';
 import { ProductAttributesTextile } from '@/pages/components/product-attributes-textile/product-attributes-textile';
-import { AuthService } from '@/services/auth.service';
 import { CategoriesService } from '@/services/categories.service';
 import { ProductJ3mService } from '@/services/products.service';
 import { fileOrUrlValidator } from '@/utils/forms';
@@ -24,22 +28,20 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
+import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { Message } from 'primeng/message';
 import { Select } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
 import { TreeTableModule } from 'primeng/treetable';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { StyleClass } from 'primeng/styleclass';
-import { ActionTableButton, Column } from '@/interfaces/forms';
-import { DynamicTable } from '@/pages/components/dynamic-table/dynamic-table';
 
 @Component({
   selector: 'app-products',
   imports: [
     AppMenuBar,
     Dialog,
+    UppercaseDirective,
     DynamicUpload,
     CommonModule,
     InputTextModule,
@@ -61,6 +63,7 @@ import { DynamicTable } from '@/pages/components/dynamic-table/dynamic-table';
 })
 export class Products {
   modal: WritableSignal<boolean> = signal(false);
+  modal_supply: WritableSignal<boolean> = signal(false);
 
   actions_table_button: ActionTableButton[] = [
     {
@@ -69,7 +72,16 @@ export class Products {
       severity: 'success',
       rounded: true,
       outlined: false,
-      method: (event: any) => {}
+      method: (event: any) => {
+        this.confirmationService.confirm({
+          message: '¿Estas seguro de activar este producto?',
+          header: 'Activar producto',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this.updateStatusProduct(event, 'active');
+          }
+        });
+      }
     },
     {
       icon: 'pi pi-times',
@@ -77,15 +89,34 @@ export class Products {
       severity: 'danger',
       rounded: true,
       outlined: false,
-      method: (event: any) => {}
+      method: (event: any) => {
+        this.confirmationService.confirm({
+          message: '¿Estas seguro de desactivar este producto?',
+          header: 'Desactivar producto',
+          icon: 'pi pi-exclamation-triangle',
+          accept: () => {
+            this.updateStatusProduct(event, 'inactive');
+          }
+        });
+      }
     },
     {
       icon: 'pi pi-box',
-      tooltip: 'Agregar inventario',
+      tooltip: 'Agregar stock',
       severity: 'warn',
       rounded: true,
       outlined: false,
-      method: (event: any) => {}
+      method: (event: any) => {
+        this.productForm.patchValue({
+          id: event.id,
+          stock: event.stock,
+          min_stock: event.min_stock
+        });
+
+        this.productForm.get('stock')?.setValidators([Validators.min(event.stock), Validators.required]);
+        this.defaultStock = event.stock;
+        this.modal_supply.set(true);
+      }
     }
   ];
 
@@ -109,6 +140,7 @@ export class Products {
   categories: WritableSignal<Category[]> = signal([]);
   attributes_products: WritableSignal<ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>[]> = signal([]);
   products: WritableSignal<Product[]> = signal([]);
+  defaultStock: number = 0;
 
   productForm: FormGroup<ProductFormGroup> = new FormGroup(
     {
@@ -124,7 +156,7 @@ export class Products {
       cost: new FormControl(null, [Validators.required]),
       price: new FormControl(null, [Validators.required]),
       stock: new FormControl(null),
-      min_stock: new FormControl(null),
+      min_stock: new FormControl(20),
       status: new FormControl('inactive', [Validators.required]),
       type_product: new FormControl('technology', [Validators.required]),
       attributes: new FormGroup({})
@@ -133,6 +165,7 @@ export class Products {
   );
 
   template_attributes_product: TemplateAttributesProduct[] = [];
+  selectedEliminateProducts: Product[] = [];
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -152,6 +185,7 @@ export class Products {
   }
   openModal() {
     this.modal.set(true);
+    this.clearValidatorStock();
     this.productForm.patchValue({
       id: 0,
       name: null,
@@ -168,6 +202,16 @@ export class Products {
       min_stock: null,
       status: 'inactive',
       type_product: 'technology'
+    });
+  }
+
+  updateStatusProduct(product: Product, for_update: StatusProduct) {
+    const data: ProductStatusUpdate = {
+      id: product.id,
+      status: for_update
+    };
+    this.productService.updateStatusProduct(data).subscribe((data) => {
+      this.products.update((current) => current.map((item) => (item.id === data.id ? data : item)));
     });
   }
 
@@ -195,7 +239,7 @@ export class Products {
       item.attributes = JSON.parse(item.attributes.toString());
       attributes_products = { ...attributes_products, [item.key]: item };
     });
-    console.log(attributes_products);
+
     this.template_attributes_product = [
       {
         key: 'food',
@@ -247,6 +291,9 @@ export class Products {
   fileSelected(file: File) {
     this.productForm.patchValue({ image: file });
   }
+  clearValidatorStock() {
+    this.productForm.get('stock')?.clearValidators();
+  }
   severityValueStatus() {
     if (this.productForm.get('status')?.value == 'active') {
       return 'success';
@@ -272,6 +319,9 @@ export class Products {
 
   goToEdit(product: Product) {
     this.openModal();
+
+    this.productForm.get('stock')?.setValidators([Validators.min(product.stock), Validators.required]);
+    this.defaultStock = product.stock;
 
     if (typeof product.attributes === 'string') {
       product.attributes = JSON.parse(product.attributes);
@@ -308,5 +358,38 @@ export class Products {
     formData.append('image', this.productForm.value.image);
 
     this.productForm.value.id == 0 ? this.createProductService(formData) : this.updateProductService(formData);
+  }
+
+  deleteProduct(event: any) {
+    this.confirmationService.confirm({
+      message: '¿Estas seguro de eliminar este producto?',
+      header: 'Eliminar Producto',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const id: number[] = [event.id];
+        this.deleteProductService(id);
+      }
+    });
+  }
+
+  deleteProducts() {
+    this.confirmationService.confirm({
+      message: `¿Estas seguro de eliminar ${this.selectedEliminateProducts.length} productos?`,
+      header: 'Eliminar Productos',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        const ids: number[] = this.selectedEliminateProducts.map((item: Product) => item.id);
+        this.deleteProductService(ids);
+      }
+    });
+  }
+
+  deleteProductService(id: number[]) {
+    this.productService.deleteProduct(id).subscribe((res) => {
+      this.products.update((current) => current.filter((item) => !res.ids.includes(item.id)));
+      this.modal.set(false);
+      this.selectedEliminateProducts = [];
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Producto eliminado exitosamente' });
+    });
   }
 }
