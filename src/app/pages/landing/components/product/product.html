@@ -1,3 +1,6 @@
+@if (loadingService.loading$ | async) {
+<app-loading-products></app-loading-products>
+}@else {
 <div class="flex flex-col gap-3 cursor-pointer" [routerLink]="['/product', product.id]">
   <div class="bg-primary-50 rounded-xl shadow-lg p-3 border border-primary-100 relative product-car">
     <div class="flex flex-col justify-center gap-5">
@@ -8,10 +11,15 @@
         }
       </div>
       <div class="flex justify-center items-center h-[280px]">
-        @if ( product.url_img ) {
-        <img class="h-full w-60 object-contain remove-white-bg" [src]="product.url_img" [alt]="product.url_img" />
-        }@else{
-        <p-progress-spinner ariaLabel="loading" />
+        @if (isLoading) {
+        <p-progress-spinner strokeWidth="2" fill="transparent" animationDuration=".2s" />
+        }@else {
+        <img
+          [ngClass]="loadedClass"
+          class="h-60 w-60 object-contain remove-white-bg transition-opacity duration-500 ease-in"
+          [src]="finalUrl"
+          [alt]="finalUrl"
+        />
         }
       </div>
     </div>
@@ -39,18 +47,23 @@
     <span class="font-bold text-primary-700 dark:text-primary-100 text-2xl">{{product.name}}</span>
     <div class="flex gap-2 items-end">
       <span class="text-primary dark:text-primary-300 font-medium text-3xl">{{product.price |currency:'USD'}}</span>
-      <span class="text-primary-300 dark:text-primary-50 font-semibold text-sm">{{2.000 |currency:'Bs'}}</span>
+      <span class="text-primary-300 dark:text-primary-50 font-semibold text-sm"
+        >{{calculatePriceForBs(product.price)|currency:'Bs'}}</span
+      >
     </div>
     <div class="flex justify-end">
+      @let min_stock = product.min_stock ?? 0;
       <div
-        class="flex gap-2 text-primary-300 bg-primary-600 w-fit px-2 py-1 items-center justify-end rounded-md text-xs font-bold"
+        [ngClass]="[calculateStock(product.stock, min_stock).bgClass,
+              calculateStock(product.stock, min_stock).textClass]"
+        class="flex gap-2 w-fit px-2 py-1 items-center justify-end rounded-md text-xs font-bold"
       >
-        <span>Disponible</span>
+        <span>{{calculateStock(product.stock, min_stock).label}}</span>
       </div>
     </div>
   </div>
 </div>
-
+}
 <!-- VISUALIZAR PRODUCXTO EN MODAL -->
 <p-dialog [modal]="true" [(visible)]="modalViewProduct" [style]="{ width: '980px'}">
   <section class="dark:bg-primary-50">

@@ -1,4 +1,4 @@
-import { Product } from '@/interfaces/product';
+import { Product, ProductKeyGeneralAttributes } from '@/interfaces/product';
 import { ConfigurationService } from '@/services/configuration.service';
 import { ProductJ3mService } from '@/services/products.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
@@ -31,7 +31,7 @@ export class ProductDetailComponent {
     private productJ3mService: ProductJ3mService,
     private shoppingCartService: ShoppingCartService,
     private viewContainer: ViewContainerRef,
-    public configurationService: ConfigurationService
+    private configurationService: ConfigurationService
   ) {}
 
   /**
@@ -59,7 +59,6 @@ export class ProductDetailComponent {
   }
 
   ngOnInit() {
-    
     if (this.route.snapshot.paramMap.get('id')) {
       const id = this.route.snapshot.paramMap.get('id');
       this.productJ3mService.getProductsById(Number(id)).subscribe((product) => (this.product = product));
@@ -68,6 +67,36 @@ export class ProductDetailComponent {
       this.items.push({ label: this.product.name });
     }
     // this.products = this.productJ3mService.getAllProducts().slice(0, 4);
+  }
+
+  getPriceDolarConfiguration() {
+    return this.configurationService.getPriceDolarConfiguration();
+  }
+
+  calculatePriceForBs(price_of_dollar: number) {
+    return this.configurationService.calculatePriceForBs(price_of_dollar);
+  }
+
+  getAttributesProduct(): [ProductKeyGeneralAttributes, string][] {
+    return Object.entries(JSON.parse(this.product.attributes.toString())) as [ProductKeyGeneralAttributes, string][];
+  }
+
+  labelAttributesSpanish(key: ProductKeyGeneralAttributes): string {
+    const proprieties: Record<ProductKeyGeneralAttributes, string> = {
+      color: 'Color',
+      amount: 'Cantidad',
+      unit: 'Unidad',
+      manufacturer: 'Fabricante',
+      model: 'Modelo',
+      storage: 'Almacenamiento',
+      expiration_date: 'Fecha de expiracion',
+      talla: 'Talla',
+      gender: 'Genero',
+      pharmaceutical_presentation: 'Presentacion',
+      marca: 'Marca',
+      style_clothes: 'Estilo'
+    };
+    return proprieties[key];
   }
 
   addAmount(product: any) {

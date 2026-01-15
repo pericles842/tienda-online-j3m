@@ -53,20 +53,22 @@
 
       <div class="flex justify-between">
         <span class="text-primary-600">{{product.name}}</span>
-        <span class="text-primary-900 font-bold dark:text-primary-200">${{product.price}}</span>
+        <span class="text-primary-900 font-bold dark:text-primary-200">{{product.price |currency:'USD'}}</span>
       </div>
       }
 
       <hr />
       <div class="flex flex-col gap-2 text-xl">
         <span class="text-primary-700 font-bold dark:text-primary-100"
-          >Tasa: {{configurationService.getPriceDolarConfiguration()?.price}} Bs</span
+          >Tasa: {{getPriceDolarConfiguration()?.price|currency:'Bs'}}</span
         >
         <div class="flex justify-between">
           <span class="text-primary-700 font-bold dark:text-primary-100">Total</span>
           <div class="flex gap-4">
-            <span class="text-primary-700 font-bold dark:text-primary-100">$154.00</span>
-            <span class="text-primary-700 font-bold dark:text-primary-100">3435.00bs</span>
+            <span class="text-primary-700 font-bold dark:text-primary-100">{{getTotal() |currency:'USD'}}</span>
+            <span class="text-primary-700 font-bold dark:text-primary-100"
+              >{{calculatePriceForBs(getTotal())|currency:'Bs'}}</span
+            >
           </div>
         </div>
       </div>

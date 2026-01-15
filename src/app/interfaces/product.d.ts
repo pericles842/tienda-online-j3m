@@ -13,6 +13,7 @@ export interface Product extends UserTracking {
   cost: number;
   price: number;
   stock: number;
+  quantity: number;
 
   //cantidad del productos para la notification de reabastecer
   min_stock: number | null;
@@ -41,6 +42,7 @@ export interface ProductAttributes<T = ProductTemplateKeys, C = ProductKeyGenera
 }
 
 export type StatusProduct = 'active' | 'inactive' | 'damaged';
+export type StatusStock = 'available' | 'unavailable' | 'low_stock';
 
 //Tipos de unidades y datos generales
 export type UnitsOfProduct = 'un' | 'mg' | 'oz' | 'lb' | 'kg' | 'lt' | 'ml' | 'g';
@@ -99,6 +101,7 @@ export interface TemplateAttributesProduct {
   component: any;
   inputs: { [key: string]: any };
 }
+
 
 export interface ProductStatusUpdate {
   id: number;

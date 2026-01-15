@@ -5,19 +5,19 @@
 </div>
 
 <p-drawer styleClass="!w-full  md:!w-[30rem]" [(visible)]="viewShoppingCard" header="Carrito de productos" position="right">
-  <div class="flex flex-col gap-0.5-5 mb-50  ">
+  <div class="flex flex-col gap-0.5-5 mb-50">
     @for (product of products; track $index) {
     <div class="flex items-center justify-between shadow-md rounded p-4 mb-3">
       <!-- Imagen -->
       <div class="flex items-center gap-4">
-        <img [src]="product.url" [alt]="product.url" class="w-20 h-20 object-contain rounded-lg" />
+        <img [src]="product.url_img" [alt]="product.url_img" class="w-20 h-20 object-contain rounded-lg" />
         <!-- Info del producto -->
         <div class="flex flex-col">
           <span class="font-semibold text-2xl text-primary-900 dark:text-primary-100">{{product.name}}</span>
           <span class="font-semibold text-lg text-primary-900 dark:text-primary-300">Cantidad: {{product.quantity}}</span>
           <div class="flex justify-start gap-3 items-center">
-            <span class="text-lg text-primary-800 dark:text-primary-300">${{product.price}}</span>
-            <span class="text-sm text-primary dark:text-primary-400">{{product.price_bs}}bs</span>
+            <span class="text-lg text-primary-800 dark:text-primary-300">{{product.price |currency:'USD'}}</span>
+            <span class="text-sm text-primary dark:text-primary-400">{{calculatePriceForBs(product.price)|currency:'Bs'}}</span>
           </div>
 
           <div class="w-30 mt-5">
@@ -48,11 +48,19 @@
     <!-- Contenedor de subtotal -->
     <div class="absolute flex flex-col bottom-0 left-0 right-0 p-5 bg-primary-50">
       <div class="flex justify-between">
-        <span class="text-lg text-primary-800 font-bold">Subtotal:</span>
-        <span class="text-lg text-primary-800 font-bold">$100.44</span>
+        <span class="text-lg text-primary-800 font-bold">Tasa:</span>
+        <span class="text-lg text-primary-800 font-bold">{{getPriceDolarConfiguration()?.price|currency:'Bs'}}</span>
       </div>
 
-      <span class="text-lg text-primary-800 font-bold self-end">21513.43 bs</span>
+      <div class="flex justify-between">
+        <span class="text-lg text-primary-800 font-bold">Subtotal ($):</span>
+        <span class="text-lg text-primary-800 font-bold">{{getTotal() |currency:'USD'}}</span>
+      </div>
+
+      <div class="flex justify-between">
+        <span class="text-lg text-primary-800 font-bold">Subtotal (Bs):</span>
+        <span class="text-lg text-primary-800 font-bold self-end">{{calculatePriceForBs(getTotal())|currency:'Bs'}}</span>
+      </div>
 
       <button
         (click)="redirectCheckout()"

@@ -6,6 +6,8 @@ import { CommonModule } from '@angular/common';
 import { Button } from 'primeng/button';
 import { ItemsButton } from '../items-button/items-button';
 import { Router, RouterLink } from '@angular/router';
+import { Product } from '@/interfaces/product';
+import { ConfigurationService } from '@/services/configuration.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -15,10 +17,11 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class ShoppingCart {
   viewShoppingCard: WritableSignal<boolean> = signal(false);
-  products: any[] = [];
+  products: Product[] = [];
 
   constructor(
     private shoppingCartService: ShoppingCartService,
+    private configurationService: ConfigurationService,
     private router: Router
   ) {}
   ngOnInit() {
@@ -26,6 +29,15 @@ export class ShoppingCart {
       this.products = items;
     });
   }
+
+  getPriceDolarConfiguration() {
+    return this.configurationService.getPriceDolarConfiguration();
+  }
+
+  calculatePriceForBs(price_of_dollar: number) {
+    return this.configurationService.calculatePriceForBs(price_of_dollar);
+  }
+
   addAmount(id: number) {
     this.shoppingCartService.addAmount(id);
   }
@@ -35,6 +47,10 @@ export class ShoppingCart {
 
   deleteProductInCard(id: number) {
     this.shoppingCartService.eliminateProduct(id);
+  }
+
+  getTotal() {
+    return this.shoppingCartService.getTotal();
   }
 
   redirectCheckout() {

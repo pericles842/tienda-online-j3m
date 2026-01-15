@@ -41,7 +41,18 @@ export class ConfigurationService {
     );
   }
 
-  getRates(): Observable<DollarInformation[]> {
+  calculatePriceForBs(price_of_dollar: number) {
+    const rate = this.getPriceDolarConfiguration();
+
+    //si llega null retornamos 0
+    if (!rate) {
+      return 0;
+    }
+
+    return price_of_dollar * rate.price;
+  }
+
+   getRates(): Observable<DollarInformation[]> {
     return this.http.get<DollarInformation[]>(`${environment.host}/rate-dollar-j3m`);
   }
 
@@ -51,11 +62,11 @@ export class ConfigurationService {
    * @return {*}  {Observable<SystemConfiguration>}
    * @memberof ConfigurationService
    */
-  getConfiguration(): Observable<SystemConfiguration> {
+   getConfiguration(): Observable<SystemConfiguration> {
     return this.http.get<SystemConfiguration>(`${environment.host}/configuration`);
   }
 
-  updateConfiguration(configuration: SystemConfiguration): Observable<SystemConfiguration> {
+   updateConfiguration(configuration: SystemConfiguration): Observable<SystemConfiguration> {
     return this.http.put<SystemConfiguration>(`${environment.host}/configuration`, configuration);
   }
 
@@ -65,7 +76,7 @@ export class ConfigurationService {
    * @return {*}  {Observable<SystemConfiguration>}
    * @memberof ConfigurationService
    */
-  getPublicConfiguration(): Observable<SystemConfiguration> {
+   getPublicConfiguration(): Observable<SystemConfiguration> {
     return this.http.get<SystemConfiguration>(`${environment.host}/configuration-public`);
   }
 }

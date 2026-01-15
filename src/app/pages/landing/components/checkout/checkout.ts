@@ -16,6 +16,8 @@ import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
+import { Product } from '@/interfaces/product';
+import { User } from '@/interfaces/user';
 
 @Component({
   selector: 'app-checkout',
@@ -24,8 +26,8 @@ import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload'
   styleUrl: './checkout.scss'
 })
 export class Checkout {
-  user: any;
-  products: any[] = [];
+  user!: User;
+  products: Product[] = [];
   pay_methods: WritableSignal<PayMethodData[]> = signal([]);
 
   indexMethod: number = 0;
@@ -40,7 +42,7 @@ export class Checkout {
   constructor(
     private authService: AuthService,
     private shoppingCartService: ShoppingCartService,
-    public configurationService: ConfigurationService,
+    private configurationService: ConfigurationService,
     private payMethodService: PayMethodService
   ) {}
 
@@ -55,8 +57,20 @@ export class Checkout {
     this.user = this.authService.decodeToken().user;
   }
 
+  getTotal() {
+    return this.shoppingCartService.getTotal();
+  }
+
   getKeysPayMethod(): [keyof PayMethodData, string][] {
     return JSON.parse(this.activeMethod?.datos.toString());
+  }
+
+  getPriceDolarConfiguration() {
+    return this.configurationService.getPriceDolarConfiguration();
+  }
+
+  calculatePriceForBs(price_of_dollar: number) {
+    return this.configurationService.calculatePriceForBs(price_of_dollar);
   }
 
   parseKeyPayMethod(key: string): string {

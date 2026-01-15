@@ -9,7 +9,7 @@
           [src]="product.url_img || ''"
           [alt]="product.url_img || ''"
           imageClass="max-h-[400px] w-full object-contain remove-white-bg"
-          class="flex items-center justify-center "
+          class="flex items-center justify-center"
           [preview]="true"
         />
         <!-- <img [src]="product.url" alt="Product Image" class="max-h-[400px] w-full object-contain" />   -->
@@ -22,16 +22,18 @@
         <div class="flex items-center gap-2">
           <span class="bg-primary-200 py-2 px-4 rounded-md font-bold text-primary-800">{{product.category_name}}</span>
           <span class="bg-primary-200 py-2 px-4 rounded-md font-bold text-primary-800">{{product.brand}}</span>
+          @if (product.discount != 0) {
           <span class="bg-primary-200 py-2 px-4 rounded-md font-bold text-primary-800">{{product.discount}}% OFF</span>
+          }
         </div>
 
         <div class="text-xl font-semibold flex flex-col">
-          <span class="text-primary-800 dark:text-primary-200 mb-5"
-            >Tasa: {{configurationService.getPriceDolarConfiguration()?.price}} bs</span
-          >
+          <span class="text-primary-800 dark:text-primary-200 mb-5">Tasa: {{getPriceDolarConfiguration()?.price}} bs</span>
           <span class="text-primary-800 font-bold dark:text-primary-200">Precio:</span>
           <div class="flex gap-2 items-end">
-            <span class="text-primary-600 dark:text-primary-400 text-3xl font-black">{{222 |currency:'Bs'}}</span>
+            <span class="text-primary-600 dark:text-primary-400 text-3xl font-black"
+              >{{calculatePriceForBs(product.price)|currency:'Bs'}}</span
+            >
             <span class="text-primary-500 dark:text-primary-300 text-2xl mr-2">{{product.price |currency:'USD'}}</span>
           </div>
         </div>
@@ -121,26 +123,14 @@
             <span class="text-3xl text-primary-800 font-bold dark:text-primary-200">Detalles</span>
 
             <div class="flex flex-col gap-5 w-full lg:w-1/2">
+              @for (item of getAttributesProduct(); track $index) {
               <div class="flex justify-between border-b border-primary-300 py-4">
-                <span class="text-xl">Marca</span>
-                <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
+                <span class="text-xl">{{ labelAttributesSpanish(item[0]) }}</span>
+                @if (item[0] == 'color') {
+                <input type="color" [value]="item[1]" disabled class="w-10 h-10 rounded-2xl" />
+                }@else { <span class="font-black text-primary-800 dark:text-primary-400">{{ item[1] }}</span>}
               </div>
-              <div class="flex justify-between border-b border-primary-300 py-4">
-                <span class="text-xl">Marca</span>
-                <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
-              </div>
-              <div class="flex justify-between border-b border-primary-300 py-4">
-                <span class="text-xl">Marca</span>
-                <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
-              </div>
-              <div class="flex justify-between border-b border-primary-300 py-4">
-                <span class="text-xl">Marca</span>
-                <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
-              </div>
-              <div class="flex justify-between border-b border-primary-300 py-4">
-                <span class="text-xl">Marca</span>
-                <span class="font-black text-primary-800 dark:text-primary-400">Apple</span>
-              </div>
+              }
             </div>
           </div>
         </p-tabpanel>
