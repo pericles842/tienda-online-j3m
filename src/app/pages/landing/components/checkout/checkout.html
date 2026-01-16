@@ -103,11 +103,11 @@
       <!-- DATos del método -->
 
       <div class="grid grid-cols-12 mt-3">
-        @for(item of getKeysPayMethod() | keyvalue; track $index){
+        @for(item of getKeysPayMethod() ; track $index){
 
         <div class="col-span-6 flex flex-col">
-          <span class="text-sm text-primary-400">{{parseKeyPayMethod(item.key)}}</span>
-          <p class="text-primary-800 font-bold">{{item.value}}</p>
+          <span class="text-sm text-primary-400">{{parseKeyPayMethod(item[0])}}</span>
+          <p class="text-primary-800 font-bold">{{item[1]}}</p>
         </div>
         }
       </div>

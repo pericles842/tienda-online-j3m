@@ -4,7 +4,7 @@ import { ProductJ3mService } from '@/services/products.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ImageModule } from 'primeng/image';
@@ -13,7 +13,7 @@ import { TabsModule } from 'primeng/tabs';
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [BreadcrumbModule, CommonModule, ImageModule, RouterLink, TabsModule],
+  imports: [BreadcrumbModule, CommonModule, ImageModule, TabsModule],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss'
 })
@@ -27,7 +27,8 @@ export class ProductDetailComponent {
   ];
 
   constructor(
-    private route: ActivatedRoute,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
     private productJ3mService: ProductJ3mService,
     private shoppingCartService: ShoppingCartService,
     private viewContainer: ViewContainerRef,
@@ -39,28 +40,28 @@ export class ProductDetailComponent {
    *
    * @memberof ProductDetailComponent
    */
-  async renderProductComponent() {
-    //Buscamos el componente
-    const { ProductComponent } = await import('../product/product');
+  // async renderProductComponent() {
+  //   //Buscamos el componente
+  //   const { ProductComponent } = await import('../product/product');
 
-    // Limpia el contenedor por si ya existían componentes
-    this.viewContainer.clear();
+  //   // Limpia el contenedor por si ya existían componentes
+  //   this.viewContainer.clear();
 
-    // Itera sobre los productos relacionados obtenidos por el servicio
-    this.products.forEach((p) => {
-      //creamos el componente
-      const ref = this.viewContainer.createComponent(ProductComponent);
-      //agregamos las clases para el grid
-      ref.location.nativeElement.classList.add('col-span-3', 'md:col-span-6', 'lg:col-span-3');
+  //   // Itera sobre los productos relacionados obtenidos por el servicio
+  //   this.products.forEach((p) => {
+  //     //creamos el componente
+  //     const ref = this.viewContainer.createComponent(ProductComponent);
+  //     //agregamos las clases para el grid
+  //     ref.location.nativeElement.classList.add('col-span-3', 'md:col-span-6', 'lg:col-span-3');
 
-      //asignamos el producto
-      ref.instance.product = p;
-    });
-  }
+  //     //asignamos el producto
+  //     ref.instance.product = p;
+  //   });
+  // }
 
   ngOnInit() {
-    if (this.route.snapshot.paramMap.get('id')) {
-      const id = this.route.snapshot.paramMap.get('id');
+    if (this.activatedRoute.snapshot.paramMap.get('id')) {
+      const id = this.activatedRoute.snapshot.paramMap.get('id');
       this.productJ3mService.getProductsById(Number(id)).subscribe((product) => (this.product = product));
     }
     if (this.product) {
@@ -78,7 +79,7 @@ export class ProductDetailComponent {
   }
 
   getAttributesProduct(): [ProductKeyGeneralAttributes, string][] {
-    return Object.entries(JSON.parse(this.product.attributes.toString())) as [ProductKeyGeneralAttributes, string][];
+    return Object.entries(this.product.attributes) as [ProductKeyGeneralAttributes, string][];
   }
 
   labelAttributesSpanish(key: ProductKeyGeneralAttributes): string {
@@ -106,7 +107,9 @@ export class ProductDetailComponent {
     if (product.quantity === 1) return;
     product.quantity -= 1;
   }
-  addToCart(product: any) {
+  addToCart(product: Product) {
+    product.quantity = 1;
     this.shoppingCartService.addToCart(product);
+    this.router.navigate(['/checkout']);
   }
 }

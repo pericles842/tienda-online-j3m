@@ -61,8 +61,8 @@ export class Checkout {
     return this.shoppingCartService.getTotal();
   }
 
-  getKeysPayMethod(): [keyof PayMethodData, string][] {
-    return JSON.parse(this.activeMethod?.datos.toString());
+  getKeysPayMethod(): [ keyof PayMethodData, string][] {
+    return Object.entries(this.activeMethod.datos) as [keyof PayMethodData, string][];
   }
 
   getPriceDolarConfiguration() {

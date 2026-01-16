@@ -64,6 +64,8 @@
 
       <button
         (click)="redirectCheckout()"
+        [disabled]="getTotal() == 0"
+        [ngClass]="getTotal() == 0 ? 'opacity-50 cursor-not-allowed' : ''"
         class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full mt-5 text-primary-50 font-bold"
       >
         Comprar
