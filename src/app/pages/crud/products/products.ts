@@ -249,7 +249,7 @@ export class Products {
       [key in ProductTemplateKeys]: ProductAttributes;
     };
     this.attributes_products().forEach((item) => {
-      item.attributes = JSON.parse(item.attributes.toString());
+      item.attributes = item.attributes;
       attributes_products = { ...attributes_products, [item.key]: item };
     });
 
