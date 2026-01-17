@@ -112,3 +112,5 @@ export interface ProductSupply {
   id: number;
   quantity: number;
 }
+
+export type ProprietiesShoppingCartStorage = 'shoppingCart';

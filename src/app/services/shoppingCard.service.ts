@@ -1,3 +1,4 @@
+import { Product, ProprietiesShoppingCartStorage } from '@/interfaces/product';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
@@ -5,10 +6,20 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ShoppingCartService {
-  private cart_products = new BehaviorSubject<any[]>([]);
+  private cart_products = new BehaviorSubject<Product[]>([]);
   cart_products$ = this.cart_products.asObservable();
+  proprietiesShoppingCartStorage: ProprietiesShoppingCartStorage = 'shoppingCart';
+  constructor() {
+    this.cart_products.next(this.getShoppingCartLocalStorage());
+  }
 
-  constructor() { }
+  private updateShoppingCartLocalStorage(item: Product[]) {
+    localStorage.setItem(this.proprietiesShoppingCartStorage, JSON.stringify(item));
+  }
+
+  private getShoppingCartLocalStorage(): Product[] {
+    return JSON.parse(localStorage.getItem(this.proprietiesShoppingCartStorage) || '[]');
+  }
 
   /**
    *Añadir un producto al carrito
@@ -16,18 +27,18 @@ export class ShoppingCartService {
    * @param {*} product
    * @memberof ShoppingCartService
    */
-  addToCart(product: any) {
+  addToCart(product: Product) {
     const items = this.cart_products.value;
     const existing = items.find((i) => i.id === product.id);
 
     if (existing) {
       existing.quantity = product.quantity;
     } else {
-      
       items.push(product);
     }
 
     this.cart_products.next([...items]);
+    this.updateShoppingCartLocalStorage(this.cart_products.value);
   }
 
   /**
@@ -39,6 +50,7 @@ export class ShoppingCartService {
   eliminateProduct(id: number) {
     const filtered = this.cart_products.value.filter((item) => item.id !== id);
     this.cart_products.next(filtered);
+    this.updateShoppingCartLocalStorage(this.cart_products.value);
   }
 
   /**
@@ -50,12 +62,16 @@ export class ShoppingCartService {
   addAmount(id: number) {
     const items = this.cart_products.value;
     const product = items.find((item) => item.id === id);
-    product.quantity += 1;
-    this.cart_products.next(items);
+
+    if (product) {
+      product.quantity += 1;
+      this.cart_products.next(items);
+      this.updateShoppingCartLocalStorage(this.cart_products.value);
+    }
   }
 
   /**
-   *disminuir la cantidad de productos 
+   *disminuir la cantidad de productos
    *
    * @param {number} id
    * @memberof ShoppingCartService
@@ -64,14 +80,18 @@ export class ShoppingCartService {
     const items = this.cart_products.value;
     const product = items.find((item) => item.id === id);
 
-    //si el producto llega a 1 no permite quitarlo
-    if (product.quantity === 1) return;
-    product.quantity -= 1;
-    this.cart_products.next(items);
+    if (product) {
+      //si el producto llega a 1 no permite quitarlo
+      if (product.quantity === 1) return;
+      product.quantity -= 1;
+      this.cart_products.next(items);
+      this.updateShoppingCartLocalStorage(this.cart_products.value);
+    }
   }
 
-  clearCart() {
+  cleanShoppingCard() {
     this.cart_products.next([]);
+    this.updateShoppingCartLocalStorage(this.cart_products.value);
   }
 
   getTotal() {

@@ -53,6 +53,9 @@ export class ShoppingCart {
     return this.shoppingCartService.getTotal();
   }
 
+  cleanShoppingCard() {
+    this.shoppingCartService.cleanShoppingCard();
+  }
   redirectCheckout() {
     this.viewShoppingCard.set(false);
     this.router.navigateByUrl('/checkout');
