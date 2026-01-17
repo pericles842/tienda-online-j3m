@@ -110,6 +110,10 @@ export class ProductDetailComponent {
   addToCart(product: Product) {
     product.quantity = 1;
     this.shoppingCartService.addToCart(product);
+  }
+
+  redirectCheckout(item: Product) {
+    this.addToCart(item);
     this.router.navigate(['/checkout']);
   }
 }
