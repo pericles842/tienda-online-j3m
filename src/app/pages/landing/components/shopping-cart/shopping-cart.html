@@ -1,10 +1,12 @@
 <div class="mt-3 mr-4">
-  <p-overlaybadge class="cursor-pointer" (click)="viewShoppingCard.set(true)" [value]="products.length">
-    <i class="pi pi-shopping-cart" style="font-size: 2rem; color: var(--color-primary-100)"></i>
+  <p-overlaybadge severity="contrast" class="cursor-pointer" (click)="viewShoppingCard.set(true)"
+    [value]="products.length">
+    <i class="pi pi-shopping-cart" style="font-size: 2rem; color: var(--color-yellow-950)"></i>
   </p-overlaybadge>
 </div>
 
-<p-drawer styleClass="!w-full  md:!w-[30rem]" [(visible)]="viewShoppingCard" header="Carrito de productos" position="right">
+<p-drawer styleClass="!w-full  md:!w-[30rem]" [(visible)]="viewShoppingCard" header="Carrito de productos"
+  position="right">
   <div class="flex flex-col gap-0.5-5 mb-50">
     @for (product of products; track $index) {
     <div class="flex items-center justify-between shadow-md rounded p-4 mb-3">
@@ -14,32 +16,25 @@
         <!-- Info del producto -->
         <div class="flex flex-col">
           <span class="font-semibold text-2xl text-primary-900 dark:text-primary-100">{{product.name}}</span>
-          <span class="font-semibold text-lg text-primary-900 dark:text-primary-300">Cantidad: {{product.quantity}}</span>
+          <span class="font-semibold text-lg text-primary-900 dark:text-primary-300">Cantidad:
+            {{product.quantity}}</span>
           <div class="flex justify-start gap-3 items-center">
             <span class="text-lg text-primary-800 dark:text-primary-300">{{product.price |currency:'USD'}}</span>
-            <span class="text-sm text-primary dark:text-primary-400">{{calculatePriceForBs(product.price)|currency:'Bs'}}</span>
+            <span
+              class="text-sm text-primary dark:text-primary-400">{{calculatePriceForBs(product.price)|currency:'Bs'}}</span>
           </div>
 
           <div class="w-30 mt-5">
-            <app-items-button
-              (addAmount)="addAmount(product.id)"
-              [amount]="product.quantity"
-              (subtractAmount)="subtractAmount(product.id)"
-              size="small"
-            ></app-items-button>
+            <app-items-button (addAmount)="addAmount(product.id)" [amount]="product.quantity"
+              (subtractAmount)="subtractAmount(product.id)" size="small"></app-items-button>
           </div>
         </div>
       </div>
 
       <!-- Precios y eliminar -->
       <div class="flex flex-col justify-end">
-        <p-button
-          (click)="deleteProductInCard(product.id)"
-          icon="pi pi-trash"
-          [text]="true"
-          severity="danger"
-          size="small"
-        ></p-button>
+        <p-button (click)="deleteProductInCard(product.id)" icon="pi pi-trash" [text]="true" severity="danger"
+          size="small"></p-button>
       </div>
     </div>
 
@@ -59,23 +54,18 @@
 
       <div class="flex justify-between">
         <span class="text-lg text-primary-800 font-bold">Subtotal (Bs):</span>
-        <span class="text-lg text-primary-800 font-bold self-end">{{calculatePriceForBs(getTotal())|currency:'Bs'}}</span>
+        <span
+          class="text-lg text-primary-800 font-bold self-end">{{calculatePriceForBs(getTotal())|currency:'Bs'}}</span>
       </div>
 
-      <button
-        (click)="redirectCheckout()"
-        [disabled]="getTotal() == 0"
+      <button (click)="redirectCheckout()" [disabled]="getTotal() == 0"
         [ngClass]="getTotal() == 0 ? 'opacity-50 cursor-not-allowed' : ''"
-        class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full mt-5 text-primary-50 font-bold"
-      >
+        class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full mt-5 text-primary-50 font-bold">
         Comprar
       </button>
-      <button
-        (click)="cleanShoppingCard()"
-        [disabled]="getTotal() == 0"
+      <button (click)="cleanShoppingCard()" [disabled]="getTotal() == 0"
         [ngClass]="getTotal() == 0 ? 'opacity-50 cursor-not-allowed' : ''"
-        class="hover:bg-red-700 cursor-pointer px-4 py-4 rounded-md bg-red-500 w-full mt-5 text-primary-50 font-bold"
-      >
+        class="hover:bg-red-700 cursor-pointer px-4 py-4 rounded-md bg-red-500 w-full mt-5 text-primary-50 font-bold">
         Limpiar
       </button>
     </div>

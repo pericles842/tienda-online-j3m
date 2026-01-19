@@ -1,7 +1,7 @@
 <!-- seccion 1 bienvenida -->
 
 @if (layoutService.isDesktop()) {
-<div class="flex justify-between p-2 px-3 items-center bg-white">
+<div class="flex justify-between p-2 px-3 items-center bg-yellow-300">
   <!-- IMAGEN -->
   <div class="flex gap-3 items-center">
     <span class="dark:text-primary-900 text-yellow-950 font-bold">Obtenga envío gratuito en pedidos superiores a $80</span>
@@ -27,11 +27,11 @@
     @if (layoutService.isDesktop()) {
     <div class="bg-surface-50 rounded-md p-1 flex">
       <input
-        class="outline-none text-primary placeholder:text-primary-900 text-lg px-2 w-full"
+        class="outline-none text-grey-700 placeholder:text-grey-700 text-lg px-2 w-full"
         type="text"
         placeholder="Buscar Productos"
       />
-      <button pButton pRipple severity="primary">
+      <button pButton pRipple severity="contrast">
         <span pButtonLabel>Buscar </span>
         <i class="pi pi-search"></i>
       </button>
@@ -46,7 +46,7 @@
     <!-- ------------------------------------------------------------------ -->
     <!-- TEMA E INGRESO -->
     <!-- ------------------------------------------------------------------ -->
-    <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-primary-800 dark:border-primary-50">
+    <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-black dark:border-black">
       @if (layoutService.isMobile()) {
       <app-shopping-cart></app-shopping-cart>
       }
@@ -67,7 +67,7 @@
       <p-button
         pTooltip="Ingresar"
         tooltipPosition="bottom"
-        severity="primary"
+        severity="contrast"
         routerLink="/auth/login"
         iconPos="right"
         icon="pi pi-sign-in"
@@ -75,7 +75,7 @@
       <p-button
         pTooltip="Registro"
         tooltipPosition="bottom"
-        severity="primary"
+        severity="contrast"
         routerLink="/auth/register"
         iconPos="right"
         icon="pi pi-user-plus"
@@ -101,10 +101,12 @@
 
       <app-shopping-cart></app-shopping-cart>
 
-      } @if(isExistToken && layoutService.isDesktop()){
+      } 
+      
+      @if(isExistToken && layoutService.isDesktop()){
       <div class="flex items-center gap-3 cursor-pointer">
         <p-avatar
-          [style]="{ 'background-color': 'var(--color-primary-100)', color: 'var(--color-primary)' }"
+          [style]="{ 'background-color': 'var(--color-blue-200)', color: 'var(--color-blue-600)' }"
           [pTooltip]="full_name"
           tooltipPosition="left"
           [label]="wordsInName"
