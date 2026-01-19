@@ -18,7 +18,6 @@ import { CategoriesService } from '@/services/categories.service';
 @Component({
   selector: 'app-header',
   imports: [
-    AppFloatingConfigurator,
     ButtonModule,
     TreeModule,
     RouterLink,
