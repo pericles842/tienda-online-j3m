@@ -4,16 +4,17 @@ import { ProductJ3mService } from '@/services/products.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input, ViewChild, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ImageModule } from 'primeng/image';
 import { TabsModule } from 'primeng/tabs';
+import { ButtonCheckout } from "../button-checkout/button-checkout";
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [BreadcrumbModule, CommonModule, ImageModule, TabsModule],
+  imports: [BreadcrumbModule, CommonModule, ImageModule, TabsModule, ButtonCheckout],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss'
 })
@@ -31,7 +32,6 @@ export class ProductDetailComponent {
     private activatedRoute: ActivatedRoute,
     private productJ3mService: ProductJ3mService,
     private shoppingCartService: ShoppingCartService,
-    private viewContainer: ViewContainerRef,
     private configurationService: ConfigurationService
   ) {}
 

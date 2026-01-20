@@ -18,10 +18,11 @@ import { TextareaModule } from 'primeng/textarea';
 import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
 import { Product } from '@/interfaces/product';
 import { User } from '@/interfaces/user';
+import { SubtotalShopingcart } from "../subtotal-shopingcart/subtotal-shopingcart";
 
 @Component({
   selector: 'app-checkout',
-  imports: [Breadcrumb, InputTextModule, TextareaModule, CommonModule, DynamicUpload],
+  imports: [Breadcrumb, InputTextModule, TextareaModule, CommonModule, DynamicUpload, SubtotalShopingcart],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
