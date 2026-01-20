@@ -58,20 +58,7 @@
       }
 
       <hr />
-      <div class="flex flex-col gap-2 text-xl">
-        <span class="text-primary-700 font-bold dark:text-primary-100"
-          >Tasa: {{getPriceDolarConfiguration()?.price|currency:'Bs'}}</span
-        >
-        <div class="flex justify-between">
-          <span class="text-primary-700 font-bold dark:text-primary-100">Total</span>
-          <div class="flex gap-4">
-            <span class="text-primary-700 font-bold dark:text-primary-100">{{getTotal() |currency:'USD'}}</span>
-            <span class="text-primary-700 font-bold dark:text-primary-100"
-              >{{calculatePriceForBs(getTotal())|currency:'Bs'}}</span
-            >
-          </div>
-        </div>
-      </div>
+      <app-subtotal-shopingcart></app-subtotal-shopingcart>
     </div>
     <!-- METODOS DE PAGO -->
     <div class="flex flex-col gap-5 bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">

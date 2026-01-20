@@ -18,7 +18,7 @@
 
       <!-- Detalles del producto -->
       <div class="flex flex-col gap-10 justify-between">
-        <span class="text-5xl font-bold text-primary-800 dark:text-primary-100">{{product.name}}</span>
+        <span class="text-4xl md:text-5xl font-bold text-primary-800 dark:text-primary-100">{{product.name}}</span>
 
         <div class="flex items-center gap-2">
           <span class="bg-primary-200 py-2 px-4 rounded-md font-bold text-primary-800">{{product.category_name}}</span>
@@ -88,12 +88,7 @@
               (subtractAmount)="subtractAmount(product)"
             ></app-items-button>
           </div> -->
-          <button
-            (click)="redirectCheckout(product)"
-            class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full md:w-100 text-primary-50 font-bold"
-          >
-            Comprar
-          </button>
+          <app-button-checkout class="w-full" [product]="product"></app-button-checkout>
 
           <button
             (click)="addToCart(product)"

@@ -47,21 +47,8 @@
 
     <!-- Contenedor de subtotal -->
     <div class="absolute flex flex-col bottom-0 left-0 right-0 p-5 bg-primary-50">
-      <div class="flex justify-between">
-        <span class="text-lg text-primary-800 font-bold">Tasa:</span>
-        <span class="text-lg text-primary-800 font-bold">{{getPriceDolarConfiguration()?.price|currency:'Bs'}}</span>
-      </div>
-
-      <div class="flex justify-between">
-        <span class="text-lg text-primary-800 font-bold">Subtotal ($):</span>
-        <span class="text-lg text-primary-800 font-bold">{{getTotal() |currency:'USD'}}</span>
-      </div>
-
-      <div class="flex justify-between">
-        <span class="text-lg text-primary-800 font-bold">Subtotal (Bs):</span>
-        <span class="text-lg text-primary-800 font-bold self-end">{{calculatePriceForBs(getTotal())|currency:'Bs'}}</span>
-      </div>
-
+      <app-subtotal-shopingcart></app-subtotal-shopingcart>
+      <!-- 
       <button
         (click)="redirectCheckout()"
         [disabled]="getTotal() == 0"
@@ -69,7 +56,14 @@
         class="hover:bg-primary-700 cursor-pointer px-4 py-4 rounded-md bg-primary-800 w-full mt-5 text-primary-50 font-bold"
       >
         Comprar
-      </button>
+      </button> -->
+
+      <app-button-checkout
+        (onCheckout)="this.viewShoppingCard.set(false)"
+        class="mt-5"
+        [disabled]="getTotal() == 0"
+      ></app-button-checkout>
+      
       <button
         (click)="cleanShoppingCard()"
         [disabled]="getTotal() == 0"

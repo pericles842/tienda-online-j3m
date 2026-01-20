@@ -1,0 +1,14 @@
+<div class="flex justify-between">
+  <span class="text-lg text-primary-800 font-bold">Tasa:</span>
+  <span class="text-lg text-primary-800 font-bold">{{getPriceDolarConfiguration()?.price|currency:'Bs'}}</span>
+</div>
+
+<div class="flex justify-between">
+  <span class="text-lg text-primary-800 font-bold">Subtotal ($):</span>
+  <span class="text-lg text-primary-800 font-bold">{{getTotal() |currency:'USD'}}</span>
+</div>
+
+<div class="flex justify-between">
+  <span class="text-lg text-primary-800 font-bold">Subtotal (Bs):</span>
+  <span class="text-lg text-primary-800 font-bold self-end">{{calculatePriceForBs(getTotal())|currency:'Bs'}}</span>
+</div>
