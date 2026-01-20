@@ -18,15 +18,39 @@ import { TextareaModule } from 'primeng/textarea';
 import { DynamicUpload } from '@/pages/components/dynamic-upload/dynamic-upload';
 import { Product } from '@/interfaces/product';
 import { User } from '@/interfaces/user';
-import { SubtotalShopingcart } from "../subtotal-shopingcart/subtotal-shopingcart";
+import { SubtotalShopingcart } from '../subtotal-shopingcart/subtotal-shopingcart';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { fileOrUrlValidator } from '@/utils/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { Message } from "primeng/message";
 
 @Component({
   selector: 'app-checkout',
-  imports: [Breadcrumb, InputTextModule, TextareaModule, CommonModule, DynamicUpload, SubtotalShopingcart],
+  imports: [
+    Breadcrumb,
+    InputTextModule,
+    TextareaModule,
+    CommonModule,
+    DynamicUpload,
+    SubtotalShopingcart,
+    ReactiveFormsModule,
+    InputTextModule,
+    TextareaModule,
+    InputNumberModule,
+    Message
+],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
 export class Checkout {
+  payUser: FormGroup = new FormGroup(
+    {
+      id: new FormControl(0),
+      reference: new FormControl(null, [Validators.required]),
+      image: new FormControl(null)
+    },
+    { validators: fileOrUrlValidator() }
+  );
   user!: User;
   products: Product[] = [];
   pay_methods: WritableSignal<PayMethodData[]> = signal([]);
@@ -62,7 +86,7 @@ export class Checkout {
     return this.shoppingCartService.getTotal();
   }
 
-  getKeysPayMethod(): [ keyof PayMethodData, string][] {
+  getKeysPayMethod(): [keyof PayMethodData, string][] {
     return Object.entries(this.activeMethod.datos) as [keyof PayMethodData, string][];
   }
 
@@ -87,5 +111,9 @@ export class Checkout {
     };
 
     return payMethodLabels[key as PayMethodKeys] || key;
+  }
+
+  fileSelected(file: File) {
+    this.payUser.patchValue({ image: file });
   }
 }
