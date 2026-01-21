@@ -1,36 +1,22 @@
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
   <!-- Banner principal (columna grande) -->
-  <div appScrollReveal class="lg:col-span-2 bg-primary-50 rounded-xl shadow-md">
-    <p-carousel
-      autoplayInterval="3000"
-      class="w-full"
-      contentClass="w-full p-0"
-      [value]="products"
-      [numVisible]="1"
-      [numScroll]="3"
-      [circular]="false"
-      [responsiveOptions]="responsiveOptions"
-    >
+  <div appScrollReveal class="lg:col-span-2 bg-surface-900 rounded-xl shadow-md">
+    <p-carousel autoplayInterval="3000" class="w-full" contentClass="w-full p-0" [value]="products" [numVisible]="1"
+      [numScroll]="3" indicatorStyleClass="bg-red-500" [circular]="false" [responsiveOptions]="responsiveOptions">
       <ng-template let-product #item>
-        <div class="flex items-center justify-between p-5 md:p-0">
-          <div class="max-w-md">
+        <div class="flex items-center justify-evenly p-5 md:p-0">
+          <div class="max-w-md  w-full flex flex-col">
             <div class="flex items-center gap-5">
-              <span class="text-7xl text-primary font-bold">{{product.discount}}</span>
-              <span class="text-2xl text-black font-bold"
-                >SALE <br />
-                OFF</span
-              >
+              <span class="text-7xl text-yellow-500 font-bold">{{product.discount}}</span>
+              <span class="text-2xl text-surface-100 font-bold">SALE <br />
+                OFF</span>
             </div>
             <div class="flex flex-col mt-4 gap-2">
-              <span class="text-5xl font-semibold text-primary-800">{{product.Title}}</span>
-              <span class="text-primary-400">{{product.description}}</span>
+              <span class="text-5xl font-semibold text-surface-300">{{product.Title}}</span>
+              <!-- <span class="text-yellow-100">{{product.description}}</span> -->
             </div>
 
-            <button
-              class="w-full mt-5 text-xl bg-primary text-primary-50 px-5 py-3 rounded-lg cursor-pointer hover:bg-primary-600"
-            >
-              Comprar
-            </button>
+            <app-button-checkout class="mt-5" [product]="product"></app-button-checkout>
           </div>
 
           @if(layoutService.isDesktop()){
@@ -45,29 +31,35 @@
   <!-- Columna derecha: dos productos verticales -->
   <div class="flex flex-col justify-between gap-6">
     <!-- Tarjeta producto 1 -->
-    <div appScrollReveal origin="right" class="bg-primary-50 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
+    <div appScrollReveal origin="right"
+      class="bg-surface-900 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
       <div>
-        <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
-        <span class="text-primary text-base">Featured category</span>
+        <p class="font-bold text-yellow-50 text-3xl">iPhone 16 Pro & Max</p>
+        <!-- <span class="text-surface-100 text-base">Featured category</span> -->
         <div class="mt-2">
-          <span class="font-bold text-4xl text-primary">$600</span>
+          <span class="font-bold text-4xl text-yellow-500">$600</span>
           <span class="line-through text-lg text-gray-400 ml-1">$898</span>
+          <app-button-checkout class="mt-5 block"></app-button-checkout>
         </div>
       </div>
-      <img class="w-30 object-contain" src="https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg" alt="iphone" />
+      <img class="w-30 object-contain" src="https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg"
+        alt="iphone" />
     </div>
 
     <!-- Tarjeta producto 2 -->
-    <div  appScrollReveal origin="right" [delay]="400" class="bg-primary-50 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
+    <div appScrollReveal origin="right" [delay]="400"
+      class="bg-surface-900 rounded-xl h-full p-5 flex items-center justify-between shadow-md">
       <div>
-        <p class="font-bold text-primary-800 text-3xl">iPhone 16 Pro & Max</p>
-        <span class="text-primary text-base">Featured category</span>
+        <p class="font-bold text-yellow-50 text-3xl">iPhone 16 Pro & Max</p>
+        <!-- <span class="text-surface-100 text-base">Featured category</span> -->
         <div class="mt-2">
-          <span class="font-bold text-4xl text-primary">$600</span>
+          <span class="font-bold text-4xl text-yellow-500">$600</span>
           <span class="line-through text-lg text-gray-400 ml-1">$898</span>
+           <app-button-checkout class="mt-5 block"></app-button-checkout>
         </div>
       </div>
-      <img class="w-30 object-contain" src="https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg" alt="iphone" />
+      <img class="w-30 object-contain" src="https://m.media-amazon.com/images/I/61bK6PMOC3L._AC_SL1500_.jpg"
+        alt="iphone" />
     </div>
   </div>
 </div>
