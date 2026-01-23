@@ -5,7 +5,7 @@
   <div class="px-4 py-10">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <!-- Imagen -->
-      <div class="flex justify-center items-center bg-primary-50 dark:shadow-lg rounded-2xl p-6">
+      <div class="flex justify-center items-center bg-surface-50 dark:shadow-lg rounded-2xl p-6">
         <p-image
           [src]="product.url_img || ''"
           [alt]="product.url_img || ''"
@@ -18,33 +18,33 @@
 
       <!-- Detalles del producto -->
       <div class="flex flex-col gap-10 justify-between">
-        <span class="text-4xl md:text-5xl font-bold text-primary-800 dark:text-primary-100">{{product.name}}</span>
+        <span class="text-4xl md:text-5xl font-bold text-surface-800 dark:text-primary-100">{{product.name}}</span>
 
         <div class="flex items-center gap-2">
-          <span class="bg-primary-200 py-2 px-4 rounded-md font-bold text-primary-800">{{product.category_name}}</span>
-          <span class="bg-primary-200 py-2 px-4 rounded-md font-bold text-primary-800">{{product.brand}}</span>
+          <span class="bg-Surface-700 py-2 px-4 rounded-md font-bold text-blue-400">{{product.category_name}}</span>
+          <span class="bg-Surface-700 py-2 px-4 rounded-md font-bold text-blue-400">{{product.brand}}</span>
           @if (product.discount != 0) {
-          <span class="bg-primary-200 py-2 px-4 rounded-md font-bold text-primary-800">{{product.discount}}% OFF</span>
+          <span class="bg-surface-800 py-2 px-4 rounded-md font-bold text-surface-100">{{product.discount}}% OFF</span>
           }
         </div>
 
         <div class="text-xl font-semibold flex flex-col">
-          <span class="text-primary-800 dark:text-primary-200 mb-5">Tasa: {{getPriceDolarConfiguration()?.price}} bs</span>
-          <span class="text-primary-800 font-bold dark:text-primary-200">Precio:</span>
+          <span class="text-surface-800 dark:text-primary-200 mb-5">Tasa: {{getPriceDolarConfiguration()?.price}} bs</span>
+          <span class="text-surface-800 font-bold dark:text-primary-200">Precio:</span>
           <div class="flex gap-2 items-end">
-            <span class="text-primary-600 dark:text-primary-400 text-3xl font-black"
+            <span class="text-yellow-500 dark:text-surface-400 text-3xl font-black"
               >{{calculatePriceForBs(product.price)|currency:'Bs'}}</span
             >
-            <span class="text-primary-500 dark:text-primary-300 text-2xl mr-2">{{product.price |currency:'USD'}}</span>
+            <span class="text-surface-500 dark:text-primary-300 text-2xl mr-2">{{product.price |currency:'USD'}}</span>
           </div>
         </div>
 
-        <ul class="text-base text-primary-600 space-y-1">
-          <div class="flex gap-2 dark:text-primary-400 items-center">
+        <ul class="text-base text-surface-500 space-y-1">
+          <div class="flex gap-2 dark:text-surface-400 items-center">
             <i class="pi pi-check-circle"></i>
             <span class="flex gap-2 items-center">Entrega gratuita disponible</span>
           </div>
-          <div class="flex gap-2 dark:text-primary-400 items-center">
+          <div class="flex gap-2 dark:text-surface-400 items-center">
             <i class="pi pi-check-circle"></i>
             <span class="flex gap-2 items-center">Ventas 30% de descuento</span>
           </div>
@@ -109,14 +109,14 @@
       <p-tabpanels>
         <p-tabpanel value="0">
           <div class="flex flex-col gap-5">
-            <span class="text-3xl text-primary-800 font-bold dark:text-primary-200">Especificaciones</span>
+            <span class="text-3xl text-surface-700 font-bold dark:text-primary-200">Especificaciones</span>
 
             <span>{{product.description}}</span>
           </div>
         </p-tabpanel>
         <p-tabpanel value="1">
           <div class="flex flex-col gap-5">
-            <span class="text-3xl text-primary-800 font-bold dark:text-primary-200">Detalles</span>
+            <span class="text-3xl text-surface-00 font-bold dark:text-primary-200">Detalles</span>
 
             <div class="flex flex-col gap-5 w-full lg:w-1/2">
               @for (item of getAttributesProduct(); track $index) {
