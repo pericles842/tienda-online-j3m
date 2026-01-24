@@ -21,21 +21,21 @@
         <span class="text-4xl md:text-5xl font-bold text-surface-800 dark:text-primary-100">{{product.name}}</span>
 
         <div class="flex items-center gap-2">
-          <span class="bg-Surface-700 py-2 px-4 rounded-md font-bold text-blue-400">{{product.category_name}}</span>
-          <span class="bg-Surface-700 py-2 px-4 rounded-md font-bold text-blue-400">{{product.brand}}</span>
+          <span class="bg-Surface-800 py-2 px-4 rounded-md font-bold text-blue-400">{{product.category_name}}</span>
+          <span class="bg-Surface-800 py-2 px-4 rounded-md font-bold text-blue-400">{{product.brand}}</span>
           @if (product.discount != 0) {
           <span class="bg-surface-800 py-2 px-4 rounded-md font-bold text-surface-100">{{product.discount}}% OFF</span>
           }
         </div>
 
         <div class="text-xl font-semibold flex flex-col">
-          <span class="text-surface-800 dark:text-primary-200 mb-5">Tasa: {{getPriceDolarConfiguration()?.price}} bs</span>
-          <span class="text-surface-800 font-bold dark:text-primary-200">Precio:</span>
+          <span class="text-surface-800 dark:text-primary-800 mb-5">Tasa: {{getPriceDolarConfiguration()?.price}} bs</span>
+          <span class="text-surface-800 font-bold dark:text-primary-800">Precio:</span>
           <div class="flex gap-2 items-end">
-            <span class="text-yellow-500 dark:text-surface-400 text-3xl font-black"
+            <span class="text-blue-400 dark:text-surface-400 text-3xl font-black"
               >{{calculatePriceForBs(product.price)|currency:'Bs'}}</span
             >
-            <span class="text-surface-500 dark:text-primary-300 text-2xl mr-2">{{product.price |currency:'USD'}}</span>
+            <span class="text-surface-800 dark:text-primary-300 text-2xl mr-2">{{product.price |currency:'USD'}}</span>
           </div>
         </div>
 

@@ -93,7 +93,7 @@ export class ProductComponent {
 
     return {
       label: 'Disponible',
-      bgClass: 'bg-surface-700',
+      bgClass: 'bg-green-600',
       textClass: 'text-green-100'
     };
   }
