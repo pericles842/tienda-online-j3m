@@ -16,7 +16,7 @@ export class StoreFilterSettings {
   rangeValues: number[] = [0, 5000];
   color: string | undefined;
   stylesInTabsAcordeon = {
-    'background-color': 'var(--color-blue-500)',
+    'background-color': 'var(--color-surface-50)',
     'border-radius': '7px',
     'box-shadow': '0px 3px 4px rgba(0, 0, 0, 0.10)'
   };
