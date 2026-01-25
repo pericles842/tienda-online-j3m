@@ -1,59 +1,59 @@
 <p-breadcrumb [model]="items" />
 
 <section class="flex flex-col md:flex-row justify-between gap-3 mt-10">
-  <div class="flex md:w-1/2 w-full h-fit flex-col bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">
-    <span class="text-xl text-primary-800 dark:text-primary-100 font-semibold">Detalles de factura</span>
+  <div class="flex md:w-1/2 w-full h-fit flex-col bg-white dark:bg-surface-900 rounded-xl p-5 shadow-md">
+    <span class="text-2xl text-blue-400 dark:text-surface-100 font-semibold">Detalles de factura</span>
     <hr />
 
     <div class="grid grid-cols-12 gap-5 mt-3">
       <div class="col-span-12 md:col-span-6 flex flex-col">
-        <span class="text-sm text-primary-400">Nombre</span>
-        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.name}}</span>
+        <span class="text-sm text-surface-400">Nombre</span>
+        <span class="text-xl text-surface-800 dark:text-surface-200">{{user.name}}</span>
       </div>
 
       <div class="col-span-12 md:col-span-6 flex flex-col">
-        <span class="text-sm text-primary-400">Apellido</span>
-        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.last_name}}</span>
+        <span class="text-sm text-surface-400">Apellido</span>
+        <span class="text-xl text-surface-800 dark:text-surface-200">{{user.last_name}}</span>
       </div>
 
       <div class="col-span-12 md:col-span-6 flex flex-col">
-        <span class="text-sm text-primary-400">Correo</span>
-        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.email}}</span>
+        <span class="text-sm text-surface-400">Correo</span>
+        <span class="text-xl text-surface-800 dark:text-surface-200">{{user.email}}</span>
       </div>
 
       <div class="col-span-12 md:col-span-6 flex flex-col">
-        <span class="text-sm text-primary-400">Teléfono</span>
-        <span class="text-xl text-primary-800 dark:text-primary-200">{{user.phone}}</span>
+        <span class="text-sm text-surface-400">Teléfono</span>
+        <span class="text-xl text-surface-800 dark:text-surface-200">{{user.phone}}</span>
       </div>
 
       <div class="col-span-12 md:col-span-6 flex flex-col">
-        <span class="text-sm text-primary-400">Direccion</span>
-        <span class="text-xl text-primary-800 dark:text-primary-200"
+        <span class="text-sm text-surface-400">Direccion</span>
+        <span class="text-xl text-surface-800 dark:text-surface-200"
           >{{user.state}} / {{user.municipality}} / {{user.parish}}</span
         >
       </div>
 
       <div class="col-span-12 flex flex-col">
-        <span class="text-sm text-primary-400">Ubicación del delivery</span>
+        <span class="text-sm text-surface-400">Ubicación del delivery</span>
         <textarea rows="5" cols="30" pTextarea class="w-full mb-2" [autoResize]="true"></textarea>
       </div>
     </div>
   </div>
 
   <div class="flex flex-col w-full md:w-1/2 gap-10">
-    <div class="flex flex-col gap-5 bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">
-      <span class="text-xl text-primary-800 font-semibold dark:text-primary-100">Tu pedido</span>
+    <div class="flex flex-col gap-5 bg-white dark:bg-surface-900 rounded-xl p-5 shadow-md">
+      <span class="text-2xl text-blue-400 font-semibold dark:text-primary-100">Tu pedido</span>
       <hr />
       <div class="flex justify-between">
-        <span class="text-primary-800 font-bold dark:text-primary-100">Productos</span>
-        <span class="text-primary-800 font-bold dark:text-primary-100">Subtotal</span>
+        <span class="text-surface-800 font-bold dark:text-surface-100">Productos</span>
+        <span class="text-surface-800 font-bold dark:text-surface-100">Subtotal</span>
       </div>
 
       @for (product of products; track $index){
 
       <div class="flex justify-between">
-        <span class="text-primary-600">{{product.name}}</span>
-        <span class="text-primary-900 font-bold dark:text-primary-200">{{product.price |currency:'USD'}}</span>
+        <span class="text-surface-600">{{product.name}}</span>
+        <span class="text-surface-900 font-bold dark:text-primary-200">{{product.price |currency:'USD'}}</span>
       </div>
       }
 
@@ -61,8 +61,8 @@
       <app-subtotal-shopingcart></app-subtotal-shopingcart>
     </div>
     <!-- METODOS DE PAGO -->
-    <div class="flex flex-col gap-5 bg-primary-50 dark:bg-surface-900 rounded-xl p-5 shadow-md">
-      <span class="text-xl text-primary-800 font-semibold dark:text-primary-100">Métodos de pago</span>
+    <div class="flex flex-col gap-5 bg-white dark:bg-surface-900 rounded-xl p-5 shadow-md">
+      <span class="text-xl text-blue-400 font-semibold dark:text-primary-100">Métodos de pago</span>
       <hr />
       <div class="flex flex-wrap justify-between gap-3">
         @for (item of pay_methods(); track $index) {
@@ -76,15 +76,15 @@
             [src]="item.url_img"
             [alt]="item.url_img"
           />
-          <span class="text-primary-800 text-xl">{{item.name}}</span>
+          <span class="text-surface-800 text-xl">{{item.name}}</span>
         </div>
         }
       </div>
       @if (activeMethod) {
       <div class="grid grid-cols-12 gap-5 mt-3">
         <div class="col-span-6 flex flex-col">
-          <span class="text-base text-primary-400">Titular</span>
-          <p class="text-primary-800 text-xl">{{activeMethod.holder}}</p>
+          <span class="text-base text-surface-400">Titular</span>
+          <p class="text-surface-800 text-xl">{{activeMethod.holder}}</p>
         </div>
       </div>
       <!-- DATos del método -->
@@ -93,8 +93,8 @@
         @for(item of getKeysPayMethod() ; track $index){
 
         <div class="col-span-6 flex flex-col">
-          <span class="text-sm text-primary-400">{{parseKeyPayMethod(item[0])}}</span>
-          <p class="text-primary-800 font-bold">{{item[1]}}</p>
+          <span class="text-sm text-surface-400">{{parseKeyPayMethod(item[0])}}</span>
+          <p class="text-surface-800 font-bold">{{item[1]}}</p>
         </div>
         }
       </div>
