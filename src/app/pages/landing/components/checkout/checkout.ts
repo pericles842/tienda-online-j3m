@@ -24,6 +24,7 @@ import { fileOrUrlValidator } from '@/utils/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { Message } from 'primeng/message';
 import { SalesService } from '@/services/sales.service';
+import { ButtonCheckout } from "../button-checkout/button-checkout";
 
 @Component({
   selector: 'app-checkout',
@@ -38,8 +39,9 @@ import { SalesService } from '@/services/sales.service';
     InputTextModule,
     TextareaModule,
     InputNumberModule,
-    Message
-  ],
+    Message,
+    ButtonCheckout
+],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
