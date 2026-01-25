@@ -22,7 +22,8 @@ import { SubtotalShopingcart } from '../subtotal-shopingcart/subtotal-shopingcar
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fileOrUrlValidator } from '@/utils/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { Message } from "primeng/message";
+import { Message } from 'primeng/message';
+import { SalesService } from '@/services/sales.service';
 
 @Component({
   selector: 'app-checkout',
@@ -38,7 +39,7 @@ import { Message } from "primeng/message";
     TextareaModule,
     InputNumberModule,
     Message
-],
+  ],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
@@ -68,7 +69,8 @@ export class Checkout {
     private authService: AuthService,
     private shoppingCartService: ShoppingCartService,
     private configurationService: ConfigurationService,
-    private payMethodService: PayMethodService
+    private payMethodService: PayMethodService,
+    private salesService: SalesService
   ) {}
 
   ngOnInit() {
@@ -87,6 +89,10 @@ export class Checkout {
   }
 
   getKeysPayMethod(): [keyof PayMethodData, string][] {
+    if (typeof this.activeMethod.datos == 'string') {
+      this.activeMethod.datos = JSON.parse(this.activeMethod.datos);
+    }
+
     return Object.entries(this.activeMethod.datos) as [keyof PayMethodData, string][];
   }
 
@@ -115,5 +121,19 @@ export class Checkout {
 
   fileSelected(file: File) {
     this.payUser.patchValue({ image: file });
+  }
+
+  createPayment() {
+    this.payUser.markAllAsDirty();
+    this.payUser.updateValueAndValidity();
+
+    //si el formulario no es valido salimos del proceso
+    if (!this.payUser.valid) return;
+
+    const formData = new FormData();
+    formData.append('payment', JSON.stringify(this.payUser.value));
+    formData.append('image', this.payUser.value.image);
+
+    this.salesService.createPayment(formData).subscribe((res) => {});
   }
 }
