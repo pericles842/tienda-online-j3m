@@ -1,10 +1,10 @@
 <!-- seccion 1 bienvenida -->
 
 @if (layoutService.isDesktop()) {
-<div class="flex justify-between p-2 px-3 items-center bg-primary">
+<div class="flex justify-between p-2 px-3 items-center bg-yellow-300">
   <!-- IMAGEN -->
   <div class="flex gap-3 items-center">
-    <span class="dark:text-primary-900 text-white font-bold">Obtenga envío gratuito en pedidos superiores a $80</span>
+    <span class="dark:text-primary-900 text-yellow-950 font-bold">Obtenga envío gratuito en pedidos superiores a $80</span>
   </div>
 
   <!-- secciones de la pagina -->
@@ -15,10 +15,10 @@
 <!-- ------------------------------------------------------------------ -->
 <!-- SECCIÓN DOS SEARCH Y REGISTRO -->
 <!-- ------------------------------------------------------------------ -->
-<div class="flex justify-between items-center p-3 bg-primary-900 dark:bg-surface-900 border-b-1 border-primary md:border-0">
+<div class="flex justify-between items-center p-3 bg-yellow-300 dark:bg-surface-900 border-b-1  md:border-0">
   <div routerLink="/dashboard" class="flex gap-2 items-center cursor-pointer">
     <img [src]="'https://grupo-j3m.s3.us-east-2.amazonaws.com/public/logotipo.png'" alt="logo" class="w-12 h-12" />
-    <span class="font-bold text-base text-white">Tienda J3M</span>
+    <span class="font-bold text-base text-yellow-950">Tienda J3M</span>
   </div>
   <!-- ------------------------------------------------------------------ -->
   <!-- SECCIÓN DE BÚSQUEDA -->
@@ -27,11 +27,11 @@
     @if (layoutService.isDesktop()) {
     <div class="bg-surface-50 rounded-md p-1 flex">
       <input
-        class="outline-none text-primary placeholder:text-primary-900 text-lg px-2 w-full"
+        class="outline-none text-grey-700 placeholder:text-grey-700 text-lg px-2 w-full"
         type="text"
         placeholder="Buscar Productos"
       />
-      <button pButton pRipple severity="primary">
+      <button pButton pRipple severity="contrast">
         <span pButtonLabel>Buscar </span>
         <i class="pi pi-search"></i>
       </button>
@@ -46,19 +46,19 @@
     <!-- ------------------------------------------------------------------ -->
     <!-- TEMA E INGRESO -->
     <!-- ------------------------------------------------------------------ -->
-    <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-primary-800 dark:border-primary-50">
+    <div class="flex items-center gap-2 md:border-r-1 md:pr-5 md:border-black dark:border-black">
       @if (layoutService.isMobile()) {
       <app-shopping-cart></app-shopping-cart>
       }
 
-      <app-floating-configurator [rounded]="false" pTooltip="Tema" tooltipPosition="bottom" severity="primary" [float]="false" />
+      <!-- <app-floating-configurator [rounded]="false" pTooltip="Tema" tooltipPosition="bottom" severity="primary" [float]="false" /> -->
 
       @if (layoutService.isMobile()) {
       <p-button
         pTooltip="Buscar Productos"
         (onClick)="visibleSearch.set(true)"
         tooltipPosition="bottom"
-        severity="primary"
+        severity="contrast"
         iconPos="right"
         icon="pi pi-search"
       />
@@ -67,7 +67,7 @@
       <p-button
         pTooltip="Ingresar"
         tooltipPosition="bottom"
-        severity="primary"
+        severity="contrast"
         routerLink="/auth/login"
         iconPos="right"
         icon="pi pi-sign-in"
@@ -75,7 +75,7 @@
       <p-button
         pTooltip="Registro"
         tooltipPosition="bottom"
-        severity="primary"
+        severity="contrast"
         routerLink="/auth/register"
         iconPos="right"
         icon="pi pi-user-plus"
@@ -101,10 +101,12 @@
 
       <app-shopping-cart></app-shopping-cart>
 
-      } @if(isExistToken && layoutService.isDesktop()){
+      } 
+      
+      @if(isExistToken && layoutService.isDesktop()){
       <div class="flex items-center gap-3 cursor-pointer">
         <p-avatar
-          [style]="{ 'background-color': 'var(--color-primary-100)', color: 'var(--color-primary)' }"
+          [style]="{ 'background-color': 'var(--color-blue-200)', color: 'var(--color-blue-600)' }"
           [pTooltip]="full_name"
           tooltipPosition="left"
           [label]="wordsInName"
@@ -114,7 +116,7 @@
         />
       </div>
       } @if (layoutService.isMobile()) {
-      <p-button (click)="menuVisible.set(true)" icon="pi pi-bars" />
+      <p-button severity="contrast" (click)="menuVisible.set(true)" icon="pi pi-bars" />
       }
     </div>
   </div>
@@ -132,7 +134,7 @@
       @if(isExistToken ){
       <div class="flex items-center gap-3 cursor-pointer">
         <p-avatar
-          [style]="{ 'background-color': 'var(--color-primary-100)', color: 'var(--color-primary)' }"
+         [style]="{ 'background-color': 'var(--color-blue-200)', color: 'var(--color-blue-600)' }"
           [pTooltip]="full_name"
           tooltipPosition="left"
           [label]="wordsInName"
@@ -167,7 +169,7 @@
         pTooltip="Ingresar"
         label="Ingreso"
         tooltipPosition="bottom"
-        severity="primary"
+        severity="contrast"
         routerLink="/auth/login"
         iconPos="right"
         icon="pi pi-sign-in"
@@ -178,7 +180,7 @@
         styleClass="w-full"
         label="Registro"
         tooltipPosition="bottom"
-        severity="primary"
+        severity="contrast"
         routerLink="/auth/register"
         iconPos="right"
         icon="pi pi-user-plus"
@@ -188,13 +190,13 @@
 </p-drawer>
 
 <p-drawer position="top" [(visible)]="visibleSearch" header="Búsqueda de productos">
-  <div class="bg-surface-50 rounded-lg border-2 border-primary-300 flex">
+  <div class="bg-surface-50 rounded-lg border-1 border-grey-700  flex">
     <input
-      class="outline-none text-primary bg-primary-100 placeholder:text-primary-900 text-lg px-2 w-full"
+      class="outline-none text-grey-700 placeholder:text-grey-700 text-lg px-2 w-full"
       type="text"
       placeholder="Buscar Productos"
     />
-    <button pButton pRipple severity="primary">
+    <button pButton pRipple severity="contrast">
       <span pButtonLabel>Buscar </span>
       <i class="pi pi-search"></i>
     </button>

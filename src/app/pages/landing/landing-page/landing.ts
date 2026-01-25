@@ -14,6 +14,7 @@ import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
 import { Product } from '@/interfaces/product';
 import { Skeleton } from 'primeng/skeleton';
 import { LoadingService } from '@/services/loading.service';
+import { ButtonCheckout } from "../components/button-checkout/button-checkout";
 
 @Component({
   selector: 'app-landing',
@@ -29,8 +30,9 @@ import { LoadingService } from '@/services/loading.service';
     DividerModule,
     Home,
     ProductComponent,
-    Skeleton
-  ],
+    Skeleton,
+    ButtonCheckout
+],
   templateUrl: './landing.html'
 })
 export class Landing {
