@@ -9,6 +9,17 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   const authService = inject(AuthService);
   const route = inject(Router);
 
+  //PARA LA VENTA
+  if (route.url.split('/').includes('checkout')) {
+    if (authService) {
+      const authReq = req.clone({
+        headers: req.headers.set('authorization', `${authService.getToken()}`)
+      });
+      return next(authReq);
+    }
+  }
+
+  
   //si no existe la palabra pages pasar la solicitud
   if (!route.url.split('/').includes('pages')) return next(req);
   const name_module_url = route.url.split('/').at(-1); //obtenemos la palara final de la url

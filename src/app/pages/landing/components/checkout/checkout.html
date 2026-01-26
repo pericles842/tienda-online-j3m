@@ -33,10 +33,10 @@
         >
       </div>
 
-      <div class="col-span-12 flex flex-col">
+      <!-- <div class="col-span-12 flex flex-col">
         <span class="text-sm text-primary-400">Ubicación del delivery</span>
         <textarea rows="5" cols="30" pTextarea class="w-full mb-2" [autoResize]="true"></textarea>
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -128,7 +128,7 @@
       </section>
 
       <div class="flex flex-col gap-2 text-xl mt-5">
-        <app-button-checkout (onCheckout)="createPayment()" class="w-full" ></app-button-checkout>
+        <app-button-checkout [goToCheckout]="false" (onCheckout)="createPayment()" class="w-full"></app-button-checkout>
       </div>
     </div>
   </div>

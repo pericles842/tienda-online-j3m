@@ -4,7 +4,7 @@ import { AuthService } from '@/services/auth.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -16,6 +16,7 @@ import { MessageService } from 'primeng/api';
 export class ButtonCheckout {
   @Input() product!: Product;
   @Input() disabled: boolean = false;
+  @Input() goToCheckout: boolean = true;
   @Output() onCheckout: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -43,9 +44,9 @@ export class ButtonCheckout {
       return;
     }
 
-    if (this.product) this.addToCart(item);
     this.onCheckout.emit();
-    this.router.navigate(['/checkout']);
+    if (this.product) this.addToCart(item);
+    if (this.goToCheckout) this.router.navigate(['/checkout']);
   }
 
   addToCart(product: Product) {
