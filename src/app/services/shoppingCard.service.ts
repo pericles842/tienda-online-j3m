@@ -1,5 +1,6 @@
 import { Product, ProprietiesShoppingCartStorage } from '@/interfaces/product';
 import { Injectable } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -9,7 +10,7 @@ export class ShoppingCartService {
   private cart_products = new BehaviorSubject<Product[]>([]);
   cart_products$ = this.cart_products.asObservable();
   proprietiesShoppingCartStorage: ProprietiesShoppingCartStorage = 'shoppingCart';
-  constructor() {
+  constructor(private mensajeService: MessageService) {
     this.cart_products.next(this.getShoppingCartLocalStorage());
   }
 
@@ -31,6 +32,7 @@ export class ShoppingCartService {
     const items = this.cart_products.value;
     const existing = items.find((i) => i.id === product.id);
 
+    
     if (existing) {
       existing.quantity = product.quantity;
     } else {
@@ -64,9 +66,21 @@ export class ShoppingCartService {
     const product = items.find((item) => item.id === id);
 
     if (product) {
+
       product.quantity += 1;
       this.cart_products.next(items);
       this.updateShoppingCartLocalStorage(this.cart_products.value);
+    }
+  }
+
+  validateStock(product: Product) {
+    if (product.quantity < product.stock) {
+      this.mensajeService.add({
+        severity: 'info',
+        summary: 'Info',
+        detail: 'No hay stock disponible para el producto' + product.name
+      });
+      return;
     }
   }
 

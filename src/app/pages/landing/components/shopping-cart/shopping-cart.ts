@@ -8,8 +8,9 @@ import { ItemsButton } from '../items-button/items-button';
 import { Router, RouterLink } from '@angular/router';
 import { Product } from '@/interfaces/product';
 import { ConfigurationService } from '@/services/configuration.service';
-import { SubtotalShopingcart } from "../subtotal-shopingcart/subtotal-shopingcart";
-import { ButtonCheckout } from "../button-checkout/button-checkout";
+import { SubtotalShopingcart } from '../subtotal-shopingcart/subtotal-shopingcart';
+import { ButtonCheckout } from '../button-checkout/button-checkout';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -24,6 +25,7 @@ export class ShoppingCart {
   constructor(
     private shoppingCartService: ShoppingCartService,
     private configurationService: ConfigurationService,
+    private mensajeService: MessageService,
     private router: Router
   ) {}
   ngOnInit() {
