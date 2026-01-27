@@ -144,7 +144,7 @@ export class Checkout {
     const formData = new FormData();
     const products = this.products.map(({ id, quantity }) => ({ id, quantity }));
 
-//!VALIDAR STOCK TANTO EN EL FRONT COMO BACK  
+    //!VALIDAR STOCK TANTO EN EL FRONT COMO BACK
 
     formData.append('payment', JSON.stringify(this.payUser.value));
     formData.append('pay_method', JSON.stringify(this.activeMethod));
@@ -152,10 +152,14 @@ export class Checkout {
     formData.append('image', this.payUser.value.image);
     formData.append('current_rate', String(this.getPriceDolarConfiguration()?.price));
 
-    this.salesService.createPayment(formData).subscribe((res) => {
-     // this.shoppingCartService.cleanShoppingCard();
-      this.payUser.patchValue({ image: null, reference: null });
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Pago realizado exitosamente' });
+    this.salesService.createPayment(formData).subscribe({
+      next: (data) => {
+        this.payUser.patchValue({ image: null, reference: null });
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Pago realizado exitosamente' });
+      },
+      complete: () => {
+        this.shoppingCartService.cleanShoppingCard();
+      }
     });
   }
 }

@@ -169,6 +169,9 @@ export class AuthService {
         icon: 'pi pi-exclamation-triangle',
         acceptLabel: 'Sí, continuar',
         rejectLabel: 'No, salir',
+        acceptButtonStyleClass: 'bg-surface-700',
+        rejectButtonStyleClass: 'bg-surface-700',
+
         accept: () => {
           clearInterval(timeout);
           //! ESTO SE DEBE COLOCAR NE L APETICION DE REFRESH

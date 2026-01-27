@@ -32,7 +32,15 @@ export class ShoppingCartService {
     const items = this.cart_products.value;
     const existing = items.find((i) => i.id === product.id);
 
-    
+    if (this.validateStock(product)) {
+      this.mensajeService.add({
+        severity: 'info',
+        summary: 'Info',
+        detail: `No hay stock para el producto ${product.name}`
+      });
+      return;
+    }
+
     if (existing) {
       existing.quantity = product.quantity;
     } else {
@@ -66,6 +74,14 @@ export class ShoppingCartService {
     const product = items.find((item) => item.id === id);
 
     if (product) {
+      if (this.validateStock(product)) {
+        this.mensajeService.add({
+          severity: 'info',
+          summary: 'Info',
+          detail: `No hay stock para el producto ${product.name}`
+        });
+        return;
+      }
 
       product.quantity += 1;
       this.cart_products.next(items);
@@ -74,14 +90,10 @@ export class ShoppingCartService {
   }
 
   validateStock(product: Product) {
-    if (product.quantity < product.stock) {
-      this.mensajeService.add({
-        severity: 'info',
-        summary: 'Info',
-        detail: 'No hay stock disponible para el producto' + product.name
-      });
-      return;
-    }
+    let stock = true;
+    if (product.quantity < product.stock) stock = false;
+
+    return stock;
   }
 
   /**
