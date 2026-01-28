@@ -40,7 +40,7 @@ export class ShopProducts {
 
   totalPages = 0;
   currentPage = 1;
-  limit = 10;
+  limit = 12;
 
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
@@ -60,7 +60,7 @@ export class ShopProducts {
         const queryParams: ProductQuery = {
           search: params['q'] || '',
           page: params['page'] || 1,
-          limit: params['limit'] || 10,
+          limit: params['limit'] || 12,
         };
         return this.productJ3mService.getProductsByQuery(queryParams);
       })
