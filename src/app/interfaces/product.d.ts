@@ -93,7 +93,7 @@ export type SubAttributesForFood = Extract<ProductKeyGeneralAttributes, 'marca' 
 
 //Formularios reactivos
 export type ProductFormGroup = FormGroupControls<Product>;
-export interface FormGroupTemplateAttributes extends Partial<Record<ProductKeyGeneralAttributes, FormControl<string | null>>> {}
+export interface FormGroupTemplateAttributes extends Partial<Record<ProductKeyGeneralAttributes, FormControl<string | null>>> { }
 
 export interface TemplateAttributesProduct {
   key: ProductTemplateKeys;
@@ -114,3 +114,22 @@ export interface ProductSupply {
 }
 
 export type ProprietiesShoppingCartStorage = 'shoppingCart';
+
+export interface ProductQuery {
+  query?: string;
+  min_price?: number;
+  max_price?: number;
+  category_id?: number;
+  search?: string;
+  page?: number | string;
+  limit?: number | string;
+  [key: string]: any; // Permite otros parámetros dinámicos
+}
+
+export interface ProductResponse {
+  data: Product[];
+  total: number;
+  totalPages: number;
+  currentPage: number;
+  itemsPerPage: number;
+}
