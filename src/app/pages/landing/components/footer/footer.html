@@ -1,25 +1,27 @@
 <footer class="bg-primary-900 text-primary-300 py-6">
   <div class="grid grid-cols-2 md:grid-cols-3 gap-6 p-10 justify-items-left md:justify-items-center">
+    @if (config()) {
     <!-- Contacto -->
     <div class="flex flex-col gap-2">
       <span class="font-semibold text-2xl text-primary-100 mb-2">Contacto</span>
-      <span>Soporte:{{config()?.phone}}</span>
-      <span>{{config()?.email}}</span>
+      <span>Soporte:{{config().phone}}</span>
+      <span>{{config().email}}</span>
     </div>
 
     <!-- Redes Sociales -->
+
     <div class="flex flex-col gap-2">
       <span class="font-semibold text-2xl text-primary-100 mb-2">Síguenos</span>
-      <a class="flex items-center gap-2" [href]="'https://www.instagram.com/'+ config()?.ig">
+      <a class="flex items-center gap-2" [href]="'https://www.instagram.com/'+ config().ig">
         <i class="pi pi-instagram" style="font-size: 1.5rem"></i>
         <span class="font-semibold text-lg">Instagram</span>
       </a>
-      <a class="flex items-center gap-2" [href]="'https://www.facebook.com/'+config()?.fb">
+      <a class="flex items-center gap-2" [href]="'https://www.facebook.com/'+config().fb">
         <i class="pi pi-facebook" style="font-size: 1.5rem"></i>
         <span class="font-semibold text-lg">Facebook</span>
       </a>
     </div>
-
+    }
     <!-- Secciones -->
     <div class="flex flex-col gap-2">
       <span class="font-semibold text-2xl text-primary-100 mb-2">Secciones</span>
