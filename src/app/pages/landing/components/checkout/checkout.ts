@@ -157,8 +157,10 @@ export class Checkout {
         this.payUser.patchValue({ image: null, reference: null });
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Pago realizado exitosamente' });
       },
-      complete: () => {
-        this.shoppingCartService.cleanShoppingCard();
+      error: (error) => {
+        if (error.error.key == 'NO_STOCK') {
+          this.shoppingCartService.cleanShoppingCard();
+        }
       }
     });
   }

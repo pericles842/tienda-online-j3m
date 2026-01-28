@@ -1,7 +1,8 @@
 import { Product, ProprietiesShoppingCartStorage } from '@/interfaces/product';
 import { Injectable } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,11 @@ export class ShoppingCartService {
   private cart_products = new BehaviorSubject<Product[]>([]);
   cart_products$ = this.cart_products.asObservable();
   proprietiesShoppingCartStorage: ProprietiesShoppingCartStorage = 'shoppingCart';
-  constructor(private mensajeService: MessageService) {
+  constructor(
+    private mensajeService: MessageService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
     this.cart_products.next(this.getShoppingCartLocalStorage());
   }
 
@@ -38,6 +43,13 @@ export class ShoppingCartService {
         summary: 'Info',
         detail: `No hay stock para el producto ${product.name}`
       });
+
+      timer(100).subscribe(() => {
+        if (this.router.url.includes('checkout')) {
+          this.router.navigate(['/landing']);
+        }
+      });
+
       return;
     }
 
