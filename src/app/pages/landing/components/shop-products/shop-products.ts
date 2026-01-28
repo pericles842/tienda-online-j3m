@@ -40,7 +40,7 @@ export class ShopProducts {
 
   totalPages = 0;
   currentPage = 1;
-  limit = 12;
+  limit = 1;
 
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
@@ -60,7 +60,7 @@ export class ShopProducts {
         const queryParams: ProductQuery = {
           search: params['q'] || '',
           page: params['page'] || 1,
-          limit: params['limit'] || 12,
+          limit: params['limit'] || 1,
         };
         return this.productJ3mService.getProductsByQuery(queryParams);
       })
@@ -86,6 +86,25 @@ export class ShopProducts {
   }
 
   get pagesArray(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    const totalVisible = 6;
+
+    if (this.totalPages <= totalVisible) {
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    }
+
+    let endPage = this.currentPage + 1;
+    let startPage = endPage - totalVisible + 1;
+
+    if (startPage < 1) {
+      startPage = 1;
+      endPage = totalVisible;
+    }
+
+    if (endPage > this.totalPages) {
+      endPage = this.totalPages;
+      startPage = Math.max(1, endPage - totalVisible + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 }
