@@ -15,7 +15,8 @@ import { TreeModule } from 'primeng/tree';
 import { PageSections } from '../page-sections/page-sections';
 import { ShoppingCart } from '../shopping-cart/shopping-cart';
 import { CategoriesService } from '@/services/categories.service';
-import { FormsModule } from '@angular/forms'; // Added import
+import { FormsModule } from '@angular/forms';
+import { SearchAutocomplete } from "../search-autocomplete/search-autocomplete"; // Added import
 
 @Component({
   selector: 'app-header',
@@ -30,8 +31,9 @@ import { FormsModule } from '@angular/forms'; // Added import
     DrawerModule,
     TableModule,
     PageSections,
-    ShoppingCart
-  ],
+    ShoppingCart,
+    SearchAutocomplete
+],
   providers: [NodeService],
   templateUrl: './header.html',
   styleUrl: './header.scss'

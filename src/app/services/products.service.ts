@@ -134,4 +134,10 @@ export class ProductJ3mService {
 
         return this.http.get<ProductResponse>(`${environment.host}/products-filter`, { params });
     }
+
+    getAllAttributesProduct(): Observable<ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>[]> {
+        return this.http.get<ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>[]>(
+            `${environment.host}/products-attributes`
+        );
+    }
 }

@@ -1,0 +1,15 @@
+<p-autocomplete appendTo="body" size="large" [suggestions]="items" (completeMethod)="filterProducts($event)"
+    (onSelect)="goToProductById($event)" optionLabel="name" [showClear]="true" inputStyleClass="w-full" class="w-full"
+    placeholder="Buscar productos">
+
+    <ng-template let-item #item>
+        <div class="flex justify-between w-full py=2">
+            <span class="truncate max-w-[80%]">{{ item.name }}</span>
+            @if (layoutService.isDesktop()) {
+            <span class="shrink-0">{{ item.price | currency:'USD' }}</span>
+            }
+        </div>
+
+    </ng-template>
+
+</p-autocomplete>

@@ -24,16 +24,9 @@
     <!-- ------------------------------------------------------------------ -->
     <!-- SECCIÓN DE BÚSQUEDA -->
     <!-- ------------------------------------------------------------------ -->
-    <div class="w-3xl">
+    <div class="w-2xl">
         @if (layoutService.isDesktop()) {
-        <div class="bg-surface-50 rounded-md p-1 flex">
-            <input class="outline-none text-grey-700 placeholder:text-grey-700 text-lg px-2 w-full" type="text"
-                placeholder="Buscar Productos" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
-            <button pButton pRipple severity="primary" (click)="onSearch()">
-                <span pButtonLabel>Buscar </span>
-                <i class="pi pi-search"></i>
-            </button>
-        </div>
+        <app-search-autocomplete></app-search-autocomplete>
         }
     </div>
 
@@ -127,13 +120,7 @@
 </p-drawer>
 
 <p-drawer position="top" [(visible)]="visibleSearch" header="Búsqueda de productos">
-    <div class="bg-surface-50 rounded-lg border-1 border-grey-700  flex">
-        <input [(ngModel)]="searchQuery" (keyup.enter)="onSearch()"
-            class="outline-none text-grey-700 placeholder:text-grey-700 text-lg px-2 w-full" type="text"
-            placeholder="Buscar Productos" />
-        <button pButton pRipple severity="contrast" (click)="onSearch()">
-            <span pButtonLabel>Buscar </span>
-            <i class="pi pi-search"></i>
-        </button>
+    <div class="w-full">
+        <app-search-autocomplete></app-search-autocomplete>
     </div>
 </p-drawer>
