@@ -139,6 +139,23 @@ export class AppConfigurator {
 
   surfaces: SurfacesType[] = [
     {
+      name: 'yellow',
+      palette: {
+        0: '#ffffff',
+        50: '#fffde6',
+        100: '#fff9bf',
+        200: '#fff499',
+        300: '#ffef73',
+        400: '#ffe94d',
+        500: '#ffe600',
+        600: '#e6cf00',
+        700: '#b3a300',
+        800: '#807700',
+        900: '#4d4a00',
+        950: '#262500'
+      }
+    },
+    {
       name: 'slate',
       palette: {
         0: '#ffffff',
@@ -311,7 +328,7 @@ export class AppConfigurator {
         200: '#fff499',
         300: '#ffef73',
         400: '#ffe94d',
-        500: '#ffe600',  
+        500: '#ffe600',
         600: '#e6cf00',
         700: '#b3a300',
         800: '#807700',

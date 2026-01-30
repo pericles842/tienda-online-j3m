@@ -1,5 +1,6 @@
 import { Injectable, effect, signal, computed } from '@angular/core';
 import { Subject } from 'rxjs';
+import { updatePreset, updateSurfacePalette } from '@primeuix/themes';
 
 export interface layoutConfig {
     preset?: string;
@@ -28,7 +29,7 @@ interface MenuChangeEvent {
 export class LayoutService {
     _config: layoutConfig = {
         preset: 'Aura',
-        primary: 'lime',
+        primary: 'yellow',
         surface: 'zinc',
         darkTheme: false,
         menuMode: 'static'
@@ -83,6 +84,7 @@ export class LayoutService {
             const config = this.layoutConfig();
             if (config) {
                 this.onConfigUpdate();
+                this.applyTheme(config);
             }
         });
 
@@ -96,6 +98,77 @@ export class LayoutService {
 
             this.handleDarkModeTransition(config);
         });
+    }
+
+    private applyTheme(config: layoutConfig) {
+        if (config.primary === 'yellow') {
+            const yellowPalette = {
+                50: '#fffde6',
+                100: '#fff9bf',
+                200: '#fff499',
+                300: '#ffef73',
+                400: '#ffe94d',
+                500: '#ffe600',
+                600: '#e6cf00',
+                700: '#b3a300',
+                800: '#807700',
+                900: '#4d4a00',
+                950: '#262500'
+            };
+
+            updatePreset({
+                semantic: {
+                    primary: yellowPalette,
+                    colorScheme: {
+                        light: {
+                            primary: {
+                                color: '{primary.600}',
+                                contrastColor: '#ffffff',
+                                hoverColor: '{primary.950}',
+                                activeColor: '{primary.700}'
+                            },
+                            highlight: {
+                                background: '{primary.50}',
+                                focusBackground: '{primary.100}',
+                                color: '{primary.900}',
+                                focusColor: '{primary.950}'
+                            }
+                        },
+                        dark: {
+                            primary: {
+                                color: '{primary.900}',
+                                contrastColor: '#ffffff',
+                                hoverColor: '{primary.800}',
+                                activeColor: '{primary.700}'
+                            },
+                            highlight: {
+                                background: 'color-mix(in srgb, {primary.400}, transparent 84%)',
+                                focusBackground: 'color-mix(in srgb, {primary.400}, transparent 76%)',
+                                color: 'rgba(255,255,255,.87)',
+                                focusColor: 'rgba(255,255,255,.87)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        if (config.surface === 'zinc') {
+            updateSurfacePalette({
+                0: '#ffffff',
+                50: '#fafafa',
+                100: '#f4f4f5',
+                200: '#e4e4e7',
+                300: '#d4d4d8',
+                400: '#a1a1aa',
+                500: '#71717a',
+                600: '#52525b',
+                700: '#3f3f46',
+                800: '#27272a',
+                900: '#18181b',
+                950: '#09090b'
+            });
+        }
     }
 
     private handleDarkModeTransition(config: layoutConfig): void {
@@ -116,7 +189,7 @@ export class LayoutService {
             .then(() => {
                 this.onTransitionEnd();
             })
-            .catch(() => {});
+            .catch(() => { });
     }
 
     toggleDarkMode(config?: layoutConfig): void {
