@@ -15,6 +15,8 @@ import { TreeModule } from 'primeng/tree';
 import { PageSections } from '../page-sections/page-sections';
 import { ShoppingCart } from '../shopping-cart/shopping-cart';
 import { CategoriesService } from '@/services/categories.service';
+import { FormsModule } from '@angular/forms'; // Added import
+
 @Component({
   selector: 'app-header',
   imports: [
@@ -22,6 +24,7 @@ import { CategoriesService } from '@/services/categories.service';
     TreeModule,
     RouterLink,
     OverlayBadgeModule,
+    FormsModule,
     AvatarModule,
     TooltipModule,
     DrawerModule,
@@ -37,17 +40,28 @@ export class Header {
   menuVisible: WritableSignal<boolean> = signal(false);
   visibleSearch: WritableSignal<boolean> = signal(false);
 
+  searchQuery: string = '';
+
   constructor(
     public layoutService: LayoutService,
     private authService: AuthService,
     public router: Router,
     private categoriesService: CategoriesService
-  ) {}
+  ) { }
 
   files!: TreeNode[];
 
   ngOnInit() {
     this.categoriesService.getCategoriesTree().subscribe((files) => (this.files = files));
+  }
+
+  onSearch() {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/shop'], { queryParams: { q: this.searchQuery } });
+    } else {
+      this.router.navigate(['/shop']);
+    }
+    this.visibleSearch.set(false);
   }
 
   /**

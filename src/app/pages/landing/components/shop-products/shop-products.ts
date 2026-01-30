@@ -1,5 +1,6 @@
 import { ProductJ3mService } from '@/services/products.service';
 import { Component, signal, WritableSignal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { ProductComponent } from '../product/product';
@@ -13,8 +14,9 @@ import { StoreFilterSettings } from '../store-filter-settings/store-filter-setti
 import { LayoutService } from '@/layout/service/layout.service';
 import { DrawerModule } from 'primeng/drawer';
 import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
-import { Product } from '@/interfaces/product';
-
+import { Product, ProductQuery, ProductResponse } from '@/interfaces/product';
+import { switchMap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-shop-products',
   imports: [
@@ -35,6 +37,11 @@ import { Product } from '@/interfaces/product';
 export class ShopProducts {
   viewMenuFilter: WritableSignal<boolean> = signal(false);
   products: Product[] = [];
+
+  totalPages = 0;
+  currentPage = 1;
+  limit = 12;
+
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
     { label: 'Tienda', routerLink: '/shop' }
@@ -42,12 +49,62 @@ export class ShopProducts {
 
   constructor(
     private productJ3mService: ProductJ3mService,
-    public layoutService: LayoutService
-  ) {}
+    public layoutService: LayoutService,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
-    this.productJ3mService.getPublicProducts().subscribe((products) => {
-      this.products = products;
+    this.route.queryParams.pipe(
+      switchMap(params => {
+        const queryParams: ProductQuery = {
+          search: params['q'] || '',
+          page: params['page'] || 1,
+          limit: params['limit'] || 12,
+        };
+        return this.productJ3mService.getProductsByQuery(queryParams);
+      })
+    ).subscribe({
+      next: (res: ProductResponse) => {
+
+        this.products = res.data;
+        this.totalPages = res.totalPages;
+        this.currentPage = res.currentPage;
+
+      },
+      error: (err) => console.error('Error cargando productos', err)
     });
+  }
+  onPageChange(page: number) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        page: page,
+      },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  get pagesArray(): number[] {
+    const totalVisible = 6;
+
+    if (this.totalPages <= totalVisible) {
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    }
+
+    let endPage = this.currentPage + 1;
+    let startPage = endPage - totalVisible + 1;
+
+    if (startPage < 1) {
+      startPage = 1;
+      endPage = totalVisible;
+    }
+
+    if (endPage > this.totalPages) {
+      endPage = this.totalPages;
+      startPage = Math.max(1, endPage - totalVisible + 1);
+    }
+
+    return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i);
   }
 }

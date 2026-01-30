@@ -6,20 +6,23 @@ import {
     Product,
     ProductAttributes,
     ProductKeyGeneralAttributes,
+    ProductQuery,
+    ProductResponse,
     ProductStatusUpdate,
     ProductSupply,
     ProductTemplateKeys,
-    StatusProduct,
     StyleClothesProduct,
     TallaProduct,
     UnitsOfProduct
 } from '@/interfaces/product';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { BaseCrudService } from './base-crud.service';
+
+
 
 @Injectable({
     providedIn: 'root'
@@ -29,6 +32,7 @@ export class ProductJ3mService {
         private http: HttpClient,
         private baseCrudService: BaseCrudService
     ) { }
+
 
     getPublicProducts(): Observable<Product[]> {
         return this.http.get<Product[]>(`${environment.host}/public-products`);
@@ -118,10 +122,16 @@ export class ProductJ3mService {
             return new FormGroup<FormGroupTemplateAttributes>({});
         }
     }
+    getProductsByQuery(filters: ProductQuery): Observable<ProductResponse> {
+        let params = new HttpParams();
 
-    getAllAttributesProduct(): Observable<ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>[]> {
-        return this.http.get<ProductAttributes<ProductTemplateKeys, ProductKeyGeneralAttributes>[]>(
-            `${environment.host}/products-attributes`
-        );
+        // Usamos entries para tener clave/valor directamente
+        Object.entries(filters).forEach(([key, value]) => {
+            if (value !== null && value !== undefined && value !== '') {
+                params = params.set(key, value.toString());
+            }
+        });
+
+        return this.http.get<ProductResponse>(`${environment.host}/products-filter`, { params });
     }
 }
