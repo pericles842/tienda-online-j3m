@@ -21,6 +21,7 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
     RippleModule,
     AppFloatingConfigurator
   ],
+    styleUrl: './login.scss',
   template: `
     <app-floating-configurator />
     <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-screen overflow-hidden">

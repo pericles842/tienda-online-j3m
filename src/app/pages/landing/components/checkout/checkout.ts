@@ -11,7 +11,7 @@ import { PayMethodService } from '@/services/pay-method.service';
 import { ShoppingCartService } from '@/services/shoppingCard.service';
 import { CommonModule } from '@angular/common';
 import { Component, signal, WritableSignal } from '@angular/core';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
@@ -22,7 +22,9 @@ import { SubtotalShopingcart } from '../subtotal-shopingcart/subtotal-shopingcar
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { fileOrUrlValidator } from '@/utils/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { Message } from "primeng/message";
+import { Message } from 'primeng/message';
+import { SalesService } from '@/services/sales.service';
+import { ButtonCheckout } from '../button-checkout/button-checkout';
 
 @Component({
   selector: 'app-checkout',
@@ -37,8 +39,9 @@ import { Message } from "primeng/message";
     InputTextModule,
     TextareaModule,
     InputNumberModule,
-    Message
-],
+    Message,
+    ButtonCheckout
+  ],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
@@ -65,10 +68,12 @@ export class Checkout {
   ];
 
   constructor(
+    private messageService: MessageService,
     private authService: AuthService,
     private shoppingCartService: ShoppingCartService,
     private configurationService: ConfigurationService,
-    private payMethodService: PayMethodService
+    private payMethodService: PayMethodService,
+    private salesService: SalesService
   ) {}
 
   ngOnInit() {
@@ -87,6 +92,10 @@ export class Checkout {
   }
 
   getKeysPayMethod(): [keyof PayMethodData, string][] {
+    if (typeof this.activeMethod.datos == 'string') {
+      this.activeMethod.datos = JSON.parse(this.activeMethod.datos);
+    }
+
     return Object.entries(this.activeMethod.datos) as [keyof PayMethodData, string][];
   }
 
@@ -115,5 +124,32 @@ export class Checkout {
 
   fileSelected(file: File) {
     this.payUser.patchValue({ image: file });
+  }
+
+  createPayment() {
+    this.payUser.markAllAsDirty();
+    this.payUser.updateValueAndValidity();
+
+    if (this.products.length == 0) {
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Advertencia',
+        detail: 'No hay productos en el carrito'
+      });
+      return;
+    }
+    //si el formulario no es valido salimos del proceso
+    if (!this.payUser.valid) return;
+
+    const formData = new FormData();
+    const products = this.products.map(({ id, quantity }) => ({ id, quantity }));
+
+    formData.append('payment', JSON.stringify(this.payUser.value));
+    formData.append('pay_method', JSON.stringify(this.activeMethod));
+    formData.append('products', JSON.stringify(products));
+    formData.append('image', this.payUser.value.image);
+    formData.append('current_rate', String(this.getPriceDolarConfiguration()?.price));
+
+    this.salesService.createPayment(formData).subscribe((res) => {});
   }
 }

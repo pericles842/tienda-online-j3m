@@ -11,6 +11,11 @@
   img {
     transition: all 0.2s ease-in-out;
     padding: 1.5px;
-    border: 1px var(--primary-color) solid;
+    border: 1px rgb(40, 40, 40) solid;
   }
+}
+
+/* Cambia el color del borde al enfocar (focus) */
+.p-inputtext:enabled:focus {
+    border-color: var(--color-yellow-500) !important;
 }

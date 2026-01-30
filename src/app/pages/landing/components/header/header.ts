@@ -20,7 +20,6 @@ import { FormsModule } from '@angular/forms'; // Added import
 @Component({
   selector: 'app-header',
   imports: [
-    FormsModule, // Added FormsModule
     AppFloatingConfigurator,
     ButtonModule,
     TreeModule,
@@ -31,7 +30,8 @@ import { FormsModule } from '@angular/forms'; // Added import
     DrawerModule,
     TableModule,
     PageSections,
-    ShoppingCart
+    ShoppingCart,
+    FormsModule
   ],
   providers: [NodeService],
   templateUrl: './header.html',

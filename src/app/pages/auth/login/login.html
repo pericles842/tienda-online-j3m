@@ -16,7 +16,7 @@
         <!-- <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">Welcome Back</div> -->
         <div class="text-center w-full">
           <span class="text-surface-700 dark:text-surface-200 leading-normal">No tienes una cuenta?</span>
-          <a class="text-primary font-medium ml-1 cursor-pointer hover:text-primary-emphasis" routerLink="/auth/register"
+          <a class="text-surface-500 font-medium ml-1 cursor-pointer hover:text-surface-600 -emphasis" routerLink="/auth/register"
             >Crear Cuenta</a
           >
         </div>
@@ -27,7 +27,7 @@
     <div class="grid grid-cols-12 gap-6">
       <!-- Correo -->
       <div class="col-span-12">
-        <label for="correo" class="block mb-2 text-sm text-primary">Correo</label>
+        <label for="correo" class="block mb-2 text-sm text-surface-500">Correo</label>
         <input
           formControlName="email"
           pInputText
@@ -44,7 +44,7 @@
 
       <!-- ContraseñaS-->
       <div class="col-span-12">
-        <label for="correo" class="block mb-2 text-sm text-primary">Contraseña</label>
+        <label for="correo" class="block mb-2 text-sm text-surface-500">Contraseña</label>
         <p-password
           formControlName="password"
           [toggleMask]="true"
@@ -62,12 +62,12 @@
     </div>
 
     <div class="flex justify-between">
-      <label for="correo" class="block mb-2 text-sm text-primary">Recordar Contraseña</label>
+      <label for="correo" class="block mb-2 text-sm text-surface-500">Recordar Contraseña</label>
       <p-checkbox formControlName="remember" [binary]="true" />
     </div>
 
     <!-- Botón -->
-    <button pButton type="submit" class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
+    <button pButton severity="contrast" type="submit" class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
       <i pButtonIcon class="pi pi-user text-base! leading-normal!"></i>
       <span pButtonLabel>Ingresar</span>
     </button>

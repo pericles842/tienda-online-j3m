@@ -9,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ImageModule } from 'primeng/image';
 import { TabsModule } from 'primeng/tabs';
-import { ButtonCheckout } from "../button-checkout/button-checkout";
+import { ButtonCheckout } from '../button-checkout/button-checkout';
 
 @Component({
   selector: 'app-product-detail',
@@ -79,6 +79,9 @@ export class ProductDetailComponent {
   }
 
   getAttributesProduct(): [ProductKeyGeneralAttributes, string][] {
+    if (typeof this.product.attributes == 'string') {
+      this.product.attributes = JSON.parse(this.product.attributes);
+    }
     return Object.entries(this.product.attributes) as [ProductKeyGeneralAttributes, string][];
   }
 

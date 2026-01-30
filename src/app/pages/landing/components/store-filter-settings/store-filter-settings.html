@@ -1,13 +1,13 @@
 <div class="flex flex-col w-full gap-7">
-  <div class="flex justify-between items-center shadow-md bg-primary-50 p-3 rounded-lg">
-    <span class="text-xl text-primary-800">Filtros</span>
-    <p-button label="Limpiar" />
+  <div class="flex justify-between items-center shadow-md bg-surface-50 p-3 rounded-lg">
+    <span class="text-xl text-surface-950">Filtros</span>
+    <p-button label="Limpiar" severity="contrast" />
   </div>
   <!-- SECCIONES DE FILTROS -->
   <p-accordion class="flex flex-col gap-7">
     <p-accordion-panel value="0">
       <p-accordion-header [style]="stylesInTabsAcordeon">
-        <span class="text-xl text-primary-800">Categorías</span>
+        <span class="text-xl text-surface-950">Categorías</span>
       </p-accordion-header>
       <p-accordion-content>
         <div class="flex flex-col gap-8 py-6 h-70 overflow-y-scroll">
@@ -33,22 +33,22 @@
 
     <p-accordion-panel value="1">
       <p-accordion-header [style]="stylesInTabsAcordeon">
-        <span class="text-xl text-primary-800">Tallas</span>
+        <span class="text-xl text-surface-950">Tallas</span>
       </p-accordion-header>
       <p-accordion-content>
         <div class="flex py-6 gap-5 justify-start">
           <span
-            class="active:border-primary-800 active:text-primary-800 border border-primary-100 px-3 cursor-pointer py-2 rounded-md text-primary"
+            class="active:border-surface-800 active:text-surface-800 border border-surface-400 px-3 cursor-pointer py-2 rounded-md text-surface"
           >
             talla xl
           </span>
           <span
-            class="active:border-primary-800 active:text-primary-800 border border-primary-100 px-3 cursor-pointer py-2 rounded-md text-primary"
+            class="active:border-surface-800 active:text-surface-800 border border-surface-400 px-3 cursor-pointer py-2 rounded-md text-surface"
           >
             talla xl
           </span>
           <span
-            class="active:border-primary-800 active:text-primary-800 border border-primary-100 px-3 cursor-pointer py-2 rounded-md text-primary"
+            class="active:border-surface-800 active:text-surface-800 border border-surface-400 px-3 cursor-pointer py-2 rounded-md text-surface"
           >
             talla xl
           </span>
@@ -58,7 +58,7 @@
 
     <p-accordion-panel value="2">
       <p-accordion-header [style]="stylesInTabsAcordeon">
-        <span class="text-xl text-primary-800">Colores</span>
+        <span class="text-xl text-surface-950">Colores</span>
       </p-accordion-header>
       <p-accordion-content>
         <div class="flex gap-5 py-6">
@@ -72,13 +72,13 @@
 
     <p-accordion-panel value="3">
       <p-accordion-header [style]="stylesInTabsAcordeon">
-        <span class="text-xl text-primary-800">Precio</span>
+        <span class="text-xl text-surface-800">Precio</span>
       </p-accordion-header>
       <p-accordion-content>
         <div class="flex flex-col gap-5 py-6">
           <div class="flex justify-between">
-            <span class="text-lg text-primary-800 dark:text-primary-100">{{rangeValues[0]}}$</span>
-            <span class="text-lg text-primary-800 dark:text-primary-100"> {{rangeValues[1]}}$</span>
+            <span class="text-lg text-surface-950 dark:text-primary-100">{{rangeValues[0]}}$</span>
+            <span class="text-lg text-surface-950 dark:text-primary-100"> {{rangeValues[1]}}$</span>
           </div>
           <p-slider [(ngModel)]="rangeValues" [range]="true" min="0" max="9999" class="w-full" />
         </div>
