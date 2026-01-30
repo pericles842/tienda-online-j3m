@@ -1,4 +1,3 @@
-import { AppFloatingConfigurator } from '@/layout/component/app.floatingconfigurator';
 import { LayoutService } from '@/layout/service/layout.service';
 import { NodeService } from '@/pages/service/node.service';
 import { AuthService } from '@/services/auth.service';
@@ -20,7 +19,6 @@ import { FormsModule } from '@angular/forms'; // Added import
 @Component({
   selector: 'app-header',
   imports: [
-    AppFloatingConfigurator,
     ButtonModule,
     TreeModule,
     RouterLink,
