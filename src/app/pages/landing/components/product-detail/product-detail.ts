@@ -9,8 +9,8 @@ import { MenuItem } from 'primeng/api';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { ImageModule } from 'primeng/image';
 import { TabsModule } from 'primeng/tabs';
-import { ButtonCheckout } from '../button-checkout/button-checkout';
 import { switchMap } from 'rxjs';
+import { ButtonCheckout } from '../button-checkout/button-checkout';
 
 @Component({
     selector: 'app-product-detail',
@@ -99,6 +99,7 @@ export class ProductDetailComponent {
     addToCart(product: Product) {
         product.quantity = 1;
         this.shoppingCartService.addToCart(product);
+
     }
 
     redirectCheckout(item: Product) {
