@@ -13,8 +13,7 @@ import { DynamicTable } from "@/pages/components/dynamic-table/dynamic-table";
 export class Sales {
     sales: WritableSignal<Sale[]> = signal([]);
     columns: Column[] = [
-        { label: 'id', key: 'id', sortTable: true },
-        { label: 'Capture', key: 'url_img', sortTable: false, dataType: 'private_image' },
+        { label: 'Capture', style: 'w-16', key: 'url_img', sortTable: false, dataType: 'private_image' },
         { label: 'Referencia', key: 'reference', sortTable: true },
         { label: 'Total USD', key: 'total_usd', sortTable: true, dataType: 'number' },
         { label: 'Total BS', key: 'total_bs', sortTable: true, dataType: 'number' },

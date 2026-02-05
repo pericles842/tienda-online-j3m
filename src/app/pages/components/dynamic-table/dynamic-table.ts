@@ -147,15 +147,23 @@ export class DynamicTable {
             return;
         }
 
+        // Validamos que exista un id de sale en la fila
+        const saleId = rowData?.id;
+        if (!saleId) {
+            return;
+        }
+
         this.privateImageLoading[key] = true;
 
         const body = {
             columnKey: col.key,
-            row: rowData
+            row: rowData,
+            // Enviamos explícitamente el id de la sale como parámetro "privateImageUrls"
+            privateImageUrls: saleId
         };
 
         this.http
-            .post<{ url: string }>(`${environment.host}/private-image`, body)
+            .get<{ url: string }>(`${environment.host}/sales/photo/${saleId}`)
             .subscribe({
                 next: (response) => {
                     this.privateImageUrls[key] = response.url;

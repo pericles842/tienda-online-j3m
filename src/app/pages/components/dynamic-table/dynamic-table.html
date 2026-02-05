@@ -63,19 +63,19 @@
 
                     <!-- 2. Ya tenemos la URL privada: usar p-image con preview y spinner mientras carga -->
                     @if (privateImageUrls[key]) {
-                    @if (!loadingImages[privateImageUrls[key]]) {
+                    @if (!loadingImages[key]) {
                     <p-progress-spinner strokeWidth="5" fill="transparent" animationDuration=".3s"
                         [style]="{ width: '40px', height: '40px' }" />
                     }@else {
                     <p-image loading="eager"
                         imageClass="w-16 h-16 object-cover cursor-pointer transition hover:opacity-80"
-                        [src]="privateImageUrls[key] + '?t=' + changeSecondsUrl"
-                        [alt]="privateImageUrls[key] + '?t=' + changeSecondsUrl" [preview]="true" />
+                        [src]="privateImageUrls[key]"
+                        [alt]="col.label || 'Comprobante'" [preview]="true" />
                     }
 
                     <!-- Imagen pivote para saber la carga real de la URL privada -->
-                    <img [src]="privateImageUrls[key]" (load)="onImageLoad(privateImageUrls[key])"
-                        (error)="onImageLoad(privateImageUrls[key])" class="hidden" />
+                    <img [src]="privateImageUrls[key]" (load)="onImageLoad(key)"
+                        (error)="onImageLoad(key)" class="hidden" />
                     }
                 </div>
             </td>

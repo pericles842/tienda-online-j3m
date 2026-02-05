@@ -5,6 +5,7 @@ import { MenuItem } from 'primeng/api';
 import { Breadcrumb } from 'primeng/breadcrumb';
 import { ProductComponent } from '../product/product';
 import { Button } from 'primeng/button';
+import { Paginator } from 'primeng/paginator';
 import { AccordionModule } from 'primeng/accordion';
 import { Badge } from 'primeng/badge';
 import { ColorPickerModule } from 'primeng/colorpicker';
@@ -29,7 +30,8 @@ import { environment } from 'src/environments/environment';
     SliderModule,
     ScrollRevealAnimations,
     StoreFilterSettings,
-    Button
+    Button,
+    Paginator
   ],
   templateUrl: './shop-products.html',
   styleUrl: './shop-products.scss'
@@ -41,6 +43,11 @@ export class ShopProducts {
   totalPages = 0;
   currentPage = 1;
   limit = 12;
+
+  // Paginador estilo Landing
+  totalRecords = 0;
+  first_paginator = 0;
+  row_paginator = 12;
 
   items: MenuItem[] = [
     { label: 'Hogar', routerLink: '/landing' },
@@ -60,7 +67,7 @@ export class ShopProducts {
         const queryParams: ProductQuery = {
           search: params['q'] || '',
           page: params['page'] || 1,
-          limit: params['limit'] || 12,
+          limit: params['limit'] || this.row_paginator,
         };
         return this.productJ3mService.getProductsByQuery(queryParams);
       })
@@ -71,18 +78,40 @@ export class ShopProducts {
         this.totalPages = res.totalPages;
         this.currentPage = res.currentPage;
 
+        // Sincronizar datos para el p-paginator estilo Landing
+        this.totalRecords = res.total;
+        this.row_paginator = res.itemsPerPage ?? this.row_paginator;
+        this.limit = this.row_paginator;
+        this.first_paginator = (this.currentPage - 1) * this.row_paginator;
+
       },
       error: (err) => console.error('Error cargando productos', err)
     });
   }
+
+  /**
+   * Navegación por página usando botones numéricos / anterior / siguiente.
+   */
   onPageChange(page: number) {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
         page: page,
+        limit: this.row_paginator,
       },
       queryParamsHandling: 'merge'
     });
+  }
+
+  /**
+   * Adaptador para el evento de PrimeNG Paginator.
+   * Convierte first/rows en número de página (1-based) y reutiliza onPageChange.
+   */
+  onPrimePageChange(event: any) {
+    this.first_paginator = event.first;
+    this.row_paginator = event.rows;
+    const newPage = Math.floor(this.first_paginator / this.row_paginator) + 1;
+    this.onPageChange(newPage);
   }
 
   get pagesArray(): number[] {

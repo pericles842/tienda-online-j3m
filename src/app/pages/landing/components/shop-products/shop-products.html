@@ -1,40 +1,32 @@
 <div class="flex bg-white dark:bg-surface-900 justify-between items-center px-3">
-  <p-breadcrumb [model]="items" />
-  @if (layoutService.isMobile()) {
-  <p-button (click)="viewMenuFilter.set(true)" icon="pi pi-filter" />
-  }
+    <p-breadcrumb [model]="items" />
+    @if (layoutService.isMobile()) {
+    <p-button (click)="viewMenuFilter.set(true)" icon="pi pi-filter" />
+    }
 </div>
 
 <section class="flex gap-10 mt-10">
-  @if(layoutService.isDesktop()){
+    @if(layoutService.isDesktop()){
 
-  <div class="w-100">
-    <app-store-filter-settings appScrollReveal></app-store-filter-settings>
-  </div>
-  }
-
-  <div class="w-full">
-    <!-- PRODUCTOS -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-5 gap-y-20">
-      @for (product of products; track $index) {
-      <app-product class="col-span-3 md:col-span-6 lg:col-span-4" [product]="product"></app-product>
-      }
+    <div class="w-100">
+        <app-store-filter-settings appScrollReveal></app-store-filter-settings>
     </div>
-  </div>
+    }
+
+    <div class="w-full">
+        <!-- PRODUCTOS -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-5 gap-y-20">
+            @for (product of products; track $index) {
+            <app-product class="col-span-3 md:col-span-6 lg:col-span-4" [product]="product"></app-product>
+            }
+        </div>
+    </div>
 </section>
-<div class="flex justify-center gap-2 mt-4">
-  <p-button label="Anterior" [disabled]="currentPage === 1" (onClick)="onPageChange(currentPage - 1)">
-  </p-button>
-
-  @for (page of pagesArray; track page) {
-  <p-button [label]="page.toString()" [styleClass]="page === currentPage ? '' : 'p-button-text'"
-    (onClick)="onPageChange(page)">
-  </p-button>
-  }
-
-  <p-button label="Siguiente" [disabled]="currentPage === totalPages" (onClick)="onPageChange(currentPage + 1)">
-  </p-button>
-</div>
+<section class="flex justify-center py-2 my-4 bg-white rounded-2xl">
+    <p-paginator class="w-100" [first]="first_paginator" [rows]="row_paginator" [totalRecords]="totalRecords"
+        [rowsPerPageOptions]="[2, 20, 30]" (onPageChange)="onPrimePageChange($event)">
+    </p-paginator>
+</section>
 <p-drawer [(visible)]="viewMenuFilter" header="Drawer">
-  <app-store-filter-settings></app-store-filter-settings>
+    <app-store-filter-settings></app-store-filter-settings>
 </p-drawer>
