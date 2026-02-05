@@ -28,7 +28,7 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    /* 🔥 Si el token expira, mostrar modal es una suscripción 
+    /* 🔥 Si el token expira, mostrar modal es una suscripción
     se puede ejecutar desde el interceptor o adguard*/
     this.authService.onSessionExpired().subscribe((expired) => {
       if (expired) {

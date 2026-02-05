@@ -19,7 +19,7 @@ export interface Column {
   key: string;
   customExportHeader?: string;
   sortTable: boolean;
-  dataType?: 'string' | 'number' | 'date' | 'boolean' | 'image';
+  dataType?: 'string' | 'number' | 'date' | 'boolean' | 'image' | 'private_image';
 }
 
 /**

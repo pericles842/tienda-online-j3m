@@ -1,145 +1,135 @@
-<p-table
-  #dt
-  [value]="data"
-  [rows]="10"
-  [(selection)]="selection"
-  (selectionChange)="emitSelectionChange($event)"
-  [columns]="columns"
-  [paginator]="true"
-  [globalFilterFields]="globalFilterFields"
-  [tableStyle]="{ 'min-width': '75rem' }"
-  [rowHover]="true"
-  dataKey="id"
-  currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} datos"
-  [showCurrentPageReport]="true"
-  [rowsPerPageOptions]="[10, 20, 30]"
->
-  <ng-template #caption>
-    <div class="flex items-center justify-between">
-      <p class="m-0 text-2xl text-primary">{{name_table}}</p>
-      <p-iconfield>
-        <p-inputicon styleClass="pi pi-search" />
-        <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
-      </p-iconfield>
-    </div>
-  </ng-template>
-  <ng-template #header>
-    <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox />
-      </th>
-      @for (col of columns; track $index) {
-      <th [pSortableColumn]="col.key" [style]="col.style? col.style : 'min-width: 16rem'">
-        {{col.label}}
-
-        <!-- Si existe sortTable -->
-        @if(col.sortTable) {
-        <p-sortIcon [field]="col.key" />
-        }
-      </th>
-
-      }
-      <th class="sticky right-0 bg-white z-10" style="min-width: 8rem">Acción</th>
-    </tr>
-  </ng-template>
-  <ng-template #body let-rowData let-columns="columns">
-    <tr>
-      <!-- CHECKBOX -->
-      <td style="width: 3rem">
-        <p-tableCheckbox [value]="rowData" />
-      </td>
-      @for (col of columns; track $index ) {
-
-      <!-- SWITCH -->
-      @switch (col.dataType) {
-      <!-- DATE -->
-      @case ('date') {
-      <td [style]="col.style? col.style : ''">{{ rowData[col.key]|date:'dd/MM/yyyy' }}</td>
-      }
-      <!--IMAGEN  -->
-      @case ('image') {
-      <td [style]="col.style? col.style : ''">
-        <!-- <img class="w-15" [src]="rowData[col.key]" [alt]="rowData[col.key]" /> -->
-
-        <div class="relative w-16 h-16 inline-block">
-          <!-- Spinner mientras carga -->
-          @if (!loadingImages[rowData[col.key]]) {
-          <p-progress-spinner
-            strokeWidth="5"
-            fill="transparent"
-            animationDuration=".3s"
-            [style]="{ width: '40px', height: '40px' }"
-          />
-
-          }@else {
-          <p-image
-            loading="eager"
-            imageClass="w-16 h-16 object-cover rounded cursor-pointer transition hover:opacity-80"
-            [src]="rowData[col.key]  + '?t=' + changeSecondsUrl"
-            [alt]="rowData[col.key] + '?t=' + changeSecondsUrl"
-            [preview]="true"
-          />
-          }
-          <!-- Imagen pivote para saber la carga -->
-          <img
-            [src]="rowData[col.key]"
-            (load)="onImageLoad(rowData[col.key])"
-            (error)="onImageLoad(rowData[col.key])"
-            class="hidden"
-          />
+<p-table #dt [value]="data" [rows]="10" [(selection)]="selection" (selectionChange)="emitSelectionChange($event)"
+    [columns]="columns" [paginator]="true" [globalFilterFields]="globalFilterFields"
+    [tableStyle]="{ 'min-width': '75rem' }" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} datos" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[10, 20, 30]">
+    <ng-template #caption>
+        <div class="flex items-center justify-between">
+            <p class="m-0 text-2xl text-primary">{{name_table}}</p>
+            <p-iconfield>
+                <p-inputicon styleClass="pi pi-search" />
+                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Buscar..." />
+            </p-iconfield>
         </div>
-      </td>
-      }
-      <!-- SWITCH -->
-      @default {
-      <!-- DEFAULT -->
-      <td [style]="col.style? col.style : ''">{{ rowData[col.key] }}</td>
-      } } }
-      <!-- botonera -->
-      <td class="sticky right-0 dark:bg-surface-900 bg-white z-10">
-        <div class="items-center flex">
-          <p-button
-            icon="pi pi-pencil"
-            severity="info"
-            pTooltip="Editar"
-            tooltipPosition="bottom"
-            showDelay="400"
-            (onClick)="onEdit.emit(rowData)"
-            class="mr-2"
-            [disabled]="!getPermissionsUser.can_update"
-            [rounded]="true"
-            [outlined]="layoutService.isDarkTheme()"
-          />
-          <p-button
-            icon="pi pi-trash"
-            pTooltip="Eliminar"
-            tooltipPosition="bottom"
-            showDelay="400"
-            class="mr-2"
-            severity="danger"
-            (onClick)="onDelete.emit(rowData)"
-            [disabled]="!getPermissionsUser.can_delete"
-            [rounded]="true"
-            [outlined]="layoutService.isDarkTheme()"
-          />
+    </ng-template>
+    <ng-template #header>
+        <tr>
+            <th style="width: 3rem">
+                <p-tableHeaderCheckbox />
+            </th>
+            @for (col of columns; track $index) {
+            <th [pSortableColumn]="col.key" [style]="col.style? col.style : 'min-width: 16rem'">
+                {{col.label}}
 
-          <!-- Iterar botones dinamicamente -->
-          @for (button of actions_button; track $index) {
-          <p-button
-            class="mr-2"
-            [pTooltip]="button.tooltip"
-            tooltipPosition="bottom"
-            showDelay="400"
-            [icon]="button.icon"
-            [disabled]="!getPermissionsUser.can_view"
-            [severity]="button.severity"
-            (onClick)="button.method(rowData)"
-            [rounded]="button.rounded"
-            [outlined]="layoutService.isDarkTheme()"
-          />
-          }
-        </div>
-      </td>
-    </tr>
-  </ng-template>
+                <!-- Si existe sortTable -->
+                @if(col.sortTable) {
+                <p-sortIcon [field]="col.key" />
+                }
+            </th>
+
+            }
+            <th class="sticky right-0 bg-white z-10" style="min-width: 8rem">Acción</th>
+        </tr>
+    </ng-template>
+    <ng-template #body let-rowData let-columns="columns">
+        <tr>
+            <!-- CHECKBOX -->
+            <td style="width: 3rem">
+                <p-tableCheckbox [value]="rowData" />
+            </td>
+            @for (col of columns; track $index ) {
+
+            <!-- SWITCH -->
+            @switch (col.dataType) {
+            <!-- DATE -->
+            @case ('date') {
+            <td [style]="col.style? col.style : ''">{{ rowData[col.key]|date:'dd/MM/yyyy' }}</td>
+            }
+            @case ('private_image') {
+            <td [style]="col.style? col.style : ''">
+                <div class="relative w-16 h-16 inline-flex items-center justify-center">
+                    @let key = getPrivateImageKey(rowData, col);
+
+                    <!-- 1. Aún no se ha pedido la URL privada: mostrar botón o spinner -->
+                    @if (!privateImageUrls[key]) {
+                    @if (privateImageLoading[key]) {
+                    <p-progress-spinner strokeWidth="5" fill="transparent" animationDuration=".3s"
+                        [style]="{ width: '40px', height: '40px' }" />
+                    }@else {
+                    <p-button type="button" icon="pi pi-image" pTooltip="Ver captura" tooltipPosition="bottom"
+                        showDelay="400" [rounded]="true" [text]="true"
+                        (onClick)="loadPrivateImage(rowData, col)" />
+                    }
+                    }
+
+                    <!-- 2. Ya tenemos la URL privada: usar p-image con preview y spinner mientras carga -->
+                    @if (privateImageUrls[key]) {
+                    @if (!loadingImages[privateImageUrls[key]]) {
+                    <p-progress-spinner strokeWidth="5" fill="transparent" animationDuration=".3s"
+                        [style]="{ width: '40px', height: '40px' }" />
+                    }@else {
+                    <p-image loading="eager"
+                        imageClass="w-16 h-16 object-cover cursor-pointer transition hover:opacity-80"
+                        [src]="privateImageUrls[key] + '?t=' + changeSecondsUrl"
+                        [alt]="privateImageUrls[key] + '?t=' + changeSecondsUrl" [preview]="true" />
+                    }
+
+                    <!-- Imagen pivote para saber la carga real de la URL privada -->
+                    <img [src]="privateImageUrls[key]" (load)="onImageLoad(privateImageUrls[key])"
+                        (error)="onImageLoad(privateImageUrls[key])" class="hidden" />
+                    }
+                </div>
+            </td>
+            }
+            <!--IMAGEN  -->
+            @case ('image') {
+            <td [style]="col.style? col.style : ''">
+                <!-- <img class="w-15" [src]="rowData[col.key]" [alt]="rowData[col.key]" /> -->
+
+                <div class="relative w-16 h-16 inline-block">
+                    <!-- Spinner mientras carga -->
+                    @if (!loadingImages[rowData[col.key]]) {
+                    <p-progress-spinner strokeWidth="5" fill="transparent" animationDuration=".3s"
+                        [style]="{ width: '40px', height: '40px' }" />
+
+                    }@else {
+                    <p-image loading="eager"
+                        imageClass="w-16 h-16 object-cover rounded cursor-pointer transition hover:opacity-80"
+                        [src]="rowData[col.key]  + '?t=' + changeSecondsUrl"
+                        [alt]="rowData[col.key] + '?t=' + changeSecondsUrl" [preview]="true" />
+                    }
+                    <!-- Imagen pivote para saber la carga -->
+                    <img [src]="rowData[col.key]" (load)="onImageLoad(rowData[col.key])"
+                        (error)="onImageLoad(rowData[col.key])" class="hidden" />
+                </div>
+            </td>
+            }
+            <!-- SWITCH -->
+            @default {
+            <!-- DEFAULT -->
+            <td [style]="col.style? col.style : ''">{{ rowData[col.key] }}</td>
+            } } }
+            <!-- botonera -->
+            <td class="sticky right-0 dark:bg-surface-900 bg-white z-10">
+                <div class="items-center flex">
+                    <p-button icon="pi pi-pencil" severity="info" pTooltip="Editar" tooltipPosition="bottom"
+                        showDelay="400" (onClick)="onEdit.emit(rowData)" class="mr-2"
+                        [disabled]="!getPermissionsUser.can_update" [rounded]="true"
+                        [outlined]="layoutService.isDarkTheme()" />
+                    <p-button icon="pi pi-trash" pTooltip="Eliminar" tooltipPosition="bottom" showDelay="400"
+                        class="mr-2" severity="danger" (onClick)="onDelete.emit(rowData)"
+                        [disabled]="!getPermissionsUser.can_delete" [rounded]="true"
+                        [outlined]="layoutService.isDarkTheme()" />
+
+                    <!-- Iterar botones dinamicamente -->
+                    @for (button of actions_button; track $index) {
+                    <p-button class="mr-2" [pTooltip]="button.tooltip" tooltipPosition="bottom" showDelay="400"
+                        [icon]="button.icon" [disabled]="!getPermissionsUser.can_view" [severity]="button.severity"
+                        (onClick)="button.method(rowData)" [rounded]="button.rounded"
+                        [outlined]="layoutService.isDarkTheme()" />
+                    }
+                </div>
+            </td>
+        </tr>
+    </ng-template>
 </p-table>
