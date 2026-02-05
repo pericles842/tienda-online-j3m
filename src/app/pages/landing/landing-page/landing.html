@@ -9,7 +9,8 @@
     <!-- PRODUCTOS -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-5 gap-y-20">
         @for (product of products; track $index) {
-        <app-product class="col-span-3 md:col-span-6 lg:col-span-3" [product]="product"></app-product>
+        <app-product appScrollReveal [delay]="$index * 100" class="col-span-3 md:col-span-6 lg:col-span-3"
+            [product]="product"></app-product>
         }
     </div>
 
