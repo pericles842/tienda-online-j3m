@@ -98,6 +98,36 @@ export class DynamicTable {
     }
 
     /**
+     * Genera una clave única para controlar el estado de carga de las imágenes públicas.
+     * Intenta usar el id de la fila + columna + updated_at (si existe) para que,
+     * cuando se edite el recurso y cambie updated_at, se fuerce un nuevo loading.
+     */
+    getImageKey(rowData: any, col: Column): string {
+        const id = rowData?.id ?? '';
+        const updatedAt = (rowData as any)?.updated_at ?? (rowData as any)?.updatedAt ?? '';
+        const url = rowData?.[col.key] ?? '';
+        return `${id}_${col.key}_${updatedAt || url}`;
+    }
+
+    /**
+     * Devuelve la URL de la imagen con un parámetro de versión para controlar el caché.
+     * - Si la fila tiene updated_at/updatedAt, se usa como versión.
+     * - Si no, se cae a un timestamp corto para evitar usar una imagen vieja en escenarios de edición.
+     */
+    getImageSrc(rowData: any, col: Column): string {
+        const baseUrl = rowData?.[col.key];
+        if (!baseUrl) return '';
+
+        const updatedAt = (rowData as any)?.updated_at ?? (rowData as any)?.updatedAt ?? '';
+
+        if (updatedAt) {
+            return `${baseUrl}?v=${encodeURIComponent(updatedAt)}`;
+        }
+
+        return `${baseUrl}?t=${this.changeSecondsUrl}`;
+    }
+
+    /**
      * Genera una clave única por fila/columna para manejar el estado de imagen privada.
      */
     getPrivateImageKey(rowData: any, col: Column): string {

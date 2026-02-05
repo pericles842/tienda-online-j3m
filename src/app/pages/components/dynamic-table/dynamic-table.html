@@ -57,8 +57,7 @@
                         [style]="{ width: '40px', height: '40px' }" />
                     }@else {
                     <p-button type="button" icon="pi pi-image" pTooltip="Ver captura" tooltipPosition="bottom"
-                        showDelay="400" [rounded]="true" [text]="true"
-                        (onClick)="loadPrivateImage(rowData, col)" />
+                        showDelay="400" [rounded]="true" [text]="true" (onClick)="loadPrivateImage(rowData, col)" />
                     }
                     }
 
@@ -84,23 +83,24 @@
             <!--IMAGEN  -->
             @case ('image') {
             <td [style]="col.style? col.style : ''">
-                <!-- <img class="w-15" [src]="rowData[col.key]" [alt]="rowData[col.key]" /> -->
-
                 <div class="relative w-16 h-16 inline-block">
-                    <!-- Spinner mientras carga -->
-                    @if (!loadingImages[rowData[col.key]]) {
+                    @let imgKey = getImageKey(rowData, col);
+                    @let imgSrc = getImageSrc(rowData, col);
+
+                    <!-- Spinner mientras la versión actual de la imagen carga -->
+                    @if (!loadingImages[imgKey] && imgSrc) {
                     <p-progress-spinner strokeWidth="5" fill="transparent" animationDuration=".3s"
                         [style]="{ width: '40px', height: '40px' }" />
 
-                    }@else {
+                    }@else if (imgSrc) {
                     <p-image loading="eager"
                         imageClass="w-16 h-16 object-cover rounded cursor-pointer transition hover:opacity-80"
-                        [src]="rowData[col.key]  + '?t=' + changeSecondsUrl"
-                        [alt]="rowData[col.key] + '?t=' + changeSecondsUrl" [preview]="true" />
+                        [src]="imgSrc" [alt]="imgSrc" [preview]="true" />
                     }
-                    <!-- Imagen pivote para saber la carga -->
-                    <img [src]="rowData[col.key]" (load)="onImageLoad(rowData[col.key])"
-                        (error)="onImageLoad(rowData[col.key])" class="hidden" />
+                    <!-- Imagen pivote para saber la carga (misma URL versionada) -->
+                    @if (imgSrc) {
+                    <img [src]="imgSrc" (load)="onImageLoad(imgKey)" (error)="onImageLoad(imgKey)" class="hidden" />
+                    }
                 </div>
             </td>
             }

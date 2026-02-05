@@ -1,5 +1,5 @@
 import { ScrollRevealAnimations } from '@/directives/scroll-reveal-animations';
-import { Product, ProductQuery, ProductResponse } from '@/interfaces/product';
+import { Product } from '@/interfaces/product';
 import { LayoutService } from '@/layout/service/layout.service';
 import { LoadingService } from '@/services/loading.service';
 import { ProductJ3mService } from '@/services/products.service';
@@ -37,21 +37,16 @@ import { ProductComponent } from '../components/product/product';
     templateUrl: './landing.html'
 })
 export class Landing {
+    // Productos de la página actual
     products: Product[] = [];
+    private allProducts: Product[] = [];
     product_offer!: Product;
 
     totalRecords: number = 0;
 
-    // Paginador
+    // Paginador (cliente)
     first_paginator: number = 0; // Índice del primer registro
     row_paginator: number = 10; // Registros por página
-    currentPage: number = 1;
-
-    // Filtros
-    filters: ProductQuery = {
-        page: 1,
-        limit: 10,
-    };
 
     constructor(
         public layoutService: LayoutService,
@@ -64,22 +59,22 @@ export class Landing {
     }
 
     loadProducts(): void {
+        // Sin optimización: traemos todos los productos públicos y paginamos en cliente
+        this.productJ3mService.getPublicProducts().subscribe({
+            next: (res: Product[]) => {
+                this.allProducts = res;
+                this.totalRecords = this.allProducts.length;
 
-        // Ajustamos los parámetros de paginación
-        this.filters.page = this.currentPage;
-        this.filters.limit = this.row_paginator;
+                // Definir producto en oferta sobre todo el catálogo
+                if (this.allProducts.length > 0) {
+                    this.product_offer = this.allProducts.reduce(
+                        (previous, current) => ((previous.discount || 0) > (current.discount || 0) ? previous : current),
+                        this.allProducts[0]
+                    );
+                }
 
-        this.productJ3mService.getProductsByQuery(this.filters).subscribe({
-            next: (res: ProductResponse) => {
-                this.products = res.data;
-                this.totalRecords = res.total; // total de registros para el paginador
-                this.currentPage = res.currentPage;
-
-
-                this.product_offer = this.products.reduce(
-                    (previous, current) => ((previous.discount || 0) > (current.discount || 0) ? previous : current),
-                    this.products[0]
-                );
+                // Inicializar la primera página
+                this.updatePage();
             },
             error: (err) => {
                 console.error('Error al cargar productos', err);
@@ -87,14 +82,20 @@ export class Landing {
         });
     }
 
+    /**
+     * Actualiza el slice de productos mostrado según el estado del paginador.
+     */
+    private updatePage(): void {
+        const start = this.first_paginator;
+        const end = this.first_paginator + this.row_paginator;
+        this.products = this.allProducts.slice(start, end);
+    }
+
     onPageChange(event: any) {
-        // event.first = índice del primer registro
-        // event.rows = número de filas por página
-        // Calculamos la página actual (1-based)
         this.first_paginator = event.first;
         this.row_paginator = event.rows;
-        this.currentPage = Math.floor(this.first_paginator / this.row_paginator) + 1;
 
-        this.loadProducts();
+        // Solo actualizamos el slice en cliente, sin nuevas peticiones
+        this.updatePage();
     }
 }

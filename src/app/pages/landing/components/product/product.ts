@@ -48,22 +48,46 @@ export class ProductComponent {
     ) { }
 
     ngOnInit() {
-        if (this.product) {
-            const img = new Image();
-            img.src = this.product.url_img as string;
+        this.loadImage();
+    }
 
-            img.onload = () => {
-                this.finalUrl = this.product.url_img as string;
-                this.isLoading = false;
-                this.loadedClass = 'opacity-100';
-            };
+    /**
+     * Si cambia el producto (por ejemplo, al paginar), recargamos la imagen
+     * y reiniciamos el estado de loading para evitar que se quede cacheada.
+     */
+    ngOnChanges() {
+        this.loadImage();
+    }
 
-            img.onerror = () => {
-                this.finalUrl = this.product.url_img as string;
-                this.isLoading = false;
-                this.loadedClass = 'opacity-100';
-            };
+    private loadImage() {
+        if (!this.product || !this.product.url_img) {
+            this.finalUrl = '';
+            this.isLoading = false;
+            this.loadedClass = 'opacity-100';
+            return;
         }
+
+        this.isLoading = true;
+        this.loadedClass = 'opacity-0';
+
+        const baseUrl = this.product.url_img as string;
+        const version = this.product.updated_at || this.product.created_at || Date.now().toString();
+        const urlWithVersion = `${baseUrl}?v=${encodeURIComponent(version)}`;
+
+        const img = new Image();
+        img.src = urlWithVersion;
+
+        img.onload = () => {
+            this.finalUrl = urlWithVersion;
+            this.isLoading = false;
+            this.loadedClass = 'opacity-100';
+        };
+
+        img.onerror = () => {
+            this.finalUrl = urlWithVersion;
+            this.isLoading = false;
+            this.loadedClass = 'opacity-100';
+        };
     }
 
     addToCart(product: Product, event: Event) {
