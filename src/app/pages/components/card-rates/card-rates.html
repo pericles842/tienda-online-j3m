@@ -1,24 +1,26 @@
 <div class="grid grid-cols-12 gap-6">
-  @for (rate of rates(); track $index) {
-  <div
-    class="col-span-12 sm:col-span-6 md:col-span-4 bg-white dark:bg-surface-900 flex flex-col justify-between rounded-md p-5 shadow-md border border-gray-100 dark:border-surface-800"
-  >
-    <!-- Título y logo -->
-    <div class="flex justify-between items-center mb-4">
-      <span class="text-2xl font-semibold text-primary-600 dark:text-primary-300">{{ rate.title }}</span>
-      <img class="w-12 h-12 object-contain bg-white rounded-lg border border-gray-200" [src]="rate.url_img" [alt]="rate.title" />
-    </div>
+    @for (rate of rates(); track $index) {
+    <div
+        class="col-span-12 sm:col-span-6 md:col-span-4 bg-white dark:bg-surface-900 flex flex-col justify-between rounded-md p-5 shadow-md border border-gray-100 dark:border-surface-800">
+        <!-- Título y logo -->
+        <div class="flex justify-between items-center mb-4">
+            <span class="text-2xl font-semibold text-primary-600 dark:text-primary-300">{{ rate.title }}</span>
+            <img class="w-12 h-12 object-contain bg-white rounded-lg border border-gray-200" [src]="rate.url_img"
+                [alt]="rate.url_img" />
+        </div>
 
-    <!-- Precio -->
-    <div class="flex justify-start items-end gap-3 mt-auto">
-      <span class="text-3xl font-bold text-primary-800 dark:text-primary-100">{{ rate.price }} Bs</span>
-      <span class="text-red-500 line-through text-sm font-medium">{{ rate.price_old }} Bs</span>
-    </div>
+        <!-- Precio -->
+        <div class="flex justify-start items-end gap-3 mt-auto">
+            <span class="text-3xl font-bold text-primary-800 dark:text-primary-100">{{ rate.price| currency: ' Bs':
+                'symbol': '1.0-4'}}</span>
+            <span class="text-red-500 line-through text-sm font-medium">{{ rate.price_old | currency: ' Bs': 'symbol':
+                '1.0-4'}}</span>
+        </div>
 
-    <!-- Fecha -->
-    <div class="mt-4 text-right">
-      <p class="text-xs text-primary-400">Actualizado: {{ rate.last_update  | date : 'dd/MM/yyyy' }}</p>
+        <!-- Fecha -->
+        <div class="mt-4 text-right">
+            <p class="text-xs text-primary-400">Actualizado: {{ rate.last_update | date : 'dd/MM/yyyy' }}</p>
+        </div>
     </div>
-  </div>
-  }
+    }
 </div>

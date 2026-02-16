@@ -45,10 +45,12 @@ export class ProductDetailComponent {
             switchMap(params => {
                 const id = Number(params.get('id'));
                 return this.productJ3mService.getProductsById(id);
-            })
+            },
+            )
         ).subscribe(product => {
-            this.product = product;
 
+            if (this.product) product = this.product
+            this.product = product;
             this.items = [
                 ...this.baseItems,
                 { label: product.name }
@@ -79,10 +81,10 @@ export class ProductDetailComponent {
             manufacturer: 'Fabricante',
             model: 'Modelo',
             storage: 'Almacenamiento',
-            expiration_date: 'Fecha de expiracion',
+            expiration_date: 'Fecha de expiración',
             talla: 'Talla',
             gender: 'Genero',
-            pharmaceutical_presentation: 'Presentacion',
+            pharmaceutical_presentation: 'Presentation',
             marca: 'Marca',
             style_clothes: 'Estilo'
         };

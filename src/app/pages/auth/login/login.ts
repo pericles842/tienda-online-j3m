@@ -82,7 +82,7 @@ export class LoginComponent {
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `Bienvenido ${user.user.name}`, life: 3000 });
 
         setTimeout(() => {
-          if (user.user.rol_id != 6) this.router.navigate(['/dashboard']);
+          if (user.user.rol_id != 6) this.router.navigate(['/pages/estadisticas_ventas']);
           else this.router.navigate(['/landing']);
         }, 2000);
       }

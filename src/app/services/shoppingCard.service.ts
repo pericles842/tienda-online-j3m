@@ -40,6 +40,7 @@ export class ShoppingCartService {
 
         if (this.validateStock(product)) {
             this.mensajeService.add({
+                life: 1000,
                 severity: 'info',
                 summary: 'Info',
                 detail: `No hay stock para el producto ${product.name}`
@@ -59,7 +60,7 @@ export class ShoppingCartService {
         } else {
             items.push(product);
         }
-        this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Producto agregado al carrito' });
+        this.messageService.add({ life: 1000, severity: 'info', summary: 'Info', detail: ` ${product.name} agregado al carrito`, });
 
         this.cart_products.next([...items]);
         this.updateShoppingCartLocalStorage(this.cart_products.value);
@@ -90,6 +91,7 @@ export class ShoppingCartService {
         if (product) {
             if (this.validateStock(product)) {
                 this.mensajeService.add({
+                    life: 1000,
                     severity: 'info',
                     summary: 'Info',
                     detail: `No hay stock para el producto ${product.name}`
