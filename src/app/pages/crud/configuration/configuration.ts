@@ -33,10 +33,10 @@ export class Configuration {
     automatic_rate: new FormControl<boolean>(true),
     type_rate: new FormControl<TypeRate>('bcv'),
     rate_manual: new FormControl<number>(1.0),
-    email: new FormControl<string>('j3m@gmail.com', Validators.required),
+    email: new FormControl<string>('contacto@tiendademo.com', Validators.required),
     phone: new FormControl<string>('0412045678', Validators.required),
-    ig: new FormControl<string>('@j3m', Validators.required),
-    fb: new FormControl<string>('@j3m', Validators.required)
+    ig: new FormControl<string>('@tiendademo', Validators.required),
+    fb: new FormControl<string>('@tiendademo', Validators.required)
   });
 
   constructor(

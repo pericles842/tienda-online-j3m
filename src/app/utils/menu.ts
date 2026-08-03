@@ -15,10 +15,17 @@ export interface CustomMenuItem extends MenuItem {
 
 export const menu: CustomMenuItem[] = [
 	{
-		label: 'Analisis',
+		label: 'Administración',
 		items: [
-			{ label: 'Ventas', icon: 'pi pi-fw pi-chart-line', routerLink: ['/pages/estadisticas_ventas'], module_id: Modules['estadisticas_ventas'].id },
-			{ label: 'Inventario', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/pages/inventario'], module_id: Modules['inventario'].id }
+			{ label: 'Cargos y permisos', icon: 'pi pi-fw pi-key', routerLink: ['/pages/cargos'], module_id: Modules['cargos'].id },
+			{
+				label: 'Cajas de ahorro',
+				icon: 'pi pi-fw pi-users',
+				routerLink: ['/pages/cajas_ahorro'],
+				module_id: Modules['cajas_ahorro'].id
+			},
+			{ label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/pages/usuarios'], module_id: Modules['usuarios'].id },
+			{ label: 'ventas', icon: 'pi pi-fw pi-megaphone', routerLink: ['/pages/ventas'], module_id: Modules['ventas'].id }
 		]
 	},
 	{
@@ -39,26 +46,20 @@ export const menu: CustomMenuItem[] = [
 		]
 	},
 	{
-		label: 'Administración',
-		items: [
-			{ label: 'Cargos y permisos', icon: 'pi pi-fw pi-key', routerLink: ['/pages/cargos'], module_id: Modules['cargos'].id },
-			{
-				label: 'Cajas de ahorro',
-				icon: 'pi pi-fw pi-users',
-				routerLink: ['/pages/cajas_ahorro'],
-				module_id: Modules['cajas_ahorro'].id
-			},
-			{ label: 'Usuarios', icon: 'pi pi-fw pi-users', routerLink: ['/pages/usuarios'], module_id: Modules['usuarios'].id },
-			{ label: 'ventas', icon: 'pi pi-fw pi-megaphone', routerLink: ['/pages/ventas'], module_id: Modules['ventas'].id }
-		]
-	},
-	{
 		label: 'inventario',
 		items: [
 			{ label: 'Productos', icon: 'pi pi-fw pi-barcode', routerLink: ['/pages/productos'], module_id: Modules['productos'].id },
 			{ label: 'Categorías', icon: 'pi pi-fw pi-tag', routerLink: ['/pages/categorias'], module_id: Modules['categorias'].id }
 		]
 	}
+	// Se oculta el grupo "Analisis" (Ventas/Inventario) del menú lateral a petición del usuario.
+	// {
+	// 	label: 'Analisis',
+	// 	items: [
+	// 		{ label: 'Ventas', icon: 'pi pi-fw pi-chart-line', routerLink: ['/pages/estadisticas_ventas'], module_id: Modules['estadisticas_ventas'].id },
+	// 		{ label: 'Inventario', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/pages/inventario'], module_id: Modules['inventario'].id }
+	// 	]
+	// }
 	// },
 	// {
 	//   label: 'UI Components',

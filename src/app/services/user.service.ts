@@ -8,7 +8,7 @@ import { buildPermissions } from './charges.service';
  * Credenciales de prueba para el demo (mostradas en la pantalla de Login).
  */
 export const DEMO_CREDENTIALS = {
-  email: 'admin@j3m.com',
+  email: 'admin@tiendademo.com',
   password: 'Admin123'
 };
 
@@ -42,7 +42,7 @@ const MOCK_USERS: User[] = [
     id: 2,
     name: 'Maria',
     last_name: 'Vendedora',
-    email: 'vendedor@j3m.com',
+    email: 'vendedor@tiendademo.com',
     phone: '0414-1111111',
     phone_2: '',
     age: 27,
@@ -67,7 +67,7 @@ const MOCK_USERS: User[] = [
     id: 3,
     name: 'Carlos',
     last_name: 'Cliente',
-    email: 'cliente@j3m.com',
+    email: 'cliente@tiendademo.com',
     phone: '0424-2222222',
     phone_2: '',
     age: 24,

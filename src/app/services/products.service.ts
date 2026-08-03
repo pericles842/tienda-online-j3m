@@ -143,15 +143,15 @@ const MOCK_PRODUCTS: Product[] = [
         category_id: 1,
         category_name: 'Alimentos',
         status: 'active',
-        url_img: 'assets/images/logotipo.PNG',
+        url_img: 'https://dummyimage.com/400x400/e2e8f0/1e293b.png&text=Arroz+Mary+1kg',
         type_product: 'food',
         attributes: { marca: 'Mary', unit: 'kg', amount: 1, expiration_date: '2026-12-01' } as any,
         created_at: '2025-01-20',
         updated_at: '2025-01-20',
         user_create_id: 1,
         user_update_id: 1,
-        email_user_create: 'admin@j3m.com',
-        email_user_update: 'admin@j3m.com'
+        email_user_create: 'admin@tiendademo.com',
+        email_user_update: 'admin@tiendademo.com'
     },
     {
         id: 2,
@@ -168,15 +168,15 @@ const MOCK_PRODUCTS: Product[] = [
         category_id: 2,
         category_name: 'Bebidas',
         status: 'active',
-        url_img: 'assets/images/logotipo.PNG',
+        url_img: 'https://dummyimage.com/400x400/fde68a/78350f.png&text=Refresco+Cola+2L',
         type_product: 'food',
         attributes: { marca: 'Cola Real', unit: 'lt', amount: 2, expiration_date: '2026-06-15' } as any,
         created_at: '2025-01-22',
         updated_at: '2025-01-22',
         user_create_id: 1,
         user_update_id: 1,
-        email_user_create: 'admin@j3m.com',
-        email_user_update: 'admin@j3m.com'
+        email_user_create: 'admin@tiendademo.com',
+        email_user_update: 'admin@tiendademo.com'
     },
     {
         id: 3,
@@ -193,20 +193,20 @@ const MOCK_PRODUCTS: Product[] = [
         category_id: 4,
         category_name: 'Celulares',
         status: 'active',
-        url_img: 'assets/images/logotipo.PNG',
+        url_img: 'https://dummyimage.com/400x400/c7d2fe/1e1b4b.png&text=Galaxy+A15',
         type_product: 'technology',
         attributes: { color: '#1f2937', model: 'Galaxy A15', storage: '128' } as any,
         created_at: '2025-02-01',
         updated_at: '2025-02-01',
         user_create_id: 1,
         user_update_id: 1,
-        email_user_create: 'admin@j3m.com',
-        email_user_update: 'admin@j3m.com'
+        email_user_create: 'admin@tiendademo.com',
+        email_user_update: 'admin@tiendademo.com'
     },
     {
         id: 4,
         name: 'Franela Casual Unisex',
-        brand: 'J3M Wear',
+        brand: 'Tienda Demo Wear',
         description: 'Franela de algodón 100%',
         discount: 0,
         reference: 'ROP-004',
@@ -218,15 +218,15 @@ const MOCK_PRODUCTS: Product[] = [
         category_id: 5,
         category_name: 'Ropa',
         status: 'active',
-        url_img: 'assets/images/logotipo.PNG',
+        url_img: 'https://dummyimage.com/400x400/bbf7d0/064e3b.png&text=Franela+Casual',
         type_product: 'textile',
         attributes: { color: '#2563eb', talla: 'm', gender: 'unisex', style_clothes: 'casual' } as any,
         created_at: '2025-02-05',
         updated_at: '2025-02-05',
         user_create_id: 1,
         user_update_id: 1,
-        email_user_create: 'admin@j3m.com',
-        email_user_update: 'admin@j3m.com'
+        email_user_create: 'admin@tiendademo.com',
+        email_user_update: 'admin@tiendademo.com'
     },
     {
         id: 5,
@@ -243,15 +243,15 @@ const MOCK_PRODUCTS: Product[] = [
         category_id: 6,
         category_name: 'Farmacia',
         status: 'active',
-        url_img: 'assets/images/logotipo.PNG',
+        url_img: 'https://dummyimage.com/400x400/fecaca/7f1d1d.png&text=Acetaminofen+500mg',
         type_product: 'farmacia',
         attributes: { manufacturer: 'Genven', pharmaceutical_presentation: 'tablets', unit: 'mg', amount: 500, expiration_date: '2027-03-01' } as any,
         created_at: '2025-02-08',
         updated_at: '2025-02-08',
         user_create_id: 1,
         user_update_id: 1,
-        email_user_create: 'admin@j3m.com',
-        email_user_update: 'admin@j3m.com'
+        email_user_create: 'admin@tiendademo.com',
+        email_user_update: 'admin@tiendademo.com'
     },
     {
         id: 6,
@@ -268,15 +268,15 @@ const MOCK_PRODUCTS: Product[] = [
         category_id: 7,
         category_name: 'Hogar',
         status: 'inactive',
-        url_img: 'assets/images/logotipo.PNG',
+        url_img: 'https://dummyimage.com/400x400/ddd6fe/4c1d95.png&text=Sabanas+Queen',
         type_product: 'other',
         attributes: {} as any,
         created_at: '2025-02-12',
         updated_at: '2025-02-12',
         user_create_id: 1,
         user_update_id: 1,
-        email_user_create: 'admin@j3m.com',
-        email_user_update: 'admin@j3m.com'
+        email_user_create: 'admin@tiendademo.com',
+        email_user_update: 'admin@tiendademo.com'
     }
 ];
 
@@ -326,8 +326,8 @@ export class ProductJ3mService {
             updated_at: new Date().toISOString(),
             user_create_id: 1,
             user_update_id: 1,
-            email_user_create: 'admin@j3m.com',
-            email_user_update: 'admin@j3m.com'
+            email_user_create: 'admin@tiendademo.com',
+            email_user_update: 'admin@tiendademo.com'
         };
 
         this.products.next([...this.products.value, created]);
@@ -345,7 +345,7 @@ export class ProductJ3mService {
             url_img: image instanceof File ? URL.createObjectURL(image) : parsed.url_img,
             updated_at: new Date().toISOString(),
             user_update_id: 1,
-            email_user_update: 'admin@j3m.com'
+            email_user_update: 'admin@tiendademo.com'
         };
 
         this.products.next(this.products.value.map((p) => (p.id === updated.id ? { ...p, ...updated } : p)));

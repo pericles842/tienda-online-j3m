@@ -60,7 +60,7 @@ import { RippleModule } from 'primeng/ripple';
                             </div>
                         </div>
                         <div class="absolute -bottom-10 left-1/2 w-[160%] -translate-x-1/2 rounded-full bg-gradient-to-r from-yellow-200 to-transparent px-10 py-6 text-center text-xs font-medium uppercase tracking-[0.35em] text-yellow-600 opacity-70">
-                            tienda j3m
+                            tienda demo
                         </div>
                     </div>
                 </div>

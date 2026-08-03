@@ -11,7 +11,7 @@ const MOCK_PDF_CONTENT = `%PDF-1.1
 3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 300 150]/Contents 4 0 R/Resources<</Font<</F1 5 0 R>>>>>>endobj
 4 0 obj<</Length 66>>
 stream
-BT /F1 16 Tf 15 70 Td (Reporte Demo - J3M) Tj ET
+BT /F1 16 Tf 15 70 Td (Reporte Demo - Tienda Demo) Tj ET
 endstream
 endobj
 5 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj

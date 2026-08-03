@@ -97,6 +97,23 @@ export class Header {
 
     return true;
   }
+
+  /**
+   *Verifica si el usuario autenticado es administrador, para mostrar
+   *el acceso directo al panel de administración desde el home.
+   *
+   * @readonly
+   * @memberof Header
+   */
+  get isAdmin() {
+    const user = this.authService.getUser();
+
+    if (!user) {
+      return false;
+    }
+
+    return user.rol_id === 1;
+  }
   /**
    *obtiene las iniciales del prime y segundo nombre del name
    *

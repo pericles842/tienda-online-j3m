@@ -19,7 +19,7 @@
 <div class="flex justify-between items-center p-3 bg-yellow-300 dark:bg-surface-900 border-b-1  md:border-0">
     <div routerLink="/pages/estadisticas_ventas" class="flex gap-2 items-center cursor-pointer">
         <img [src]="'https://grupo-j3m.s3.us-east-2.amazonaws.com/public/logotipo.png'" alt="logo" class="w-12 h-12" />
-        <span class="font-bold text-base text-yellow-950">Tienda J3M</span>
+        <span class="font-bold text-base text-yellow-950">Tienda Demo</span>
     </div>
     <!-- ------------------------------------------------------------------ -->
     <!-- SECCIÓN DE BÚSQUEDA -->
@@ -57,6 +57,9 @@
             } @if(isExistToken && layoutService.isDesktop()){
             <p-button (click)="logout()" pTooltip="Salir" tooltipPosition="bottom" severity="danger"
                 routerLink="/auth/register" iconPos="right" icon="pi pi-power-off" />
+            } @if(isAdmin && layoutService.isDesktop()){
+            <p-button pTooltip="Ir al panel de administración" tooltipPosition="bottom" severity="contrast"
+                routerLink="/pages/estadisticas_ventas" iconPos="right" icon="pi pi-th-large" label="Dashboard" />
             }
         </div>
 
@@ -105,16 +108,23 @@
     <app-page-sections orientation="vertical"></app-page-sections>
 
     <ng-template #footer>
-        <div class="flex justify-between">
-            @if(isExistToken){
-            <p-button (click)="logout()" pTooltip="Salir" styleClass="w-full" label="Salir" tooltipPosition="bottom"
-                severity="danger" routerLink="/auth/register" iconPos="right" icon="pi pi-power-off" />
-            }@else {
-            <p-button styleClass="w-full" pTooltip="Ingresar" label="Ingreso" tooltipPosition="bottom"
-                severity="contrast" routerLink="/auth/login" iconPos="right" icon="pi pi-sign-in" />
+        <div class="flex flex-col gap-2">
+            @if(isAdmin){
+            <p-button styleClass="w-full" pTooltip="Ir al panel de administración" label="Dashboard"
+                tooltipPosition="bottom" severity="contrast" routerLink="/pages/estadisticas_ventas" iconPos="right"
+                icon="pi pi-th-large" />
             }
-            <p-button pTooltip="Registro" styleClass="w-full" label="Registro" tooltipPosition="bottom"
-                severity="contrast" routerLink="/auth/register" iconPos="right" icon="pi pi-user-plus" />
+            <div class="flex justify-between gap-2">
+                @if(isExistToken){
+                <p-button (click)="logout()" pTooltip="Salir" styleClass="w-full" label="Salir" tooltipPosition="bottom"
+                    severity="danger" routerLink="/auth/register" iconPos="right" icon="pi pi-power-off" />
+                }@else {
+                <p-button styleClass="w-full" pTooltip="Ingresar" label="Ingreso" tooltipPosition="bottom"
+                    severity="contrast" routerLink="/auth/login" iconPos="right" icon="pi pi-sign-in" />
+                }
+                <p-button pTooltip="Registro" styleClass="w-full" label="Registro" tooltipPosition="bottom"
+                    severity="contrast" routerLink="/auth/register" iconPos="right" icon="pi pi-user-plus" />
+            </div>
         </div>
     </ng-template>
 </p-drawer>

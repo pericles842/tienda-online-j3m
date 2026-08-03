@@ -10,7 +10,7 @@ const MOCK_PUBLIC_GROUPS: PublicGroup[] = [
     name: 'Caja de ahorro Los Robles',
     description: 'Grupo de ahorro comunitario del sector Los Robles',
     rif: 'J-12345678-9',
-    email: 'losrobles@j3m.com',
+    email: 'losrobles@tiendademo.com',
     url_img: 'assets/images/logotipo.PNG',
     created_at: '2025-01-15'
   },
@@ -19,7 +19,7 @@ const MOCK_PUBLIC_GROUPS: PublicGroup[] = [
     name: 'Caja de ahorro El Paraíso',
     description: 'Grupo de ahorro comunitario del sector El Paraíso',
     rif: 'J-98765432-1',
-    email: 'elparaiso@j3m.com',
+    email: 'elparaiso@tiendademo.com',
     url_img: 'assets/images/logotipo.PNG',
     created_at: '2025-02-20'
   }

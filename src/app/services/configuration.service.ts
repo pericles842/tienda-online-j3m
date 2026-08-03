@@ -14,10 +14,10 @@ const MOCK_CONFIGURATION: SystemConfiguration = {
   automatic_rate: true,
   type_rate: 'bcv',
   rate_manual: 36,
-  email: 'contacto@j3m.com',
+  email: 'contacto@tiendademo.com',
   phone: '0212-1234567',
-  ig: '@j3m.tienda',
-  fb: 'j3m.tienda'
+  ig: '@tiendademo',
+  fb: 'tiendademo'
 };
 
 @Injectable({ providedIn: 'root' })

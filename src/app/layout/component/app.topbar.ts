@@ -36,7 +36,7 @@ import { User } from '@/interfaces/user';
             />
           </g>
         </svg> -->
-        <span>J3M</span>
+        <span>Tienda Demo</span>
       </a>
     </div>
 

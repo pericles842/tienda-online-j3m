@@ -18,8 +18,8 @@ const MOCK_PAY_METHODS: PayMethodData[] = [
     id: 2,
     name: 'Zelle',
     type: 'billetera_digital',
-    datos: { email: 'pagos@j3m.com' },
-    holder: 'J3M Tienda C.A.',
+    datos: { email: 'pagos@tiendademo.com' },
+    holder: 'Tienda Demo C.A.',
     url_img: 'assets/images/logotipo.PNG',
     created_at: '2025-02-01'
   },
@@ -36,7 +36,7 @@ const MOCK_PAY_METHODS: PayMethodData[] = [
       type_account: 'corriente',
       type_person: 'juridica'
     },
-    holder: 'J3M Tienda C.A.',
+    holder: 'Tienda Demo C.A.',
     url_img: 'assets/images/logotipo.PNG',
     created_at: '2025-02-10'
   }
