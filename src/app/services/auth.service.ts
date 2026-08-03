@@ -1,12 +1,42 @@
 import { ChargesResponse, LoginResponse, User } from '@/interfaces/user';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject, delay, map, Observable, of } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ConfirmationService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { Modules } from '@/interfaces/modules';
+
+/**
+ * Usuario embebido dentro del token mock, incluye la permisología
+ * completa para que `getPermissionsUser` pueda resolverla sin backend.
+ */
+export interface MockTokenUser {
+    id: number;
+    name: string;
+    last_name: string;
+    email: string;
+    role: string;
+    rol_id: number;
+    permissions: ChargesResponse[];
+}
+
+function encodeMockSegment(value: unknown): string {
+    return btoa(unescape(encodeURIComponent(JSON.stringify(value))));
+}
+
+/**
+ * Genera un JWT falso (header.payload.firma) decodificable por JwtHelperService,
+ * usado para simular sesiones autenticadas sin backend.
+ */
+export function createMockToken(user: MockTokenUser, expiresInSeconds = 60 * 60 * 8): string {
+    const header = encodeMockSegment({ alg: 'HS256', typ: 'JWT' });
+    const payload = encodeMockSegment({
+        user,
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + expiresInSeconds
+    });
+    return `${header}.${payload}.mock-signature-demo`;
+}
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +63,6 @@ export class AuthService {
     private expirationTimer: any;
 
     constructor(
-        private http: HttpClient,
         private confirmationService: ConfirmationService,
         private router: Router
     ) { }
@@ -228,21 +257,25 @@ export class AuthService {
     }
 
     /**
-     *Refresca la session
+     *Refresca la session, regenerando el token mock a partir de la sesión actual
      *
      * @return {*}  {Observable<string>}
      * @memberof AuthService
      */
     refreshToken(): Observable<string> {
-        return this.http.post<LoginResponse>(environment.host + '/users/refreshToken', {}, { withCredentials: true }).pipe(
-            map((res) => {
-                this.setToken(res.accessToken); // guardamos el token
-                this.setUser(res.user); //guardamos el usuario
-                return res.accessToken; // devolvemos solo el string
-            }),
-            catchError((err) => {
-                console.error('No se pudo renovar el token', err);
-                return of(''); // devuelve string vacío si falla
+        const currentToken = this.getToken();
+        const decoded = currentToken ? this.decodeToken(currentToken) : null;
+
+        if (!decoded?.user) {
+            return of('').pipe(delay(200));
+        }
+
+        return of(decoded.user as MockTokenUser).pipe(
+            delay(200),
+            map((user) => {
+                const newToken = createMockToken(user);
+                this.setToken(newToken);
+                return newToken;
             })
         );
     }

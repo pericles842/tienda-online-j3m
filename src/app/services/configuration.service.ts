@@ -1,15 +1,33 @@
 import { Injectable, Signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { DollarInformation, SystemConfiguration } from '@/interfaces/configuration';
-import { environment } from 'src/environments/environment';
-import { forkJoin, map, Observable } from 'rxjs';
+import { BehaviorSubject, delay, forkJoin, map, Observable, of } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
+
+const MOCK_RATES: DollarInformation[] = [
+  { id: 1, key: 'bcv', title: 'Tasa BCV', last_update: new Date().toDateString(), price_old: '36.10', price: 36.5, url_img: 'assets/images/logotipo.PNG' },
+  { id: 2, key: 'binance', title: 'Tasa Binance', last_update: new Date().toDateString(), price_old: '37.80', price: 38.2, url_img: 'assets/images/logotipo.PNG' },
+  { id: 3, key: 'manual', title: 'Tasa manual', last_update: new Date().toDateString(), price_old: '36.00', price: 36.0, url_img: 'assets/images/logotipo.PNG' }
+];
+
+const MOCK_CONFIGURATION: SystemConfiguration = {
+  id: 1,
+  automatic_rate: true,
+  type_rate: 'bcv',
+  rate_manual: 36,
+  email: 'contacto@j3m.com',
+  phone: '0212-1234567',
+  ig: '@j3m.tienda',
+  fb: 'j3m.tienda'
+};
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationService {
   getPriceDolarConfiguration: Signal<DollarInformation | null>;
 
-  constructor(private http: HttpClient) {
+  private rates = new BehaviorSubject<DollarInformation[]>(MOCK_RATES);
+  private configuration = new BehaviorSubject<SystemConfiguration>(MOCK_CONFIGURATION);
+
+  constructor() {
     this.getPriceDolarConfiguration = toSignal(
       forkJoin({
         config: this.getPublicConfiguration(),
@@ -48,7 +66,7 @@ export class ConfigurationService {
   }
 
   getRates(): Observable<DollarInformation[]> {
-    return this.http.get<DollarInformation[]>(`${environment.host}/rate-dollar-j3m`);
+    return of(this.rates.value).pipe(delay(200));
   }
 
   /**
@@ -58,11 +76,12 @@ export class ConfigurationService {
    * @memberof ConfigurationService
    */
   getConfiguration(): Observable<SystemConfiguration> {
-    return this.http.get<SystemConfiguration>(`${environment.host}/configuration`);
+    return of(this.configuration.value).pipe(delay(200));
   }
 
   updateConfiguration(configuration: SystemConfiguration): Observable<SystemConfiguration> {
-    return this.http.put<SystemConfiguration>(`${environment.host}/configuration`, configuration);
+    this.configuration.next(configuration);
+    return of(configuration).pipe(delay(200));
   }
 
   /**
@@ -72,6 +91,6 @@ export class ConfigurationService {
    * @memberof ConfigurationService
    */
   getPublicConfiguration(): Observable<SystemConfiguration> {
-    return this.http.get<SystemConfiguration>(`${environment.host}/configuration-public`);
+    return of(this.configuration.value).pipe(delay(200));
   }
 }

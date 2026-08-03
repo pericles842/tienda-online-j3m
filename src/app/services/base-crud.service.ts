@@ -1,26 +1,23 @@
 import { ResponseDeleteResource } from '@/interfaces/forms';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { BehaviorSubject, delay, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseCrudService {
-  constructor(private http: HttpClient) {}
-
   /**
-   *Se encarga de eliminar un recurso o varios recursos
+   *Se encarga de eliminar uno o varios recursos del store en memoria indicado
    *
-   * @param {string} url 'users/one-client/1'
-   * @param {number} id 1
+   * @param {BehaviorSubject<{ id: number }[]>} store BehaviorSubject donde vive la colección en memoria
+   * @param {number[]} id ids a eliminar
    * @return {*}  {Observable<ResponseDeleteResource>}
    *
-   * @example this.eliminateResources('users/one-client', [1,2,3])
+   * @example this.baseCrudService.eliminateResources(this.products, [1,2,3])
    * @memberof BaseCrudService
    */
-  eliminateResources(url: string, id: number[]): Observable<ResponseDeleteResource> {
-    return this.http.delete<ResponseDeleteResource>(`${environment.host}/${url}`, { params: { id } });
+  eliminateResources<T extends { id: number }>(store: BehaviorSubject<T[]>, id: number[]): Observable<ResponseDeleteResource> {
+    store.next(store.value.filter((item) => !id.includes(item.id)));
+    return of({ ids: id }).pipe(delay(200));
   }
 }
